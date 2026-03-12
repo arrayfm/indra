@@ -10,19 +10,17 @@ import { FaviconLinks } from '@/components/partial/favicon-links'
 import { TransitionProvider } from '@/components/providers/transition-provider'
 import { VideoPlaybackQueueProvider } from '@/components/providers/video-playback-queue-provider'
 
-// import { ThemeProvider } from 'next-themes'
-
 export const metadata: Metadata = {
   title: {
-    template: '%s | Base Sanity',
-    default: 'Base Sanity',
+    template: '%s | Indra',
+    default: 'Indra',
   },
   referrer: 'same-origin',
 }
 
-// export const viewport: Viewport = {
-//   themeColor: '#',
-// }
+export const viewport: Viewport = {
+  themeColor: '#EBE6DF',
+}
 
 export default async function RootLayout({
   children,

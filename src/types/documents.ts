@@ -1,6 +1,6 @@
 import { PortableTextBlock } from 'next-sanity'
 import { TextBlock } from './sections'
-import { Link, Media } from './elements'
+import { Media } from './elements'
 
 export interface Page {
   _id: string
@@ -29,29 +29,6 @@ export interface SiteSettings {
 
 export interface SocialLink {
   url: string
-}
-
-export interface Category {
-  _id: string
-  title: string
-  slug: string
-  parent?: Category
-}
-
-export interface Menu {
-  title?: string
-  slug: string
-  items: MenuItem[]
-}
-
-export interface MenuItem extends Link {
-  subItems?: SubMenuItem[]
-}
-
-export interface SubMenuItem {
-  label: string
-  description?: string
-  href: string
 }
 
 export interface Article {

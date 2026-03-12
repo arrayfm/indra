@@ -22,8 +22,6 @@ export default async function Articles() {
     query: getArticles,
   })
 
-  console.log('articles', articles)
-
   return (
     <>
       <main className="min-h-screen-header-footer"></main>

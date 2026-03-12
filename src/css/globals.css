@@ -2,7 +2,6 @@
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tailwindcss/utilities.css' layer(utilities);
 
-@import './react-datepicker.css';
 @import './animations.css';
 
 /*
@@ -21,40 +20,8 @@
 
   --text-*: initial;
 
-  /* --text-xs-mobile: 10px;
-  --text-xs-mobile--line-height: 14px; */
   --text-xs: 12px;
   --text-xs--line-height: 16px;
-
-  /* --text-sm-mobile: 12px;
-  --text-sm-mobile--line-height: 15px; */
-  --text-sm: 15px;
-  --text-sm--line-height: 20px;
-
-  /* --text-md-mobile: 17px;
-  --text-md-mobile--line-height: 18px; */
-  --text-md: 18px;
-  --text-md--line-height: 24px;
-
-  /* --text-lg-mobile: 19px;
-  --text-lg-mobile--line-height: 20px; */
-  --text-lg: 24px;
-  --text-lg--line-height: 30px;
-
-  /* --text-xl-mobile: 36px;
-  --text-xl-mobile--line-height: 44px; */
-  --text-xl: 36px;
-  --text-xl--line-height: 44px;
-
-  /* --text-2xl-mobile: 24px;
-  --text-2xl-mobile--line-height: 30px; */
-  --text-2xl: 48px;
-  --text-2xl--line-height: 60px;
-
-  /* --text-3xl-mobile: 24px;
-  --text-3xl-mobile--line-height: 30px; */
-  --text-3xl: 65px;
-  --text-3xl--line-height: 75px;
 
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -104,15 +71,9 @@
   --color-white: #ffffff;
   --color-black: #111111;
 
-  --color-mono-100: #e8e8e8;
-  --color-mono-200: #d0d0d0;
-  --color-mono-300: #c7c7c7;
-  --color-mono-400: #a7a7a7;
-  --color-mono-500: #989898;
-  --color-mono-600: #8a8a8a;
-  --color-mono-700: #686868;
-  --color-mono-800: #4f4f4f;
-  --color-mono-900: #383838;
+  --color-dark-purple: #2b1b38;
+  --color-beige: #ebe6df;
+  --color-grey-400: #9c9c9c;
 
   --color-sanity-ui-success: #00a86b;
   --color-sanity-ui-error: #d73a49;
@@ -133,22 +94,6 @@
 
   --animate-fade-in: fadeIn 0.4s ease-in-out;
   --animate-fade-out: fadeOut 0.4s ease-in-out 0.3s;
-}
-
-@utility container {
-  margin-inline: auto;
-  margin: 0 auto;
-  padding-inline: 12px;
-
-  @media (min-width: --theme(--breakpoint-sm)) {
-    max-width: none;
-  }
-  @media (min-width: --theme(--breakpoint-md)) {
-    max-width: 100%;
-  }
-  @media (min-width: --theme(--breakpoint-2xl)) {
-    max-width: 1920px;
-  }
 }
 
 .container {

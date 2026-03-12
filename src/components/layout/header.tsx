@@ -1,25 +1,26 @@
-import { Menu as MenuProps } from '@/types/documents'
+import Image from 'next/image'
 import { ConditionalLink } from '../elements/conditional-link'
 
-type HeaderProps = {
-  menu: MenuProps
-}
-
-export const Header = ({ menu }: HeaderProps) => {
+export const Header = () => {
   return (
     <header>
       <div className="container">
-        <div className="grid grid-cols-12 py-4">
-          <div className="col-span-6">Base Sanity App</div>
-          <nav className="col-span-6">
-            <ul className="flex justify-between">
-              {menu?.items.map((item, index) => (
-                <li key={index}>
-                  <ConditionalLink href={item.href}>
-                    {item.label}
-                  </ConditionalLink>
-                </li>
-              ))}
+        <div className="flex items-center justify-between py-2.5">
+          <div>
+            <Image
+              src="/images/indra-logo-purple.png"
+              alt="Indra logo"
+              width={70}
+              height={38}
+            />
+          </div>
+          <nav>
+            <ul>
+              <li>
+                <ConditionalLink href="/customer-portal">
+                  Account <span className="text-grey-400">User</span>
+                </ConditionalLink>
+              </li>
             </ul>
           </nav>
         </div>

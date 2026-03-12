@@ -1,11 +1,9 @@
-import { RiHome2Line, RiPagesLine } from 'react-icons/ri'
+import { RiHome2Line } from 'react-icons/ri'
 import { StructureBuilder } from 'sanity/structure'
 import { ConfigContext, DocumentStore } from 'sanity'
-import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
-import categoryStructure from './category-structure'
 
-const content = ['page']
-const types = ['menus']
+const content = ['page', 'article']
+const types = ['resource']
 
 export const structure = (
   S: StructureBuilder,
@@ -19,11 +17,11 @@ export const structure = (
         content.includes(listItem.getId()?.toString() || '')
       ),
       // --------------------- Divider ---------------------
-      // S.divider(),
+      S.divider(),
       // --------------------- Types ---------------------
-      // ...S.documentTypeListItems().filter((listItem) =>
-      //   types.includes(listItem.getId()?.toString() || '')
-      // ),
+      ...S.documentTypeListItems().filter((listItem) =>
+        types.includes(listItem.getId()?.toString() || '')
+      ),
       // --------------------- Divider ---------------------
       S.divider(),
       // --------------------- Settings ---------------------

@@ -1,10 +1,8 @@
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { getMetaData } from '@/lib/core/seo'
 import { Metadata } from 'next'
-import { Summary } from '@/components/sections/summary'
 import { getPage } from '@/sanity/queries/get-page'
 import NotFound from '../not-found'
-import { ContentBuilder } from '@/components/layout/content-builder'
 import { Page as PageProps } from '@/types/documents'
 import { SmoothScroll } from '@/components/layout/smooth-scroll'
 
@@ -37,10 +35,7 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <SmoothScroll>
-      <main className="min-h-screen-header-footer">
-        <Summary {...page} />
-        <ContentBuilder content={page.content} />
-      </main>
+      <main className="min-h-screen-header-footer"></main>
     </SmoothScroll>
   )
 }

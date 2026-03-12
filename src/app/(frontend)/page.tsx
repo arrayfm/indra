@@ -5,8 +5,6 @@ import Script from 'next/script'
 import { Metadata } from 'next'
 import { Page } from '@/types/documents'
 import { sanityFetch } from '@/sanity/lib/fetch'
-import { Summary } from '@/components/sections/summary'
-import { ContentBuilder } from '@/components/layout/content-builder'
 import { SmoothScroll } from '@/components/layout/smooth-scroll'
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -34,10 +32,7 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
       />
       <SmoothScroll>
-        <main className="min-h-screen-header-footer">
-          <Summary {...page} />
-          <ContentBuilder content={page.content} />
-        </main>
+        <main className="min-h-screen-header-footer"></main>
       </SmoothScroll>
     </>
   )

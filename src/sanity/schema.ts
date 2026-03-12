@@ -7,7 +7,6 @@ import { siteSettings } from './schema/documents/settings'
 import { menus } from './schema/documents/menus'
 import { menuItem, subMenuItem } from './schema/types/menu-item'
 import { mediaUrlEmbed } from './schema/types/media-url-embed'
-import { category } from './schema/documents/category'
 import { textBlock } from './schema/content/text-block'
 import { video } from './schema/types/video'
 
@@ -17,7 +16,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     page,
     siteSettings,
     menus,
-    category,
+
     // --------------- Types ---------------
     video,
     mediaItem,

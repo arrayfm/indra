@@ -45,13 +45,6 @@ export const page = defineType({
       group: 'content',
       hidden: true,
     }),
-    defineField({
-      name: 'content',
-      title: 'Content',
-      type: 'array',
-      group: 'content',
-      of: [defineArrayMember({ type: 'textBlock' })],
-    }),
     seo,
   ],
   preview: {

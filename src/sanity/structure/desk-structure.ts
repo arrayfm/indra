@@ -19,12 +19,11 @@ export const structure = (
         content.includes(listItem.getId()?.toString() || '')
       ),
       // --------------------- Divider ---------------------
-      S.divider(),
+      // S.divider(),
       // --------------------- Types ---------------------
-      categoryStructure('category', S, context.documentStore, context),
-      ...S.documentTypeListItems().filter((listItem) =>
-        types.includes(listItem.getId()?.toString() || '')
-      ),
+      // ...S.documentTypeListItems().filter((listItem) =>
+      //   types.includes(listItem.getId()?.toString() || '')
+      // ),
       // --------------------- Divider ---------------------
       S.divider(),
       // --------------------- Settings ---------------------

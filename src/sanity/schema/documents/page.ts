@@ -22,7 +22,8 @@ export const page = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'text',
+      rows: 2,
       group: 'content',
     }),
     defineField({
@@ -44,6 +45,13 @@ export const page = defineType({
       type: 'string',
       group: 'content',
       hidden: true,
+    }),
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      group: 'content',
+      rows: 5,
     }),
     seo,
   ],

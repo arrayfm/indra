@@ -30,7 +30,7 @@ export default async function RootLayout({
         <FaviconLinks />
       </head>
       <body
-        className={`${fontPPMori.variable} font-grot text-dark-purple bg-beige text-sm`}
+        className={`${fontPPMori.variable} text-dark-purple bg-beige text-md font-sans`}
       >
         <TransitionProvider>
           <VideoPlaybackQueueProvider>

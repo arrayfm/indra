@@ -15,5 +15,6 @@ export const getPage = groq`
         title,
         path
       },
+      description,
     }
   `

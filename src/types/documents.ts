@@ -8,7 +8,7 @@ export interface Page {
   pageType: string
   path: string
   title?: string
-  description?: PortableTextBlock[]
+  description?: string
   slug: string
   content?: TextBlock[]
 }

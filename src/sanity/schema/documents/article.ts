@@ -4,6 +4,11 @@ import { defineType, defineField, defineArrayMember } from 'sanity'
 import { seo } from '@/sanity/schema/fields/seo'
 import { createSlugField } from '../fields/slug'
 import { imageExtended } from '../fields/image-extended'
+import { ArrayMaxItems } from '@/sanity/components/custom-array'
+import {
+  orderRankField,
+  orderRankOrdering,
+} from '@sanity/orderable-document-list'
 
 export const article = defineType({
   name: 'article',
@@ -20,7 +25,9 @@ export const article = defineType({
       title: 'SEO',
     },
   ],
+  orderings: [orderRankOrdering],
   fields: [
+    orderRankField({ type: 'article' }),
     defineField({
       name: 'title',
       title: 'Title',
@@ -37,21 +44,25 @@ export const article = defineType({
       hidden: true,
     }),
     defineField({
-      title: 'Publish Date',
-      name: 'publishDate',
-      type: 'date',
-      group: 'content',
-      description: 'If left empty, the date will default to the created date',
-      options: {
-        dateFormat: 'DD-MM-YYYY',
-      },
-    }),
-    defineField({
       name: 'description',
       title: 'Description',
       group: 'content',
       type: 'text',
       rows: 5,
+    }),
+    defineField({
+      name: 'media',
+      title: 'Media',
+      type: 'array',
+      group: 'content',
+      of: [
+        defineArrayMember(imageExtended),
+        defineArrayMember({
+          type: 'video',
+        }),
+      ],
+      components: { input: ArrayMaxItems },
+      validation: (Rule) => Rule.max(1),
     }),
     defineField({
       name: 'resources',

@@ -5,6 +5,10 @@ import { seo } from '@/sanity/schema/fields/seo'
 import { createSlugField } from '../fields/slug'
 import { imageExtended } from '../fields/image-extended'
 import { ArrayMaxItems } from '@/sanity/components/custom-array'
+import {
+  orderRankField,
+  orderRankOrdering,
+} from '@sanity/orderable-document-list'
 
 export const resource = defineType({
   name: 'resource',
@@ -21,7 +25,9 @@ export const resource = defineType({
       title: 'SEO',
     },
   ],
+  orderings: [orderRankOrdering],
   fields: [
+    orderRankField({ type: 'resource' }),
     defineField({
       name: 'title',
       title: 'Title',

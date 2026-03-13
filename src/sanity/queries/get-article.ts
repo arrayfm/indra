@@ -14,6 +14,9 @@ export const getArticle = groq`
         title,
         path
       },
+      media[]{
+        ${mediaItem}
+      }
       resources[] {
         resourceReference->{
           title,
@@ -28,14 +31,17 @@ export const getArticle = groq`
   `
 
 export const getArticles = groq`
-  *[_type == 'article'][]{
+  *[_type == 'article'][] | order(orderRank) {
     _id,
     title,
     path,
     "slug": slug.current,
     _updatedAt,
+    media[]{
+      ${mediaItem}
+    },
     resources[] {
-      resourceReference->{
+      ...resourceReference->{
         title,
         path,
         media[]{

@@ -1,8 +1,10 @@
-import { RiHome2Line } from 'react-icons/ri'
+import { RiHome2Line, RiNewspaperLine } from 'react-icons/ri'
 import { StructureBuilder } from 'sanity/structure'
 import { ConfigContext, DocumentStore } from 'sanity'
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
+import { MdOutlineDatasetLinked } from 'react-icons/md'
 
-const content = ['page', 'article']
+const content = ['page']
 const types = ['resource']
 
 export const structure = (
@@ -16,12 +18,23 @@ export const structure = (
       ...S.documentTypeListItems().filter((listItem) =>
         content.includes(listItem.getId()?.toString() || '')
       ),
+      orderableDocumentListDeskItem({
+        type: 'article',
+        title: 'Module',
+        icon: RiNewspaperLine,
+        S,
+        context,
+      }),
       // --------------------- Divider ---------------------
       S.divider(),
       // --------------------- Types ---------------------
-      ...S.documentTypeListItems().filter((listItem) =>
-        types.includes(listItem.getId()?.toString() || '')
-      ),
+      orderableDocumentListDeskItem({
+        type: 'resource',
+        title: 'Resource',
+        icon: MdOutlineDatasetLinked,
+        S,
+        context,
+      }),
       // --------------------- Divider ---------------------
       S.divider(),
       // --------------------- Settings ---------------------

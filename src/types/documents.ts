@@ -37,6 +37,7 @@ export interface Article {
   title: string
   slug: string
   description?: string
+  media?: Media[]
   resources?: Resource[]
 }
 

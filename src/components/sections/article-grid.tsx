@@ -3,6 +3,8 @@ import { Section } from '../layout/section'
 import { Media } from '../media/media'
 import { cn } from '@/lib/utils/class-name'
 import { Article } from '@/types/documents'
+import { ConditionalLink } from '../elements/conditional-link'
+import { Button } from '../ui/button'
 
 const gridPlacement = (index: number) => {
   const placementIndex = index % 3
@@ -22,15 +24,23 @@ export const ArticleGrid = ({ articles }: { articles: Article[] }) => {
     <Section id="articles" className="pt-12">
       <div className="container grid grid-cols-10 gap-2.5 gap-y-32">
         {articles.map((article, index) => (
-          <div
+          <ConditionalLink
             key={article._id}
-            className={cn(gridPlacement(index), 'flex flex-col gap-5')}
+            className={cn(gridPlacement(index), 'group flex flex-col gap-5')}
+            href={article.path}
           >
-            <div className="flex max-h-120 items-center justify-center">
-              <Media {...article.media?.[0]} />
-            </div>
-            <h2 className={cn(typePPMori({ size: 'xl' }))}>{article.title}</h2>
-          </div>
+            {article.media?.[0] && (
+              <div className="flex max-h-120 items-center justify-center">
+                <Media {...article.media?.[0]} />
+              </div>
+            )}
+            {article.title && (
+              <h2 className={cn(typePPMori({ size: 'xl' }))}>
+                {article.title}
+              </h2>
+            )}
+            <Button className="w-fit">Explore</Button>
+          </ConditionalLink>
         ))}
       </div>
     </Section>

@@ -6,14 +6,14 @@ export const Header = () => {
     <header>
       <div className="container">
         <div className="flex items-center justify-between py-2.5">
-          <div>
+          <ConditionalLink href="/">
             <Image
               src="/images/indra-logo-purple.png"
               alt="Indra logo"
               width={70}
               height={38}
             />
-          </div>
+          </ConditionalLink>
           <nav>
             <ul>
               <li>

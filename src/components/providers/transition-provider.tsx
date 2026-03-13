@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation'
 import { useTransition, useTransitionContext } from '@/lib/hooks/use-transition'
 import { cn } from '@/lib/utils/class-name'
 import { cva, VariantProps } from 'class-variance-authority'
-import { useLenis } from 'lenis/react'
 
 export const transitionVariants = cva(
   'animation-fill-mode-forwards pointer-events-none fixed top-0 left-0 z-50 h-screen w-full transition-colors duration-700',
@@ -15,13 +14,11 @@ export const transitionVariants = cva(
     variants: {
       backgroundTheme: {
         transparent: 'bg-transparent',
-        'deep-blue': 'bg-deep-blue',
-        'grey-200': 'bg-grey-200',
-        'grey-500': 'bg-grey-500',
+        beige: 'bg-beige',
       },
     },
     defaultVariants: {
-      backgroundTheme: 'grey-200',
+      backgroundTheme: 'beige',
     },
   }
 )
@@ -35,24 +32,12 @@ export function TransitionProvider({
   const pathname = usePathname()
   const isHome = pathname === '/'
 
-  const lenis = useLenis()
-
   const [className, setClassName] = useState('animate-fade-out')
   const [headerVisible, setHeaderVisible] = useState(isHome ? false : true)
   const [pageReady, setPageReady] = useState(isHome ? false : true)
   const [backgroundTheme, setBackgroundTheme] = useState<
     VariantProps<typeof transitionVariants>['backgroundTheme'] | undefined
   >(undefined)
-
-  useEffect(() => {
-    if (!lenis) return
-
-    if (!pageReady) {
-      lenis.stop()
-    } else {
-      lenis.start()
-    }
-  }, [lenis, pageReady])
 
   const animation = useRef<Animation>('fade-out')
 
@@ -99,10 +84,7 @@ const TransitionContextHandler = ({
   useEffect(() => {
     window.scrollTo(0, 0)
 
-    const hasPlayed = sessionStorage.getItem('heroPlayed')
     transitions.fadeOut()
-
-    if (!hasPlayed) return
 
     setPageReady(true)
 

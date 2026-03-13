@@ -12,23 +12,18 @@ const sectionVariants = cva('relative', {
       md: 'py-6 lg:py-8',
     },
     theme: {
-      'deep-blue': 'bg-deep-blue text-grey-200',
-      'mid-blue': 'bg-mid-blue text-grey-200',
-      'grey-200': 'bg-grey-200 text-grey-700',
-      'grey-400': 'bg-grey-400 text-grey-200',
-      'grey-500': 'bg-grey-500 text-grey-200',
-      'grey-700': 'bg-grey-700 text-grey-200',
-      none: 'text-grey-700',
+      none: '',
     },
   },
   defaultVariants: {
-    padding: 'md',
-    theme: 'grey-200',
+    padding: 'none',
+    theme: 'none',
   },
 })
 
 export interface SectionProps
-  extends React.ComponentProps<'section'>,
+  extends
+    React.ComponentProps<'section'>,
     VariantProps<typeof sectionVariants> {
   id: string
   asChild?: boolean

@@ -16,12 +16,31 @@
 
 @theme {
   --font-*: initial;
-  --font-sans: var(--font-at-surt), Helvetica, Arial, sans-serif;
+  --font-sans: var(--font-pp-mori), Helvetica, Arial, sans-serif;
 
   --text-*: initial;
 
-  --text-xs: 12px;
-  --text-xs--line-height: 16px;
+  --tracking-ppmori: -0.01em;
+
+  --text-ppmori-xs: 10px;
+  --text-ppmori-xs--line-height: 14px;
+  --text-ppmori-xs--letter-spacing: var(--tracking-ppmori);
+
+  --text-ppmori-sm: 12px;
+  --text-ppmori-sm--line-height: 14px;
+  --text-ppmori-sm--letter-spacing: var(--tracking-ppmori);
+
+  --text-ppmori-md: 14px;
+  --text-ppmori-md--line-height: 14px;
+  --text-ppmori-md--letter-spacing: var(--tracking-ppmori);
+
+  --text-ppmori-xl: 38px;
+  --text-ppmori-xl--line-height: 34px;
+  --text-ppmori-xl--letter-spacing: var(--tracking-ppmori);
+
+  --text-ppmori-2xl: 86px;
+  --text-ppmori-2xl--line-height: 74px;
+  --text-ppmori-2xl--letter-spacing: -0.02em;
 
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -31,8 +50,8 @@
   --height-footer: 152px;
   --height-footer-mobile: 231px;
 
-  --height-header: 130px;
-  --height-header-mobile: 90px;
+  --height-header: 62px;
+  --height-header-mobile: 62pxpx;
 
   --height-filter-footer: 102px;
 
@@ -92,8 +111,8 @@
   --width-10\/12: 83.333333%;
   --width-11\/12: 91.666667%;
 
-  --animate-fade-in: fadeIn 0.4s ease-in-out;
-  --animate-fade-out: fadeOut 0.4s ease-in-out 0.3s;
+  --animate-fade-in: fade-in 0.4s ease-in-out;
+  --animate-fade-out: fade-out 0.4s ease-in-out 0.3s;
 }
 
 .container {
@@ -298,4 +317,8 @@ input[type='search']::-webkit-search-cancel-button {
   to {
     width: 1.25em;
   }
+}
+
+.animation-fill-mode-forwards {
+  animation-fill-mode: forwards;
 }

@@ -34,5 +34,5 @@ export const fontPPMori = localFont({
     },
   ],
   display: 'swap',
-  variable: '--font-ppmori',
+  variable: '--font-pp-mori',
 })

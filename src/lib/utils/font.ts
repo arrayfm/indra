@@ -1,0 +1,31 @@
+import { tv } from 'tailwind-variants'
+
+const typography = tv(
+  {
+    base: '',
+    variants: {},
+    defaultVariants: {},
+  },
+  { twMerge: false }
+)
+
+export const typePPMori = tv(
+  {
+    extend: typography,
+    base: 'font-ppmori',
+    variants: {
+      size: {
+        xs: 'text-ppmori-xs',
+        sm: 'text-ppmori-sm',
+        md: 'text-ppmori-md',
+
+        xl: 'text-ppmori-xl',
+        '2xl': 'text-ppmori-2xl',
+      },
+    },
+    defaultVariants: {
+      size: 'md',
+    },
+  },
+  { twMerge: false }
+)

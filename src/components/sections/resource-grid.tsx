@@ -50,7 +50,16 @@ export const ResourceGrid = ({
   )
 }
 
-const GridCard = ({ _id, path, media, title }: Resource) => {
+const GridCard = ({
+  _id,
+  path,
+  media,
+  title,
+  audio,
+  mediaUrlEmbed,
+}: Resource) => {
+  const isAudioOnly = !!audio && !mediaUrlEmbed
+
   return (
     <ConditionalLink
       key={_id}
@@ -62,12 +71,29 @@ const GridCard = ({ _id, path, media, title }: Resource) => {
           <Media {...media?.[0]} />
         </div>
       )}
-      {title && (
-        <h2 className={cn(typePPMori({ size: 'md', weight: 'semibold' }))}>
-          {title}
-        </h2>
-      )}
-      <Button className="w-fit">Get started</Button>
+      <div
+        className={cn('flex', {
+          'flex-row': isAudioOnly,
+          'flex-col': !isAudioOnly,
+        })}
+      >
+        {title && (
+          <h2
+            className={cn(typePPMori({ size: 'md', weight: 'semibold' }), {
+              'w-1/2': isAudioOnly,
+            })}
+          >
+            {title}
+          </h2>
+        )}
+        <Button
+          className={cn('w-fit', {
+            'ml-auto': isAudioOnly,
+          })}
+        >
+          Get started
+        </Button>
+      </div>
     </ConditionalLink>
   )
 }

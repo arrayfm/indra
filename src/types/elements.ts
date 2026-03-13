@@ -10,7 +10,13 @@ export interface MuxVideo {
 
 export type Video = Pick<
   Asset,
-  '_id' | 'assetId' | 'url' | 'originalFilename' | 'extension' | 'size' | 'uploadId'
+  | '_id'
+  | 'assetId'
+  | 'url'
+  | 'originalFilename'
+  | 'extension'
+  | 'size'
+  | 'uploadId'
 > & {
   caption?: string
   dimensions: {
@@ -34,8 +40,10 @@ export type Image = Pick<Asset, '_id' | 'url' | 'alt' | 'caption'> & {
   hotspot?: { x: number; y: number; height: number; width: number }
 }
 
-export interface ImageProps
-  extends Omit<NextImageProps, 'fill' | 'src' | 'alt' | 'width' | 'height'> {
+export interface ImageProps extends Omit<
+  NextImageProps,
+  'fill' | 'src' | 'alt' | 'width' | 'height'
+> {
   image?: Image
 
   alt?: string
@@ -59,8 +67,7 @@ export type VideoOutputSize = {
   poster?: boolean
 }
 
-export interface VideoProps
-  extends React.VideoHTMLAttributes<HTMLVideoElement> {
+export interface VideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
   video?: Video
   aspectRatio?: string
   rounded?: boolean
@@ -87,4 +94,12 @@ export type Link = {
   label?: string
   file?: Asset
   blank?: boolean
+}
+
+export type Audio = {
+  uploadId?: string
+  assetId?: string
+  url?: string
+  extension?: string
+  path?: string
 }

@@ -128,11 +128,12 @@
   }
 
   @media (min-width: --theme(--breakpoint-lg)) {
-    max-width: 1680px;
+    max-width: 1440px;
     padding-left: 20px;
     padding-right: 20px;
   }
 }
+
 @layer base {
   *,
   ::after,
@@ -160,13 +161,6 @@ body {
 
   * {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-}
-
-.container {
-  @media (max-width: --theme(--breakpoint-lg)) {
-    padding-left: 8px;
-    padding-right: 8px;
   }
 }
 

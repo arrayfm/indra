@@ -10,19 +10,26 @@ export const Hero = ({ title, description }: Page | Article) => {
     <Section id="hero" className="pt-10">
       <div className="container grid grid-cols-10 gap-2.5">
         <BackLink className="text-grey-400 col-span-1">Back</BackLink>
-        <h1
-          className={cn('col-span-6 row-start-2', typePPMori({ size: '2xl' }))}
-        >
-          {nl2br(title)}
-        </h1>
-        <p
-          className={cn(
-            'col-span-3 row-start-3 pt-12',
-            typePPMori({ size: 'md' })
-          )}
-        >
-          {description}
-        </p>
+        {title && (
+          <h1
+            className={cn(
+              'col-span-10 row-start-2 md:col-span-6',
+              typePPMori({ size: '2xl' })
+            )}
+          >
+            {nl2br(title)}
+          </h1>
+        )}
+        {description && (
+          <p
+            className={cn(
+              'col-span-10 row-start-3 pt-12 md:col-span-3',
+              typePPMori({ size: 'md' })
+            )}
+          >
+            {description}
+          </p>
+        )}
       </div>
     </Section>
   )

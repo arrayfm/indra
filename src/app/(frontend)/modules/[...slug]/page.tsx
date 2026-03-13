@@ -5,6 +5,7 @@ import { getPage } from '@/sanity/queries/get-page'
 import NotFound from '../not-found'
 import { Page as PageProps } from '@/types/documents'
 import { SmoothScroll } from '@/components/layout/smooth-scroll'
+import { Hero } from '@/components/layout/hero'
 
 type Params = Promise<{ slug: string[] }>
 
@@ -34,8 +35,8 @@ export default async function Page({ params }: { params: Params }) {
   if (!page) return NotFound()
 
   return (
-    <SmoothScroll>
-      <main className="min-h-screen-header-footer"></main>
-    </SmoothScroll>
+    <main className="min-h-screen-header-footer">
+      <Hero {...page} />
+    </main>
   )
 }

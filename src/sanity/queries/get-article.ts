@@ -2,12 +2,13 @@ import { groq } from 'next-sanity'
 import { mediaItem } from './get-media'
 
 export const getArticle = groq`
-    *[_type == $type && path == $path][0]{
+    *[_type == $type && slug.current == $slug][0]{
       _id,
       _type,
       pageType,
       path,
       title,
+      description,
       _updatedAt,
       "slug": slug.current,
       parent->{
@@ -16,17 +17,20 @@ export const getArticle = groq`
       },
       media[]{
         ${mediaItem}
-      }
-      resources[] {
-        resourceReference->{
-          title,
-          path,
-          mediaUrlEmbed,
-          media[]{
-            ${mediaItem}
-          }
-        }
       },
+      resources {
+        layout,
+        items[] {
+          ...resourceReference->{
+            title,
+            path,
+            mediaUrlEmbed,
+            media[]{
+              ${mediaItem}
+            }
+          }
+        },
+      }
     }
   `
 
@@ -40,14 +44,16 @@ export const getArticles = groq`
     media[]{
       ${mediaItem}
     },
-    resources[] {
-      ...resourceReference->{
-        title,
-        path,
-        media[]{
-          ${mediaItem}
+    resources {
+      items[] {
+        ...resourceReference->{
+          title,
+          path,
+          media[]{
+            ${mediaItem}
+          }
         }
-      }
+      },
     },
   }
 `

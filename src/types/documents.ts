@@ -1,4 +1,3 @@
-import { PortableTextBlock } from 'next-sanity'
 import { TextBlock } from './sections'
 import { Media } from './elements'
 
@@ -36,9 +35,15 @@ export interface Article {
   _type: 'article'
   title: string
   slug: string
+  path: string
   description?: string
   media?: Media[]
-  resources?: Resource[]
+  resources?: ArticleResourcesObject
+}
+
+export type ArticleResourcesObject = {
+  layout?: 'grid' | 'scattered'
+  items: Resource[]
 }
 
 export interface Resource {

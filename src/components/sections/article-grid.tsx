@@ -30,7 +30,7 @@ export const ArticleGrid = ({ articles }: { articles: Article[] }) => {
             href={article.path}
           >
             {article.media?.[0] && (
-              <div className="flex max-h-120 items-center justify-center">
+              <div className="flex max-h-120 items-center justify-center overflow-hidden rounded-xl">
                 <Media {...article.media?.[0]} />
               </div>
             )}

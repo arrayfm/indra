@@ -31,7 +31,8 @@ export const article = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'text',
+      rows: 2,
       group: 'content',
     }),
 
@@ -67,27 +68,47 @@ export const article = defineType({
     defineField({
       name: 'resources',
       title: 'Resources',
-      type: 'array',
+      type: 'object',
       group: 'content',
-      of: [
-        defineArrayMember({
-          type: 'object',
-          name: 'resource',
-          title: 'Resource',
-          fields: [
-            defineField({
-              name: 'resourceReference',
-              title: 'Resource Reference',
-              type: 'reference',
-              to: [{ type: 'resource' }],
+      fields: [
+        defineField({
+          name: 'layout',
+          title: 'Layout',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Grid', value: 'grid' },
+              { title: 'Scattered', value: 'scattered' },
+            ],
+            layout: 'radio',
+          },
+          initialValue: 'grid',
+        }),
+        defineField({
+          name: 'items',
+          title: 'Items',
+          type: 'array',
+          of: [
+            defineArrayMember({
+              type: 'object',
+              name: 'resource',
+              title: 'Resource',
+              fields: [
+                defineField({
+                  name: 'resourceReference',
+                  title: 'Resource Reference',
+                  type: 'reference',
+                  to: [{ type: 'resource' }],
+                }),
+              ],
+              preview: {
+                select: {
+                  title: 'resourceReference.title',
+                  media: 'resourceReference.media.0',
+                },
+              },
             }),
           ],
-          preview: {
-            select: {
-              title: 'resourceReference.title',
-              media: 'resourceReference.media.0',
-            },
-          },
         }),
       ],
     }),

@@ -1,11 +1,11 @@
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { getMetaData } from '@/lib/core/seo'
 import { Metadata } from 'next'
-import { getPage } from '@/sanity/queries/get-page'
-import NotFound from '../not-found'
-import { Page as PageProps } from '@/types/documents'
-import { SmoothScroll } from '@/components/layout/smooth-scroll'
+// import NotFound from '../not-found'
+import { Article as ArticleProps } from '@/types/documents'
 import { Hero } from '@/components/layout/hero'
+import { getArticle } from '@/sanity/queries/get-article'
+import { ResourceGrid } from '@/components/sections/resource-grid'
 
 type Params = Promise<{ slug: string[] }>
 
@@ -21,22 +21,20 @@ export const generateMetadata = async ({
   })
 }
 
-export default async function Page({ params }: { params: Params }) {
+export default async function Article({ params }: { params: Params }) {
   const { slug } = await params
-  const path = slug.join('/')
 
-  console.log('slug', slug)
+  const article = (await sanityFetch({
+    query: getArticle,
+    params: { type: 'article', slug: slug[slug.length - 1] },
+  })) as ArticleProps
 
-  const page = (await sanityFetch({
-    query: getPage,
-    params: { type: 'page', path },
-  })) as PageProps
-
-  if (!page) return NotFound()
+  // if (!article) return NotFound()
 
   return (
     <main className="min-h-screen-header-footer">
-      <Hero {...page} />
+      <Hero {...article} />
+      <ResourceGrid {...article.resources} />
     </main>
   )
 }

@@ -22,9 +22,14 @@ export const typePPMori = tv(
         xl: 'text-ppmori-xl',
         '2xl': 'text-ppmori-2xl',
       },
+      weight: {
+        normal: 'font-normal',
+        semibold: 'font-semibold',
+      },
     },
     defaultVariants: {
       size: 'md',
+      weight: 'normal',
     },
   },
   { twMerge: false }

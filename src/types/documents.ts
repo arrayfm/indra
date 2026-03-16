@@ -50,6 +50,7 @@ export interface Resource {
   _id: string
   _type: 'resource'
   title: string
+  subtitle?: string
   description?: string
   slug: string
   path: string

@@ -6,6 +6,7 @@ export const getResource = groq`
       _id,
       _type,
       title,
+      subtitle,
       pageType,
       path,
       path,

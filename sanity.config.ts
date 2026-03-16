@@ -11,8 +11,6 @@ import { structure } from './src/sanity/structure/desk-structure'
 
 import { openDocumentAction, updatedPublishAction } from '@/sanity/lib/actions'
 
-import { muxInput } from 'sanity-plugin-mux-input'
-
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from './src/sanity/env'
 import { schema } from './src/sanity/schema'
@@ -62,7 +60,6 @@ export default defineConfig({
     structureTool({
       structure,
     }),
-    muxInput(),
     media(),
     ...dynamicTools,
   ],

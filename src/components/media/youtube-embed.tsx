@@ -7,45 +7,63 @@ import { VideoEmbedControls } from '@/components/media/video-embed-controls'
 import Script from 'next/script'
 import { Embed } from '@/types/elements'
 
+export type YoutubeEmbedControls = {
+  isPlaying?: boolean
+  isMuted?: boolean
+  onPlayToggle?: () => void
+  onMuteToggle?: () => void
+}
+
 export const YoutubeEmbed = ({
   playbackId,
   autoplay = true,
   controls = false,
   hasMedia = false,
-}: Embed) => {
+  externalControls,
+}: Embed & { externalControls?: YoutubeEmbedControls }) => {
   const playerRef = useRef<HTMLDivElement | null>(null)
   const [player, setPlayer] = useState<any | null>(null)
-  const [isPlaying, setIsPlaying] = useState(true)
-  const [isMuted, setIsMuted] = useState(true)
+
+  const [internalIsPlaying, setInternalIsPlaying] = useState(autoplay)
+  const [internalIsMuted, setInternalIsMuted] = useState(true)
+
+  const isPlaying = externalControls?.isPlaying ?? internalIsPlaying
+  const isMuted = externalControls?.isMuted ?? internalIsMuted
+
   const [isClicked, setIsClicked] = useState(autoplay)
-  const [playerTime, setPlayerTime] = useState({
-    played: 0,
-    duration: 0,
-  })
+  const [playerTime, setPlayerTime] = useState({ played: 0, duration: 0 })
 
   const handlePlay = () => {
     if (!player) return
     if (!isClicked) setIsClicked(true)
 
-    const playerState = player.getPlayerState()
-    if (playerState === window.YT.PlayerState.PLAYING) {
-      player.pauseVideo()
-      setIsPlaying(false)
+    if (externalControls?.onPlayToggle) {
+      externalControls.onPlayToggle()
     } else {
-      player.playVideo()
-      setIsPlaying(true)
+      const playerState = player.getPlayerState()
+      if (playerState === window.YT.PlayerState.PLAYING) {
+        player.pauseVideo()
+        setInternalIsPlaying(false)
+      } else {
+        player.playVideo()
+        setInternalIsPlaying(true)
+      }
     }
   }
 
   const handleMuteButtonClick = () => {
     if (!player) return
 
-    if (!isMuted) {
-      player.mute()
-      setIsMuted(true)
+    if (externalControls?.onMuteToggle) {
+      externalControls.onMuteToggle()
     } else {
-      player.unMute()
-      setIsMuted(false)
+      if (!isMuted) {
+        player.mute()
+        setInternalIsMuted(true)
+      } else {
+        player.unMute()
+        setInternalIsMuted(false)
+      }
     }
   }
 
@@ -53,13 +71,32 @@ export const YoutubeEmbed = ({
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     if (!player) return
-
     const { width } = e.currentTarget.getBoundingClientRect()
     const x = e.clientX - e.currentTarget.getBoundingClientRect().left
     const percentage = x / width
-
     player.seekTo(playerTime.duration * percentage)
   }
+
+  useEffect(() => {
+    if (!player || !externalControls) return
+
+    if (isPlaying) {
+      player.playVideo()
+      if (!isClicked) setIsClicked(true)
+    } else {
+      player.pauseVideo()
+    }
+  }, [isPlaying, player, externalControls])
+
+  useEffect(() => {
+    if (!player || !externalControls) return
+
+    if (isMuted) {
+      player.mute()
+    } else {
+      player.unMute()
+    }
+  }, [isMuted, player, externalControls])
 
   useEffect(() => {
     const createPlayer = () => {
@@ -98,14 +135,11 @@ export const YoutubeEmbed = ({
 
   useEffect(() => {
     if (!player) return
-
     const interval = setInterval(async () => {
       const played = await player.getCurrentTime()
       const duration = await player.getDuration()
-
       setPlayerTime({ played, duration })
     }, 500)
-
     return () => clearInterval(interval)
   }, [player])
 
@@ -113,11 +147,7 @@ export const YoutubeEmbed = ({
 
   return (
     <>
-      <Script
-        src="https://www.youtube.com/iframe_api"
-        strategy="lazyOnload" // Load the script after the page has been loaded
-      />
-
+      <Script src="https://www.youtube.com/iframe_api" strategy="lazyOnload" />
       <div
         className={cn(
           'absolute top-0 left-0 z-20 h-full w-full object-cover object-center transition-opacity duration-300',
@@ -128,10 +158,8 @@ export const YoutubeEmbed = ({
         )}
       >
         <div
-          ref={playerRef} // Attach the ref to the iframe element
-          className={cn(
-            'absolute top-0 left-0 z-20 h-full w-full object-cover object-center'
-          )}
+          ref={playerRef}
+          className="absolute top-0 left-0 z-20 h-full w-full object-cover object-center"
         />
       </div>
       <VideoEmbedControls

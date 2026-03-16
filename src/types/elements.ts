@@ -58,6 +58,7 @@ export interface ImageProps extends Omit<
     quality?: number
     fit?: 'crop' | 'clip' | 'fill' | 'max' | 'scale'
   }
+  cover?: boolean
 }
 
 export type VideoOutputSize = {

@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils/class-name'
 import { formatPlayerTime } from '@/lib/core/mux'
 import { SVG } from '@/components/elements/svg'
-import { PlayIcon } from '@radix-ui/react-icons'
 import { Button } from '../ui/button'
+import { PlaySVG } from '../svg/play'
 
 export type VideoEmbedControlsProps = {
   isPlaying: boolean
@@ -51,7 +51,7 @@ export const VideoEmbedControls = ({
         <Button>
           Play video
           <SVG>
-            <PlayIcon />
+            <PlaySVG />
           </SVG>
         </Button>
       </div>

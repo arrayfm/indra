@@ -10,7 +10,7 @@ export const getResource = groq`
       path,
       path,
       mediaUrlEmbed,
-      audio,
+      "audio": audio.asset->,
       media[]{
         ${mediaItem}
       }

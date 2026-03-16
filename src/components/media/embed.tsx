@@ -22,7 +22,12 @@ export const Embed = ({ externalControls, ...embed }: EmbedWithControls) => {
         />
       )}
       {embed.url && embed.type === 'youtube' && (
-        <YoutubeEmbed autoplay={false} controls={true} {...embed} />
+        <YoutubeEmbed
+          autoplay={false}
+          controls={true}
+          externalControls={externalControls}
+          {...embed}
+        />
       )}
     </>
   )

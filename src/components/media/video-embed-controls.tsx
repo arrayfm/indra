@@ -3,6 +3,7 @@ import { formatPlayerTime } from '@/lib/core/mux'
 import { SVG } from '@/components/elements/svg'
 import { Button } from '../ui/button'
 import { PlaySVG } from '../svg/play'
+import { typePPMori } from '@/lib/utils/font'
 
 export type VideoEmbedControlsProps = {
   isPlaying: boolean
@@ -41,7 +42,7 @@ export const VideoEmbedControls = ({
       />
       <div
         className={cn(
-          'bg-mono-100 pointer-events-none absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2',
+          'pointer-events-none absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2',
           {
             'opacity-0': !playButtonVisible,
             'opacity-100': !!playButtonVisible,
@@ -58,7 +59,7 @@ export const VideoEmbedControls = ({
       <div
         className={cn(
           'pointer-events-auto relative z-20 m-1 w-full sm:m-2',
-          'bg-mono-100 flex items-center justify-stretch gap-1 rounded-full px-2 lg:gap-2',
+          'bg-mid-beige flex items-center justify-stretch gap-1 rounded-full px-2 lg:gap-2',
           'transition-opacity duration-500',
           {
             'opacity-0': !embedVisible,
@@ -67,7 +68,10 @@ export const VideoEmbedControls = ({
         )}
       >
         <button
-          className={cn('text-body-xs p-1 uppercase')}
+          className={cn(
+            typePPMori({ size: 'xs' }),
+            'cursor-pointer p-1 uppercase'
+          )}
           style={{ letterSpacing: '0.1em' }}
           onClick={handlePlay}
         >
@@ -89,12 +93,17 @@ export const VideoEmbedControls = ({
             }}
           />
         </div>
-        <div className={cn('text-body-xs min-w-10 p-1 uppercase')}>
+        <div
+          className={cn(typePPMori({ size: 'xs' }), 'min-w-10 p-1 uppercase')}
+        >
           {formatPlayerTime(playerTime.played)}
         </div>
         <button
           onClick={handleMuteButtonClick}
-          className={cn('text-body-xs z-10 p-1 uppercase')}
+          className={cn(
+            typePPMori({ size: 'xs' }),
+            'z-10 cursor-pointer p-1 uppercase'
+          )}
           style={{ letterSpacing: '0.1em' }}
         >
           {isMuted ? 'Unmute' : 'Mute'}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Resource } from '@/types/documents'
 import { Section } from '../layout/section'
 import { Embed } from '../media/embed'
@@ -8,15 +8,27 @@ import { Media } from '../media/media'
 import { Button } from '../ui/button'
 import { SVG } from '../elements/svg'
 import { PlaySVG } from '../svg/play'
+import { AudioPlaySVG } from '../svg/audio-play'
 
 export const ResourcePlayer = ({ mediaUrlEmbed, audio, media }: Resource) => {
   const [isPlayingVideo, setIsPlayingVideo] = useState(false)
   const [isPlayingAudio, setIsPlayingAudio] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const hasAudio = !!audio
   const hasVideo = !!mediaUrlEmbed?.url
 
-  const externalControls = mediaUrlEmbed?.url
+  useEffect(() => {
+    if (!audioRef.current) return
+
+    if (isPlayingAudio) {
+      audioRef.current.play()
+    } else {
+      audioRef.current.pause()
+    }
+  }, [isPlayingAudio])
+
+  const externalControls = hasVideo
     ? {
         isPlaying: isPlayingVideo,
         onPlayToggle: () => setIsPlayingVideo((prev) => !prev),
@@ -25,19 +37,15 @@ export const ResourcePlayer = ({ mediaUrlEmbed, audio, media }: Resource) => {
 
   const handleVideoClick = () => {
     if (!hasVideo) return
-    if (isPlayingAudio) {
-      setIsPlayingAudio(false)
-    }
 
+    if (isPlayingAudio) setIsPlayingAudio(false)
     setIsPlayingVideo((prev) => !prev)
   }
 
   const handleAudioClick = () => {
     if (!hasAudio) return
-    if (isPlayingVideo) {
-      setIsPlayingVideo(false)
-    }
 
+    if (isPlayingVideo) setIsPlayingVideo(false)
     setIsPlayingAudio((prev) => !prev)
   }
 
@@ -55,12 +63,15 @@ export const ResourcePlayer = ({ mediaUrlEmbed, audio, media }: Resource) => {
 
         <div className="ml-auto flex flex-wrap items-center gap-2.5">
           {hasAudio && (
-            <Button onClick={handleAudioClick}>
-              {isPlayingAudio ? 'Pause' : 'Play'} audio
-              <SVG>
-                <PlaySVG />
-              </SVG>
-            </Button>
+            <>
+              <Button onClick={handleAudioClick}>
+                {isPlayingAudio ? 'Pause' : 'Play'} audio
+                <SVG>
+                  <AudioPlaySVG isPlaying={isPlayingAudio} />
+                </SVG>
+              </Button>
+              <audio ref={audioRef} src={audio?.url} className="hidden" />
+            </>
           )}
           {hasVideo && (
             <Button onClick={handleVideoClick}>

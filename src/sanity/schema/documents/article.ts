@@ -9,6 +9,7 @@ import {
   orderRankField,
   orderRankOrdering,
 } from '@sanity/orderable-document-list'
+import { MdOutlineDatasetLinked } from 'react-icons/md'
 
 export const article = defineType({
   name: 'article',
@@ -105,7 +106,13 @@ export const article = defineType({
               preview: {
                 select: {
                   title: 'resourceReference.title',
-                  media: 'resourceReference.media.0',
+                  mediaArray: 'resourceReference.media',
+                },
+                prepare({ title, mediaArray }) {
+                  return {
+                    title: `${title}`,
+                    media: mediaArray ? mediaArray[0] : MdOutlineDatasetLinked,
+                  }
                 },
               },
             }),

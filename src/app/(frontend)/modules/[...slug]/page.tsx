@@ -3,9 +3,8 @@ import { getMetaData } from '@/lib/core/seo'
 import { Metadata } from 'next'
 import NotFound from '../../not-found'
 import { Article as ArticleProps } from '@/types/documents'
-import { Hero } from '@/components/layout/hero'
 import { getArticle } from '@/sanity/queries/get-article'
-import { ResourceGrid } from '@/components/sections/resource-grid'
+import ResourceGrid from '@/components/resource-grid'
 
 type Params = Promise<{ slug: string[] }>
 

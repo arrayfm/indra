@@ -3,9 +3,10 @@ import { BackLink } from '../elements/back-link'
 import { Section } from './section'
 import { nl2br } from '@/lib/utils/string'
 import { cn } from '@/lib/utils/class-name'
-import { Article, Page } from '@/types/documents'
+import { Article, Page, Resource } from '@/types/documents'
 
-export const Hero = ({ title, description }: Page | Article) => {
+export const Hero = ({ title, description }: Page | Article | Resource) => {
+  console.log('Hero', title)
   return (
     <Section id="hero" className="pt-10">
       <div className="container grid grid-cols-10 gap-2.5">

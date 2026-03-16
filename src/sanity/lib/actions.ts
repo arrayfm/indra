@@ -15,7 +15,7 @@ const getPagePath = groq`
     }
     `
 
-const hasPath = ['page', 'article', 'project']
+const hasPath = ['page', 'article', 'resource']
 
 export const updatedPublishAction = (
   originalPublishAction: DocumentActionComponent
@@ -41,7 +41,7 @@ export const updatedPublishAction = (
           draft?.slug?.current || published?.slug?.current || ''
 
         let parentSlugsPath = currentSlug
-        const hasParent = draft?.parent || published?.Parent
+        const hasParent = draft?.parent || published?.parent
 
         if (props.type === 'page' && hasParent && parentSlugsPath) {
           const pathFetch = await sanityFetch({

@@ -52,6 +52,7 @@ export const ResourceGrid = ({
 
 const GridCard = ({
   _id,
+  slug,
   path,
   media,
   title,
@@ -74,7 +75,7 @@ const GridCard = ({
       <div
         className={cn('flex', {
           'flex-row': isAudioOnly,
-          'flex-col': !isAudioOnly,
+          'flex-col gap-2': !isAudioOnly,
         })}
       >
         {title && (

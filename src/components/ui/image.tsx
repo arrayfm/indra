@@ -19,6 +19,7 @@ function Image({
   className,
   transition = true,
   rounded = false,
+  cover = false,
   sanityImageOptions,
   ...props
 }: ImageProps) {
@@ -106,13 +107,21 @@ function Image({
     <motion.figure
       ref={ref}
       className={cn(
-        'relative h-auto max-h-full w-auto max-w-full overflow-hidden',
+        'overflow-hidden',
+        {
+          'absolute inset-0 h-full w-full object-cover': cover,
+          'relative h-auto max-h-full w-auto max-w-full object-contain': !cover,
+        },
         className
       )}
-      style={{
-        aspectRatio: `${resolvedAspectRatio}`,
-        marginBottom: `${captionHeight}px`,
-      }}
+      style={
+        !cover
+          ? {
+              aspectRatio: `${resolvedAspectRatio}`,
+              marginBottom: `${captionHeight}px`,
+            }
+          : undefined
+      }
     >
       {imageUrl && (
         <img
@@ -124,6 +133,7 @@ function Image({
             'transition-opacity duration-700': transition,
             'opacity-0': (!isInView && transition) || !loaded,
             'opacity-100': (isInView && transition) || (!transition && loaded),
+            'min-h-full min-w-full': cover,
           })}
           loading="lazy"
           {...props}

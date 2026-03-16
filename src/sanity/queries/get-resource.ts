@@ -2,15 +2,16 @@ import { groq } from 'next-sanity'
 import { mediaItem } from './get-media'
 
 export const getResource = groq`
-    *[_type == $type && path == $path][0]{
+    *[_type == $type && slug.current == $slug][0]{
       _id,
       _type,
+      title,
       pageType,
       path,
-      title,
       path,
       mediaUrlEmbed,
       media[]{
         ${mediaItem}
       }
+    }
   `

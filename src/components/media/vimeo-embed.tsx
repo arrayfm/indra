@@ -5,20 +5,14 @@ import Player from '@vimeo/player'
 
 import { useRef, useEffect, useState } from 'react'
 import { VideoEmbedControls } from './video-embed-controls'
-
-type VimeoEmbedProps = {
-  playbackId?: string
-  autoplay?: boolean
-  controls?: boolean
-  hasMedia?: boolean
-}
+import { Embed } from '@/types/elements'
 
 export const VimeoEmbed = ({
   playbackId,
   autoplay = true,
   controls = false,
   hasMedia = false,
-}: VimeoEmbedProps) => {
+}: Embed) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
   const playerRef = useRef<any | null>(null)
 
@@ -140,10 +134,10 @@ export const VimeoEmbed = ({
         ref={iframeRef} // Attach the ref to the iframe element
         src={`https://player.vimeo.com/video/${playbackId}?background=1`}
         className={cn(
-          'absolute left-0 top-0 z-20 h-full w-full object-cover object-center transition-opacity duration-300',
+          'absolute top-0 left-0 z-20 h-full w-full object-cover object-center transition-opacity duration-300',
           {
             'opacity-0': hasMedia && !isClicked,
-            'opacity-1': !!isClicked || autoplay,
+            'opacity-100': !!isClicked || autoplay,
           }
         )}
         allow="autoplay; fullscreen; picture-in-picture"

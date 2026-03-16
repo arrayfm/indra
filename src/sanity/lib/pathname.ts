@@ -6,8 +6,8 @@ export const getPathname = async (type: string, path: string) => {
       return path
     case 'article':
       return `/modules/${path}`
-    case 'brand':
-      return `/brands/${path}`
+    case 'resource':
+      return `/resources/${path}`
     case 'people':
       return `/people/${path}`
     default:

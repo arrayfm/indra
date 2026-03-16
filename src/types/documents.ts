@@ -1,5 +1,5 @@
 import { TextBlock } from './sections'
-import { Audio, Media } from './elements'
+import { Audio, Embed, Media } from './elements'
 
 export interface Page {
   _id: string
@@ -50,8 +50,10 @@ export interface Resource {
   _id: string
   _type: 'resource'
   title: string
+  description?: string
+  slug: string
   path: string
-  mediaUrlEmbed?: string
+  mediaUrlEmbed?: Embed
   audio?: Audio
   media?: Media[]
 }

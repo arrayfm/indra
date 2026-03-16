@@ -79,6 +79,7 @@ export const article = defineType({
             list: [
               { title: 'Grid', value: 'grid' },
               { title: 'Scattered', value: 'scattered' },
+              { title: 'Inline', value: 'inline' },
             ],
             layout: 'radio',
           },

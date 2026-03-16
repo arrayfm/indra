@@ -8,7 +8,7 @@ const buttonVariants = cva(
     variants: {
       theme: {
         'mid-beige':
-          'bg-mid-beige text-dark-purple group-hover:bg-mid-beige/80 hover:bg-mid-beige/80',
+          'bg-mid-beige hover:border-mid-beige/80 group-hover:border-mid-beige/80 text-dark-purple group-hover:bg-mid-beige/80 hover:bg-mid-beige/80',
       },
       size: {
         default: '',

@@ -5,22 +5,14 @@ import { cn } from '@/lib/utils/class-name'
 import { useRef, useEffect, useState } from 'react'
 import { VideoEmbedControls } from '@/components/media/video-embed-controls'
 import Script from 'next/script'
-
-type YoutubeEmbedProps = {
-  playbackId?: string
-  embedUrl?: string
-  autoplay?: boolean
-  controls?: boolean
-  hasMedia?: boolean
-}
+import { Embed } from '@/types/elements'
 
 export const YoutubeEmbed = ({
   playbackId,
-  embedUrl,
   autoplay = true,
   controls = false,
   hasMedia = false,
-}: YoutubeEmbedProps) => {
+}: Embed) => {
   const playerRef = useRef<HTMLDivElement | null>(null)
   const [player, setPlayer] = useState<any | null>(null)
   const [isPlaying, setIsPlaying] = useState(true)
@@ -128,17 +120,17 @@ export const YoutubeEmbed = ({
 
       <div
         className={cn(
-          'absolute left-0 top-0 z-20 h-full w-full object-cover object-center transition-opacity duration-300',
+          'absolute top-0 left-0 z-20 h-full w-full object-cover object-center transition-opacity duration-300',
           {
             'opacity-0': hasMedia && !isClicked,
-            'opacity-1': !!isClicked || autoplay,
+            'opacity-100': !!isClicked || autoplay,
           }
         )}
       >
         <div
           ref={playerRef} // Attach the ref to the iframe element
           className={cn(
-            'absolute left-0 top-0 z-20 h-full w-full object-cover object-center'
+            'absolute top-0 left-0 z-20 h-full w-full object-cover object-center'
           )}
         />
       </div>

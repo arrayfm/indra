@@ -1,7 +1,7 @@
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { getMetaData } from '@/lib/core/seo'
 import { Metadata } from 'next'
-// import NotFound from '../not-found'
+import NotFound from '../../not-found'
 import { Article as ArticleProps } from '@/types/documents'
 import { Hero } from '@/components/layout/hero'
 import { getArticle } from '@/sanity/queries/get-article'
@@ -29,7 +29,7 @@ export default async function Article({ params }: { params: Params }) {
     params: { type: 'article', slug: slug[slug.length - 1] },
   })) as ArticleProps
 
-  // if (!article) return NotFound()
+  if (!article) return NotFound()
 
   return (
     <main className="min-h-screen-header-footer">

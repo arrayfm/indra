@@ -87,6 +87,9 @@ export interface Embed {
   url?: string
   embedUrl?: string
   playbackId?: string
+  autoplay?: boolean
+  controls?: boolean
+  hasMedia?: boolean
 }
 
 export type Link = {

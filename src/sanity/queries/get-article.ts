@@ -25,6 +25,8 @@ export const getArticle = groq`
             title,
             path,
             mediaUrlEmbed,
+            subtitle,
+            "audio": audio.asset->,
             media[]{
               ${mediaItem}
             }
@@ -48,7 +50,10 @@ export const getArticles = groq`
       items[] {
         ...resourceReference->{
           title,
+          subtitle,
           path,
+          "audio": audio.asset->,
+          mediaUrlEmbed,
           media[]{
             ${mediaItem}
           }

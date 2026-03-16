@@ -5,7 +5,8 @@ import { Resource as ResourceProps } from '@/types/documents'
 import { Hero } from '@/components/layout/hero'
 import { getResource } from '@/sanity/queries/get-resource'
 import NotFound from '../../not-found'
-import { ResourcePlayer } from '@/components/sections/resource-player'
+import { ResourcePlayer } from '@/components/media/resource-player'
+import { Section } from '@/components/layout/section'
 
 type Params = Promise<{ slug: string[] }>
 
@@ -34,7 +35,11 @@ export default async function Resource({ params }: { params: Params }) {
   return (
     <main className="min-h-screen-header-footer">
       <Hero {...resource} />
-      <ResourcePlayer {...resource} />
+      <Section id="resource-player" className="pt-12">
+        <div className="container">
+          <ResourcePlayer {...resource} />
+        </div>
+      </Section>
     </main>
   )
 }

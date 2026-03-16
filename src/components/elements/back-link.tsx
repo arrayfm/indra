@@ -2,6 +2,7 @@
 
 import { contains, stripBaseUrl } from '@/lib/utils/string'
 import { ConditionalLink, ConditionalLinkProps } from './conditional-link'
+import { useNavigateTransition } from '@/lib/hooks/use-transition'
 
 export const BackLink = ({
   targetPreviousUrl,
@@ -13,24 +14,22 @@ export const BackLink = ({
   previousUrl?: string
   children: React.ReactNode
 } & ConditionalLinkProps) => {
-  let backUrl: string | null = null
+  const { handleBack } = useNavigateTransition()
 
-  if (
-    typeof document !== 'undefined' &&
-    document.referrer.startsWith(window.location.origin)
-  ) {
-    backUrl = document.referrer
+  const canGoBack =
+    targetPreviousUrl && previousUrl && contains(previousUrl, targetPreviousUrl)
+
+  if (canGoBack) {
+    return (
+      <ConditionalLink href={stripBaseUrl(previousUrl)} {...props}>
+        {children}
+      </ConditionalLink>
+    )
   }
-
-  if (targetPreviousUrl && backUrl && !contains(backUrl, targetPreviousUrl)) {
-    backUrl = targetPreviousUrl
-  }
-
-  const href = stripBaseUrl(backUrl || previousUrl || targetPreviousUrl || '/')
 
   return (
-    <ConditionalLink href={href} {...props}>
+    <a href="#" onClick={handleBack} {...props}>
       {children}
-    </ConditionalLink>
+    </a>
   )
 }

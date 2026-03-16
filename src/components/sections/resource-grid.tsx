@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils/class-name'
 import { ConditionalLink } from '../elements/conditional-link'
 import { Button } from '../ui/button'
 import { ArticleResourcesObject, Resource } from '@/types/documents'
+import { ResourcePlayer } from '../media/resource-player'
 
 const scatterGridPlacement = (index: number) => {
   const placementIndex = index % 3
@@ -27,11 +28,16 @@ export const ResourceGrid = ({
   layout?: ArticleResourcesObject['layout']
   items?: Resource[]
 }) => {
-  console.log('ResourceGrid', { layout, items })
   return (
     <Section id="items" className="pt-12">
       <div className="container grid grid-cols-10 gap-2.5 gap-y-20">
         {items?.map((resource, index) => {
+          if (layout === 'inline')
+            return (
+              <div key={index} className="col-span-10">
+                <ResourcePlayer {...resource} />
+              </div>
+            )
           if (layout === 'grid') return <GridCard key={index} {...resource} />
           if (layout === 'scattered')
             return (

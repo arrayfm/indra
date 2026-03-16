@@ -42,7 +42,7 @@ export interface Article {
 }
 
 export type ArticleResourcesObject = {
-  layout?: 'grid' | 'scattered'
+  layout?: 'grid' | 'scattered' | 'inline'
   items: Resource[]
 }
 

@@ -3,14 +3,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { Resource } from '@/types/documents'
 import { Section } from '../layout/section'
-import { Embed } from '../media/embed'
-import { Media } from '../media/media'
+import { Embed } from './embed'
+import { Media } from './media'
 import { Button } from '../ui/button'
 import { SVG } from '../elements/svg'
 import { PlaySVG } from '../svg/play'
 import { AudioPlaySVG } from '../svg/audio-play'
 import { typePPMori } from '@/lib/utils/font'
 import { cn } from '@/lib/utils/class-name'
+import { PauseIcon } from '@radix-ui/react-icons'
 
 const formatDuration = (seconds: number) => {
   const minutes = Math.floor(seconds / 60)
@@ -56,14 +57,14 @@ export const ResourcePlayer = ({
   const handleVideoClick = () => {
     if (!hasVideo) return
 
-    if (isPlayingAudio) setIsPlayingAudio(false)
+    // if (isPlayingAudio) setIsPlayingAudio(false)
     setIsPlayingVideo((prev) => !prev)
   }
 
   const handleAudioClick = () => {
     if (!hasAudio) return
 
-    if (isPlayingVideo) setIsPlayingVideo(false)
+    // if (isPlayingVideo) setIsPlayingVideo(false)
     setIsPlayingAudio((prev) => !prev)
   }
 
@@ -106,53 +107,49 @@ export const ResourcePlayer = ({
   }, [mediaUrlEmbed?.url])
 
   return (
-    <Section id="resource-player" className="pt-12">
-      <div className="container flex flex-col gap-5">
-        {(media || hasVideo) && (
-          <div className="relative aspect-video overflow-hidden rounded-xl">
-            {media && <Media {...media[0]} cover />}
-            <Embed
-              {...mediaUrlEmbed}
-              hasMedia={!!media}
-              externalControls={externalControls}
-            />
-          </div>
-        )}
+    <div className="flex flex-col gap-5">
+      {(media || hasVideo) && (
+        <div className="relative aspect-video overflow-hidden rounded-xl">
+          {media && <Media {...media[0]} cover />}
+          <Embed
+            {...mediaUrlEmbed}
+            hasMedia={!!media}
+            externalControls={externalControls}
+          />
+        </div>
+      )}
 
-        <div className="flex flex-col justify-between gap-2.5 md:flex-row">
-          <div className="flex flex-col gap-2.5">
-            {subtitle && (
-              <p className={cn(typePPMori({ size: 'md', weight: 'semibold' }))}>
-                {subtitle}
-              </p>
-            )}
-            <p className={cn('text-grey-400', typePPMori({ size: 'md' }))}>
-              {length}
+      <div className="flex flex-col justify-between gap-2.5 md:flex-row">
+        <div className="flex flex-col gap-2.5">
+          {subtitle && (
+            <p className={cn(typePPMori({ size: 'md', weight: 'semibold' }))}>
+              {subtitle}
             </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-1.5">
-            {hasAudio && (
-              <>
-                <Button onClick={handleAudioClick}>
-                  {isPlayingAudio ? 'Pause' : 'Play'} audio
-                  <SVG>
-                    <AudioPlaySVG isPlaying={isPlayingAudio} />
-                  </SVG>
-                </Button>
-                <audio ref={audioRef} src={audio?.url} className="hidden" />
-              </>
-            )}
-            {hasVideo && (
-              <Button onClick={handleVideoClick}>
-                {isPlayingVideo ? 'Pause' : 'Play'} video
+          )}
+          <p className={cn('text-grey-400', typePPMori({ size: 'md' }))}>
+            {length}
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-1.5">
+          {hasAudio && (
+            <>
+              <Button onClick={handleAudioClick}>
+                {isPlayingAudio ? 'Pause' : 'Play'} audio
                 <SVG>
-                  <PlaySVG />
+                  <AudioPlaySVG isPlaying={isPlayingAudio} />
                 </SVG>
               </Button>
-            )}
-          </div>
+              <audio ref={audioRef} src={audio?.url} className="hidden" />
+            </>
+          )}
+          {hasVideo && (
+            <Button onClick={handleVideoClick}>
+              {isPlayingVideo ? 'Pause' : 'Play'} video
+              <SVG>{isPlayingVideo ? <PauseIcon /> : <PlaySVG />}</SVG>
+            </Button>
+          )}
         </div>
       </div>
-    </Section>
+    </div>
   )
 }

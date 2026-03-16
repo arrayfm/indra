@@ -101,7 +101,6 @@ export const useNavigateTransition = () => {
 
   const handleNavigation = async (event: MouseEvent, href: string) => {
     if (event.metaKey || event.ctrlKey) return
-
     if (href === pathname) return
 
     event.preventDefault()
@@ -112,7 +111,17 @@ export const useNavigateTransition = () => {
     router.push(href)
   }
 
+  const handleBack = async (event: MouseEvent) => {
+    event.preventDefault()
+
+    setPageReady(false)
+    await transitions.fadeIn()
+
+    router.back()
+  }
+
   return {
     handleNavigation,
+    handleBack,
   }
 }

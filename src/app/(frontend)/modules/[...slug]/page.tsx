@@ -33,8 +33,7 @@ export default async function Article({ params }: { params: Params }) {
 
   return (
     <main className="min-h-screen-header-footer">
-      <Hero {...article} />
-      <ResourceGrid {...article.resources} />
+      <ResourceGrid {...article} />
     </main>
   )
 }

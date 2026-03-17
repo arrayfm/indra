@@ -5,12 +5,17 @@ import { nl2br } from '@/lib/utils/string'
 import { cn } from '@/lib/utils/class-name'
 import { Article, Page, Resource } from '@/types/documents'
 
-export const Hero = ({ title, description }: Page | Article | Resource) => {
-  console.log('Hero', title)
+type HeroProps = Pick<Page | Article | Resource, 'title' | 'description'> & {
+  hasBacklink?: boolean
+}
+
+export const Hero = ({ title, description, hasBacklink = true }: HeroProps) => {
   return (
     <Section id="hero" className="pt-10">
       <div className="container grid grid-cols-10 gap-2.5">
-        <BackLink className="text-grey-400 col-span-1">Back</BackLink>
+        {hasBacklink && (
+          <BackLink className="text-grey-400 col-span-1">Back</BackLink>
+        )}
         {title && (
           <h1
             className={cn(

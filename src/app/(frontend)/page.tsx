@@ -5,6 +5,7 @@ import Script from 'next/script'
 import { Metadata } from 'next'
 import { Page } from '@/types/documents'
 import { sanityFetch } from '@/sanity/lib/fetch'
+import { Hero } from '@/components/layout/hero'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({
@@ -31,7 +32,9 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
       />
 
-      <main className="min-h-screen-header-footer"></main>
+      <main className="min-h-screen-header-footer">
+        <Hero title={page.title} hasBacklink={false} />
+      </main>
     </>
   )
 }

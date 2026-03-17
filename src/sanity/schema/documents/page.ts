@@ -53,6 +53,47 @@ export const page = defineType({
       group: 'content',
       rows: 5,
     }),
+    defineField({
+      name: 'homeContent',
+      title: 'Home Page Content',
+      type: 'object',
+      group: 'content',
+      fields: [
+        defineField({
+          name: 'cards',
+          title: 'Cards',
+          type: 'array',
+          of: [
+            defineArrayMember({
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'image',
+                  title: 'Image',
+                  type: 'image',
+                }),
+                defineField({
+                  name: 'title',
+                  title: 'Title',
+                  type: 'string',
+                }),
+                defineField({
+                  name: 'description',
+                  title: 'Description',
+                  type: 'text',
+                  rows: 3,
+                }),
+                defineField({
+                  name: 'link',
+                  title: 'Link',
+                  type: 'link',
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    }),
     seo,
   ],
   preview: {

@@ -1,6 +1,7 @@
 import { groq } from 'next-sanity'
 import { getContent } from './get-content'
-import { mediaItem } from './get-media'
+import { image, mediaItem } from './get-media'
+import { link } from './get-link'
 
 export const getPage = groq`
     *[_type == $type && path == $path][0]{
@@ -16,5 +17,13 @@ export const getPage = groq`
         path
       },
       description,
+      homeContent {
+        cards[] {
+          title,  
+          description,
+          ${image},
+          ${link()}
+        }
+      }
     }
   `

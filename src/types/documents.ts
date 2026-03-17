@@ -1,5 +1,4 @@
-import { TextBlock } from './sections'
-import { Audio, Embed, Media } from './elements'
+import { Audio, Embed, Image, Link, Media } from './elements'
 
 export interface Page {
   _id: string
@@ -9,7 +8,14 @@ export interface Page {
   title?: string
   description?: string
   slug: string
-  content?: TextBlock[]
+  homeContent?: {
+    cards: {
+      title: string
+      description?: string
+      image?: Image
+      link?: Link
+    }[]
+  }
 }
 
 export interface SiteSettings {

@@ -13,7 +13,10 @@ export const CardRow = ({ cards }: { cards?: RowCard[] }) => {
         <div className="flex flex-col gap-y-7.5">
           {cards?.map((card, index) => (
             <div key={index} className="grid grid-cols-10 gap-x-2.5">
-              <div className="col-span-10 flex gap-2.5 sm:col-span-8 md:col-span-5 lg:col-span-4">
+              <ConditionalLink
+                href={card.link?.href}
+                className="group col-span-10 flex gap-2.5 sm:col-span-8 md:col-span-5 lg:col-span-4"
+              >
                 <div className="h-fit w-full max-w-1/3 sm:max-w-[calc(50%-5px)]">
                   <Media {...card.image} />
                 </div>
@@ -30,15 +33,12 @@ export const CardRow = ({ cards }: { cards?: RowCard[] }) => {
                     {card.description}
                   </p>
                   {card.link?.href && (
-                    <ConditionalLink
-                      href={card.link.href}
-                      className="mt-1.5 block"
-                    >
-                      <Button>{card.link.label || 'Explore'}</Button>
-                    </ConditionalLink>
+                    <Button className="mt-1.5">
+                      {card.link.label || 'Explore'}
+                    </Button>
                   )}
                 </div>
-              </div>
+              </ConditionalLink>
             </div>
           ))}
         </div>

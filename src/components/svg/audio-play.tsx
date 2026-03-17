@@ -1,41 +1,111 @@
-export const AudioPlaySVG = ({ isPlaying }: { isPlaying?: boolean }) => {
-  const duration = 2
+'use client'
 
-  if (isPlaying) {
+import { motion } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
+
+export const AudioPlaySVG = ({
+  isPlaying,
+  numberOfLines = 5,
+  linesOnly = false,
+  height = 15,
+  barWidth = 1.5,
+  gap = 1.5,
+  staticHeights,
+  animationDuration = 2,
+  transitionDuration = 0.35,
+  className,
+  style,
+}: {
+  isPlaying?: boolean
+  numberOfLines?: number
+  linesOnly?: boolean
+  height?: number
+  barWidth?: number
+  gap?: number
+  staticHeights?: number[]
+  animationDuration?: number
+  transitionDuration?: number
+  className?: string
+  style?: React.CSSProperties
+}) => {
+  const resolvedHeights = useRef(
+    staticHeights ??
+      Array.from(
+        { length: numberOfLines },
+        () => height * Math.random() * 0.7 + height * 0.3
+      )
+  ).current
+
+  // false = entering transition, true = clean looping (no null keyframes)
+  const [looping, setLooping] = useState(false)
+
+  useEffect(() => {
+    if (isPlaying) {
+      const t = setTimeout(() => setLooping(true), transitionDuration * 1000)
+      return () => clearTimeout(t)
+    } else {
+      setLooping(false)
+    }
+  }, [isPlaying, transitionDuration])
+
+  const svgWidth = numberOfLines * barWidth + (numberOfLines - 1) * gap
+  const animHeightMin = Math.max(3, height * 0.3)
+  const animHeightMax = height
+
+  const showLines = linesOnly || isPlaying
+
+  if (showLines) {
     return (
       <svg
-        width="15"
-        height="15"
-        viewBox="0 0 15 15"
+        width={svgWidth}
+        height={height}
+        viewBox={`0 0 ${svgWidth} ${height}`}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className={className}
+        style={style}
       >
-        {[0, 1, 2, 3, 4].map((i) => (
-          <rect
-            key={i}
-            x={i * 3}
-            y="0"
-            width="1.5"
-            height="15"
-            rx="0.75"
-            fill="currentColor"
-          >
-            <animate
-              attributeName="height"
-              values="3;15;3"
-              dur={`${duration}s`}
-              repeatCount="indefinite"
-              begin={`${i * (duration / 5)}s`}
+        {Array.from({ length: numberOfLines }).map((_, i) => {
+          const x = i * (barWidth + gap)
+          const staticH = resolvedHeights[i] ?? height * 0.3
+          const staticY = (height - staticH) / 2
+          const delay = i * (animationDuration / numberOfLines)
+
+          return (
+            <motion.rect
+              key={i}
+              x={x}
+              width={barWidth}
+              rx={barWidth / 2}
+              fill="currentColor"
+              initial={{ height: staticH, y: staticY }}
+              animate={
+                !isPlaying
+                  ? { height: staticH, y: staticY }
+                  : !looping
+                    ? // Enter: transition all bars up to animHeightMax cleanly
+                      { height: animHeightMax, y: 0 }
+                    : // Loop: starts at animHeightMax (where enter left off) — no jump
+                      {
+                        height: [animHeightMax, animHeightMin, animHeightMax],
+                        y: [0, (height - animHeightMin) / 2, 0],
+                      }
+              }
+              transition={
+                !isPlaying
+                  ? { duration: transitionDuration, ease: 'easeOut' }
+                  : !looping
+                    ? { duration: transitionDuration, ease: 'easeOut' }
+                    : {
+                        repeat: Infinity,
+                        duration: animationDuration,
+                        delay,
+                        ease: 'easeInOut',
+                      }
+              }
             />
-            <animate
-              attributeName="y"
-              values="6;0;6"
-              dur={`${duration}s`}
-              repeatCount="indefinite"
-              begin={`${i * (duration / 5)}s`}
-            />
-          </rect>
-        ))}
+          )
+        })}
       </svg>
     )
   }
@@ -47,6 +117,8 @@ export const AudioPlaySVG = ({ isPlaying }: { isPlaying?: boolean }) => {
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      style={style}
     >
       <path
         d="M14 7.5C14 3.91059 11.0894 1 7.5 1C3.91059 1 1 3.91059 1 7.5C1 11.0894 3.91059 14 7.5 14C11.0894 14 14 11.0894 14 7.5ZM15 7.5C15 11.6417 11.6417 15 7.5 15C3.35831 15 0 11.6417 0 7.5C2.57773e-07 3.35831 3.35831 2.57764e-07 7.5 0C11.6417 0 15 3.35831 15 7.5Z"

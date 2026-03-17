@@ -20,7 +20,7 @@ export const generateMetadata = async ({
   })
 }
 
-export default async function Article({ params }: { params: Params }) {
+export default async function Module({ params }: { params: Params }) {
   const { slug } = await params
 
   const article = (await sanityFetch({

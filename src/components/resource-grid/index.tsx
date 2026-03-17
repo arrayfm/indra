@@ -17,7 +17,7 @@ const ResourceGrid = ({ title, description, resources }: Article) => {
   return (
     <Section id="items" className="pt-10">
       <div className="container grid grid-cols-10 gap-2.5 gap-y-20">
-        <div className="col-span-10 flex flex-col gap-2.5 md:col-span-5">
+        <div className="col-span-10 flex flex-col gap-2.5 md:col-span-6">
           <BackLink className="text-grey-400 col-span-1">Back</BackLink>
           {title && (
             <h1 className={cn(typePPMori({ size: '2xl' }))}>{nl2br(title)}</h1>
@@ -28,6 +28,10 @@ const ResourceGrid = ({ title, description, resources }: Article) => {
             </p>
           )}
         </div>
+
+        {resources?.layout !== 'scattered' && (
+          <div className="col-span-4 hidden md:block" />
+        )}
 
         {resources?.items?.map((resource, index) => {
           if (resources?.layout === 'inline')

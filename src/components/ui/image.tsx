@@ -133,7 +133,7 @@ function Image({
             'transition-opacity duration-700': transition,
             'opacity-0': (!isInView && transition) || !loaded,
             'opacity-100': (isInView && transition) || (!transition && loaded),
-            'min-h-full min-w-full': cover,
+            'absolute inset-0 h-full w-full': cover,
           })}
           loading="lazy"
           {...props}

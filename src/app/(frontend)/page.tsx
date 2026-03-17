@@ -6,6 +6,7 @@ import { Metadata } from 'next'
 import { Page } from '@/types/documents'
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { Hero } from '@/components/layout/hero'
+import { CardRow } from '@/components/sections/card-row'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({
@@ -34,6 +35,7 @@ export default async function Home() {
 
       <main className="min-h-screen-header-footer">
         <Hero title={page.title} hasBacklink={false} />
+        <CardRow cards={page.homeContent?.cards} />
       </main>
     </>
   )

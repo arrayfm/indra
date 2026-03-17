@@ -1,4 +1,4 @@
-import { Audio, Embed, Image, Link, Media } from './elements'
+import { Audio, Embed, Image, Link, Media, RowCard } from './elements'
 
 export interface Page {
   _id: string
@@ -9,12 +9,7 @@ export interface Page {
   description?: string
   slug: string
   homeContent?: {
-    cards: {
-      title: string
-      description?: string
-      image?: Image
-      link?: Link
-    }[]
+    cards: RowCard[]
   }
 }
 

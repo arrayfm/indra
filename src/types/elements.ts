@@ -107,3 +107,10 @@ export type Audio = {
   extension?: string
   path?: string
 }
+
+export type RowCard = {
+  title?: string
+  description?: string
+  image?: Image
+  link?: Link
+}

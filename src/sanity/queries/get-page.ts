@@ -1,6 +1,6 @@
 import { groq } from 'next-sanity'
-import { getContent } from './get-content'
-import { image, mediaItem } from './get-media'
+
+import { mediaItem } from './get-media'
 import { link } from './get-link'
 
 export const getPage = groq`
@@ -21,8 +21,12 @@ export const getPage = groq`
         cards[] {
           title,  
           description,
-          ${image},
-          ${link()}
+          image {
+            ${mediaItem}
+          },
+          link {
+            ${link()}
+          }
         }
       }
     }

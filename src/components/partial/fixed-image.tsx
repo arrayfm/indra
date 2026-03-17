@@ -8,6 +8,7 @@ export const FixedImage = () => {
         width={549}
         src="/images/meditating-crop.webp"
         alt="Meditating person"
+        loading="eager"
         className="h-[80dvh] w-auto max-w-full object-contain"
       />
     </div>

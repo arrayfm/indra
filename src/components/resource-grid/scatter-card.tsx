@@ -19,7 +19,7 @@ export const ScatterCard = ({
   audio,
   mediaUrlEmbed,
 }: Resource) => {
-  const isAudioOnly = !!audio && !mediaUrlEmbed
+  const isAudioOnly = !!audio && !mediaUrlEmbed?.url
 
   const [isPlayingAudio, setIsPlayingAudio] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
@@ -43,13 +43,11 @@ export const ScatterCard = ({
       )}
       <div className="flex flex-row items-center justify-between gap-5">
         {title && (
-          <h2
-            className={cn(typePPMori({ size: 'md', weight: 'semibold' }), {
-              'w-1/2': isAudioOnly,
-            })}
-          >
-            {title}
-          </h2>
+          <ConditionalLink key={_id} href={path} className="flex-1">
+            <h2 className={cn(typePPMori({ size: 'md', weight: 'semibold' }))}>
+              {title}
+            </h2>
+          </ConditionalLink>
         )}
         {!isAudioOnly && (
           <ConditionalLink key={_id} href={path}>

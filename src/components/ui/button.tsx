@@ -1,9 +1,12 @@
+'use client'
+
 import * as React from 'react'
+import { motion } from 'motion/react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils/class-name'
 
 const buttonVariants = cva(
-  "inline-flex cursor-pointer  text-md font-semibold items-center justify-center leading-none gap-2 whitespace-nowrap px-4.75 py-3.5 rounded-[200px] text-sm transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+  "inline-flex cursor-pointer text-md font-semibold items-center justify-center leading-none gap-2 whitespace-nowrap px-4.75 py-3.5 rounded-[200px] text-sm transition-[color,background-color,width,height,padding,font-size] duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
   {
     variants: {
       theme: {
@@ -33,10 +36,12 @@ function Button({
     asChild?: boolean
   }) {
   return (
-    <button
+    <motion.button
       data-slot="button"
+      layout
+      transition={{ duration: 0.2, ease: 'easeInOut' }}
       className={cn(buttonVariants({ theme, size, className }))}
-      {...props}
+      {...(props as React.ComponentProps<typeof motion.button>)}
     />
   )
 }

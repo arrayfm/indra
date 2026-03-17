@@ -25,13 +25,15 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${fontPPMori.variable} text-dark-purple bg-beige text-md font-sans`}
+    >
       <head>
         <FaviconLinks />
       </head>
-      <body
-        className={`${fontPPMori.variable} text-dark-purple bg-beige text-md font-sans`}
-      >
+      <body>
         <TransitionProvider>
           <VideoPlaybackQueueProvider>
             <>

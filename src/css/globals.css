@@ -34,6 +34,10 @@
   --text-ppmori-md--line-height: 14px;
   --text-ppmori-md--letter-spacing: var(--tracking-ppmori);
 
+  --text-ppmori-lg: 28px;
+  --text-ppmori-lg--line-height: 28px;
+  --text-ppmori-lg--letter-spacing: var(--tracking-ppmori);
+
   --text-ppmori-xl: 38px;
   --text-ppmori-xl--line-height: 34px;
   --text-ppmori-xl--letter-spacing: var(--tracking-ppmori);
@@ -44,6 +48,7 @@
 
   --radius-sm: 6px;
   --radius-md: 10px;
+  --radius-lg: 15px;
   --radius-xl: 18px;
 
   --gap-mini: 2px;
@@ -102,6 +107,8 @@
   --color-sanity-ui-error: #d73a49;
   --color-sanity-ui-warning: #ffaa15;
   --color-sanity-ui-info: #556bfc;
+
+  --drop-shadow-xl: 0 0 20px rgba(0, 0, 0, 0.15);
 
   --width-1\/12: 8.333333%;
   --width-2\/12: 16.666667%;

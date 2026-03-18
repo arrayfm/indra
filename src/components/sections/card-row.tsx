@@ -21,12 +21,12 @@ export const CardRow = ({ cards }: { cards?: RowCard[] }) => {
                   <Media {...card.image} />
                 </div>
                 <div>
-                  <h3 className={cn(typePPMori({ size: 'xl' }))}>
+                  <h3 className={cn(typePPMori({ size: 'lg' }))}>
                     {card.title}
                   </h3>
                   <p
                     className={cn(
-                      'text-grey-400 mt-4.5',
+                      'text-grey-400 mt-4',
                       typePPMori({ size: 'md' })
                     )}
                   >

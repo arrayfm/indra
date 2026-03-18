@@ -3,6 +3,7 @@
 import { Resend } from 'resend'
 import crypto from 'crypto'
 import { supabaseAdmin } from '../supabase/admin'
+import { RegisterLinkEmailTemplate } from '@/components/email/register-link'
 
 export type RegisterState = {
   error?: string
@@ -10,6 +11,7 @@ export type RegisterState = {
 }
 
 const ALLOWED_EMAILS = new Set(['alexsimpson@array.design'])
+const { NEXT_PUBLIC_BASE_URL } = process.env
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -56,18 +58,13 @@ export async function registerAction(
     return { error: 'Something went wrong. Please try again.' }
   }
 
-  const magicLink = `${process.env.NEXT_PUBLIC_APP_URL}/set-password?token=${token}`
+  const magicLink = `${NEXT_PUBLIC_BASE_URL}/set-password?token=${token}`
 
   const { error: emailError } = await resend.emails.send({
     from: 'alexsimpson@array.design',
     to: email,
     subject: 'Complete your registration',
-    html: `
-      <p>Hi,</p>
-      <p>Click the link below to set your password and complete your registration. This link expires in 1 hour.</p>
-      <p><a href="${magicLink}">Set my password</a></p>
-      <p>If you didn't request this, you can safely ignore this email.</p>
-    `,
+    react: RegisterLinkEmailTemplate({ magicLink }),
   })
 
   if (emailError) {

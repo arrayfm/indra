@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useRef, useState } from 'react'
 import { cn } from '@/lib/utils/class-name'
 import { Input } from '../ui/input'
 import { typePPMori } from '@/lib/utils/font'
@@ -10,6 +10,7 @@ import { ConditionalLink } from '../elements/conditional-link'
 
 export const LoginForm = ({ email }: { email?: string }) => {
   const [state, action, isPending] = useActionState(loginAction, {})
+  const emailRef = useRef<HTMLInputElement>(null)
 
   return (
     <form action={action}>
@@ -21,6 +22,7 @@ export const LoginForm = ({ email }: { email?: string }) => {
           Email
         </label>
         <Input
+          ref={emailRef}
           id="email"
           name="email"
           type="email"

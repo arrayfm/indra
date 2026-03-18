@@ -3,10 +3,12 @@ const { NEXT_PUBLIC_BASE_URL } = process.env
 /* eslint-disable @next/next/no-img-element */
 type RegisterLinkEmailTemplateProps = {
   magicLink: string
+  firstName?: string
 }
 
 export const RegisterLinkEmailTemplate = ({
   magicLink,
+  firstName,
 }: RegisterLinkEmailTemplateProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
@@ -68,7 +70,7 @@ export const RegisterLinkEmailTemplate = ({
                 <table width="100%" cellPadding={0} cellSpacing={0} border={0}>
                   <tr>
                     <td>
-                      <p>Hi,</p>
+                      <p>Hi {firstName},</p>
                       <p>
                         Click the link below to set your password and complete
                         your registration. This link expires in 1 hour.

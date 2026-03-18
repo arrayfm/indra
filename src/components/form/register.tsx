@@ -14,9 +14,9 @@ export const RegisterForm = () => {
   if (state?.success) {
     return (
       <div>
-        <p className={typePPMori({ size: 'md' })}>Check your inbox</p>
-        <p className={cn('mt-1 text-neutral-500', typePPMori({ size: 'sm' }))}>
-          We've sent a link to set your password. It expires in 24 hours.
+        <p className={typePPMori({ size: 'lg' })}>Check your inbox</p>
+        <p className={cn('text-grey-400 mt-1', typePPMori({ size: 'md' }))}>
+          We've sent a link to set your password. It expires in 1 hour
         </p>
       </div>
     )

@@ -45,11 +45,12 @@ export async function setPasswordAction(
     return { error: 'This link has expired. Please register again.' }
   }
 
-  const { error: createError } = await supabaseAdmin.auth.admin.createUser({
-    email: record.email,
-    password,
-    email_confirm: true,
-  })
+  const { data: authUser, error: createError } =
+    await supabaseAdmin.auth.admin.createUser({
+      email: record.email,
+      password,
+      email_confirm: true,
+    })
 
   if (createError) {
     if (createError.message.includes('already registered')) {
@@ -57,6 +58,15 @@ export async function setPasswordAction(
     }
     console.error('Supabase createUser error:', createError)
     return { error: 'Failed to create account. Please try again.' }
+  }
+
+  const { error: profileError } = await supabaseAdmin
+    .from('profiles')
+    .update({ id: authUser.user!.id })
+    .eq('email', record.email)
+
+  if (profileError) {
+    console.error('Failed to link profile:', profileError)
   }
 
   await supabaseAdmin

@@ -1,41 +1,41 @@
 import { getPage } from '@/sanity/queries/get-page'
-import { getSiteSettings } from '@/sanity/queries/get-site-settings'
-import { getMetaData, generateOrganizationData } from '@/lib/core/seo'
-import Script from 'next/script'
+import { getMetaData } from '@/lib/core/seo'
 import { Metadata } from 'next'
 import { Page } from '@/types/documents'
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { Hero } from '@/components/layout/hero'
 import { FixedImage } from '@/components/partial/fixed-image'
-import { LoginForm } from '@/components/form/login'
 import { Section } from '@/components/layout/section'
+import { SetPasswordForm } from '@/components/form/set-password'
+import { redirect } from 'next/navigation'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({
     type: 'page',
-    slug: 'login',
+    slug: 'set-password',
   })
 }
 
-export default async function Login({
+export default async function SetPassword({
   searchParams,
 }: {
-  searchParams: Promise<{ email?: string }>
+  searchParams: Promise<{ token?: string }>
 }) {
-  const { email } = await searchParams
+  const { token } = await searchParams
+  if (!token) redirect('/login')
 
   const page = (await sanityFetch({
     query: getPage,
-    params: { type: 'page', path: '/login' },
+    params: { type: 'page', path: '/set-password' },
   })) as Page
 
   return (
     <main className="min-h-screen-header-footer">
-      <Hero title="Welcome" hasBacklink={false} />
-      <Section id="login" className="pt-18 sm:pt-32 md:pt-36">
+      <Hero title="Set password" hasBacklink={false} />
+      <Section id="set-password" className="pt-18 sm:pt-32 md:pt-36">
         <div className="container">
           <div className="sm:w-3/4 md:max-w-1/2">
-            <LoginForm email={email} />
+            <SetPasswordForm token={token} />
           </div>
         </div>
       </Section>

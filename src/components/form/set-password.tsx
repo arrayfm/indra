@@ -5,33 +5,16 @@ import { cn } from '@/lib/utils/class-name'
 import { Input } from '../ui/input'
 import { typePPMori } from '@/lib/utils/font'
 import { Button } from '../ui/button'
-import { loginAction } from '@/lib/actions/login'
-import { ConditionalLink } from '../elements/conditional-link'
+import { setPasswordAction } from '@/lib/actions/set-password'
 
-export const LoginForm = ({ email }: { email?: string }) => {
-  const [state, action, isPending] = useActionState(loginAction, {})
+export const SetPasswordForm = ({ token }: { token?: string }) => {
+  const [state, action, isPending] = useActionState(setPasswordAction, {})
 
   return (
     <form action={action}>
-      <div className="mb-4">
-        <label
-          className={cn('mb-1.5', typePPMori({ size: 'md' }))}
-          htmlFor="email"
-        >
-          Email
-        </label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-          disabled={isPending}
-          defaultValue={email}
-        />
-      </div>
+      <input type="hidden" name="token" value={token} />
 
-      <div className="mb-6">
+      <div className="mb-4">
         <label
           className={cn('mb-1.5', typePPMori({ size: 'md' }))}
           htmlFor="password"
@@ -42,26 +25,38 @@ export const LoginForm = ({ email }: { email?: string }) => {
           id="password"
           name="password"
           type="password"
-          autoComplete="current-password"
+          autoComplete="new-password"
           required
+          minLength={8}
           disabled={isPending}
         />
       </div>
 
-      <div className="flex items-center gap-2.5">
+      <div className="mb-6">
+        <label
+          className={cn('mb-1.5', typePPMori({ size: 'md' }))}
+          htmlFor="confirmPassword"
+        >
+          Confirm password
+        </label>
+        <Input
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          autoComplete="new-password"
+          required
+          minLength={8}
+          disabled={isPending}
+        />
+      </div>
+
+      <div className="flex items-center gap-5">
         <Button type="submit" theme="purple" disabled={isPending}>
-          {isPending ? 'Signing in…' : 'Sign In'}
+          {isPending ? 'Creating account…' : 'Set password'}
         </Button>
 
-        <p>
-          Haven't registered yet?{' '}
-          <ConditionalLink href="/register" className="underline">
-            Register
-          </ConditionalLink>
-        </p>
-
         {state?.error && (
-          <p className={cn('text-red-600', typePPMori({ size: 'sm' }))}>
+          <p className={cn('mt-3 text-red-600', typePPMori({ size: 'sm' }))}>
             {state.error}
           </p>
         )}

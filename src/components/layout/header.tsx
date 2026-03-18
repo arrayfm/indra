@@ -1,9 +1,14 @@
+import type { User } from '@supabase/supabase-js'
 import Image from 'next/image'
 import { ConditionalLink } from '../elements/conditional-link'
 
-export const Header = () => {
+type HeaderProps = {
+  user: User | null
+}
+
+export const Header = ({ user }: HeaderProps) => {
   return (
-    <header>
+    <header className="relative z-60">
       <div className="container">
         <div className="flex items-center justify-between py-2.5">
           <ConditionalLink href="/">
@@ -18,7 +23,8 @@ export const Header = () => {
             <ul>
               <li>
                 <ConditionalLink href="/customer-portal">
-                  Account <span className="text-grey-400">User</span>
+                  Account{' '}
+                  <span className="text-grey-400">{user?.email ?? 'User'}</span>
                 </ConditionalLink>
               </li>
             </ul>

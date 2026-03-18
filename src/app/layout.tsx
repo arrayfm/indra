@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/footer'
 import { FaviconLinks } from '@/components/partial/favicon-links'
 import { TransitionProvider } from '@/components/providers/transition-provider'
 import { VideoPlaybackQueueProvider } from '@/components/providers/video-playback-queue-provider'
+import { getUser } from '@/lib/supabase/session'
 
 export const metadata: Metadata = {
   title: {
@@ -24,6 +25,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const user = await getUser()
+
   return (
     <html
       lang="en"
@@ -37,7 +40,7 @@ export default async function RootLayout({
         <TransitionProvider>
           <VideoPlaybackQueueProvider>
             <>
-              <Header />
+              <Header user={user} />
               {children}
               <Footer />
             </>

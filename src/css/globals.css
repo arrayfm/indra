@@ -327,3 +327,29 @@ input[type='search']::-webkit-search-cancel-button {
 .animation-fill-mode-forwards {
   animation-fill-mode: forwards;
 }
+
+.border-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.border-link:after {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  transform-origin: 100% 0;
+}
+
+.border-link-active:after,
+.border-link:hover:after,
+.group:hover .border-link:after {
+  transform: scaleX(1);
+  transform-origin: 0 0;
+}

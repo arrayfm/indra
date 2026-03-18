@@ -53,9 +53,9 @@ export const LoginForm = ({ email }: { email?: string }) => {
           {isPending ? 'Signing in…' : 'Sign In'}
         </Button>
 
-        <p>
+        <p className={typePPMori({ size: 'sm' })}>
           Haven't registered yet?{' '}
-          <ConditionalLink href="/register" className="underline">
+          <ConditionalLink href="/register" className="border-link">
             Register
           </ConditionalLink>
         </p>

@@ -26,34 +26,46 @@ export const Header = ({ user }: HeaderProps) => {
           <nav>
             <ul>
               <li className="group relative">
-                Account{' '}
-                <span className="text-grey-400">{user?.email ?? 'User'}</span>
+                {!user && (
+                  <ConditionalLink
+                    href="/login"
+                    className={cn('border-link', typePPMori({ size: 'md' }))}
+                  >
+                    Login
+                  </ConditionalLink>
+                )}
                 {user && (
-                  <div className="pointer-events-none absolute top-full right-0 pt-2 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
-                    <div className="bg-beige w-60 rounded-lg p-2.5 drop-shadow-xl">
-                      <p
-                        className={cn(
-                          'mb-4 overflow-hidden text-ellipsis',
-                          typePPMori({ size: 'lg' })
-                        )}
-                      >
-                        {user?.email}
-                      </p>
-                      <p
-                        className={cn(
-                          'text-grey-400 mb-8',
-                          typePPMori({ size: 'md' })
-                        )}
-                      >
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Curabitur at ligula arcu.
-                      </p>
-                      <form action={logoutAction} className="mb-1.5">
-                        <Button type="submit">Logout</Button>
-                      </form>
-                      <Button type="button">Reset password</Button>
+                  <>
+                    Account{' '}
+                    <span className="text-grey-400">
+                      {user?.email ?? 'User'}
+                    </span>
+                    <div className="pointer-events-none absolute top-full right-0 pt-2 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
+                      <div className="bg-beige w-60 rounded-lg p-2.5 drop-shadow-xl">
+                        <p
+                          className={cn(
+                            'mb-4 overflow-hidden text-ellipsis',
+                            typePPMori({ size: 'lg' })
+                          )}
+                        >
+                          {user?.email}
+                        </p>
+                        <p
+                          className={cn(
+                            'text-grey-400 mb-8',
+                            typePPMori({ size: 'md' })
+                          )}
+                        >
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Curabitur at ligula arcu.
+                        </p>
+                        <form action={logoutAction} className="mb-1.5">
+                          <Button type="submit">Logout</Button>
+                        </form>
+                        <Button type="button">Reset password</Button>
+                      </div>
                     </div>
-                  </div>
+                  </>
                 )}
               </li>
             </ul>

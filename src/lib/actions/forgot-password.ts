@@ -41,7 +41,7 @@ export async function forgotPasswordAction(
 
   const { error: emailError } = await resend.emails.send({
     from: 'alexsimpson@array.design',
-    to: 'alexsimpson@array.design',
+    to: 'joel@array.design',
     subject: 'Reset your password',
     react: ResetPasswordEmailTemplate({
       resetLink,

@@ -19,9 +19,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
 export default async function ResetPassword({
   searchParams,
 }: {
-  searchParams: Promise<{ token?: string; email?: string }>
+  searchParams: Promise<{ token?: string }>
 }) {
-  const { token, email } = await searchParams
+  const { token } = await searchParams
   if (!token) redirect('/login')
 
   const page = (await sanityFetch({
@@ -35,7 +35,7 @@ export default async function ResetPassword({
       <Section id="reset-password" className="pt-18 sm:pt-32 md:pt-36">
         <div className="container">
           <div className="sm:w-3/4 md:max-w-1/2">
-            <ResetPasswordForm token={token} email={email} />
+            <ResetPasswordForm token={token} />
           </div>
         </div>
       </Section>

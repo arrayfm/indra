@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { supabaseAdmin } from '../supabase/admin'
+import { markTokenUsed, validateToken } from '../supabase/queries'
 
 export type SetPasswordState = {
   error?: string
@@ -27,27 +28,18 @@ export async function setPasswordAction(
     return { error: 'Password must be at least 8 characters.' }
   }
 
-  const { data: record, error: fetchError } = await supabaseAdmin
-    .from('registration_tokens')
-    .select('email, expires_at, completed_at')
-    .eq('token', token)
-    .single()
+  const { email, error: tokenError } = await validateToken(
+    token,
+    'registration'
+  )
 
-  if (fetchError || !record) {
-    return { error: 'Invalid or expired link. Please register again.' }
-  }
-
-  if (record.completed_at) {
-    return { error: 'This link has already been used.' }
-  }
-
-  if (new Date(record.expires_at) < new Date()) {
-    return { error: 'This link has expired. Please register again.' }
+  if (tokenError) {
+    return { error: tokenError }
   }
 
   const { data: authUser, error: createError } =
     await supabaseAdmin.auth.admin.createUser({
-      email: record.email,
+      email: email,
       password,
       email_confirm: true,
     })
@@ -63,16 +55,13 @@ export async function setPasswordAction(
   const { error: profileError } = await supabaseAdmin
     .from('profiles')
     .update({ id: authUser.user!.id })
-    .eq('email', record.email)
+    .eq('email', email)
 
   if (profileError) {
     console.error('Failed to link profile:', profileError)
   }
 
-  await supabaseAdmin
-    .from('registration_tokens')
-    .update({ completed_at: new Date().toISOString() })
-    .eq('token', token)
+  await markTokenUsed(token)
 
-  redirect('/login?email=' + encodeURIComponent(record.email))
+  redirect('/login?email=' + encodeURIComponent(email))
 }

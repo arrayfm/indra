@@ -3,12 +3,12 @@ import localFont from 'next/font/local'
 export const fontPPMori = localFont({
   src: [
     {
-      path: './PPMori-ExtraLight.otf',
+      path: './PPMori-Extralight.otf',
       style: 'normal',
       weight: '200',
     },
     {
-      path: './PPMori-ExtraLightItalic.otf',
+      path: './PPMori-ExtralightItalic.otf',
       style: 'italic',
       weight: '200',
     },

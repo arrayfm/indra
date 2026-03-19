@@ -2,10 +2,10 @@
 
 import { useActionState } from 'react'
 import { cn } from '@/lib/utils/class-name'
-import { Input } from '../ui/input'
 import { typePPMori } from '@/lib/utils/font'
 import { Button } from '../ui/button'
 import { setPasswordAction } from '@/lib/actions/set-password'
+import { PasswordInput } from '../ui/password-input'
 
 export const SetPasswordForm = ({ token }: { token?: string }) => {
   const [state, action, isPending] = useActionState(setPasswordAction, {})
@@ -21,10 +21,9 @@ export const SetPasswordForm = ({ token }: { token?: string }) => {
         >
           Password
         </label>
-        <Input
+        <PasswordInput
           id="password"
           name="password"
-          type="password"
           autoComplete="new-password"
           required
           minLength={8}
@@ -39,10 +38,9 @@ export const SetPasswordForm = ({ token }: { token?: string }) => {
         >
           Confirm password
         </label>
-        <Input
+        <PasswordInput
           id="confirmPassword"
           name="confirmPassword"
-          type="password"
           autoComplete="new-password"
           required
           minLength={8}

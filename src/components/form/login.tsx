@@ -7,6 +7,7 @@ import { typePPMori } from '@/lib/utils/font'
 import { Button } from '../ui/button'
 import { loginAction } from '@/lib/actions/login'
 import { ConditionalLink } from '../elements/conditional-link'
+import { PasswordInput } from '../ui/password-input'
 
 export const LoginForm = ({ email }: { email?: string }) => {
   const [state, action, isPending] = useActionState(loginAction, {})
@@ -40,10 +41,9 @@ export const LoginForm = ({ email }: { email?: string }) => {
         >
           Password
         </label>
-        <Input
+        <PasswordInput
           id="password"
           name="password"
-          type="password"
           autoComplete="current-password"
           required
           disabled={isPending}

@@ -40,6 +40,21 @@ export const RegisterForm = () => {
           disabled={isPending}
         />
       </div>
+      <div className="mb-6">
+        <label
+          className={cn('mb-1.5', typePPMori({ size: 'md' }))}
+          htmlFor="send_email"
+        >
+          Send Email
+        </label>
+        <Input
+          id="send_email"
+          name="send_email"
+          type="email"
+          autoComplete="email"
+          disabled={isPending}
+        />
+      </div>
 
       <div className="flex items-center gap-2.5">
         <Button type="submit" theme="purple" disabled={isPending}>

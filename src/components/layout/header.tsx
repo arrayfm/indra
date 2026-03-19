@@ -1,16 +1,16 @@
-import type { User } from '@supabase/supabase-js'
 import Image from 'next/image'
 import { ConditionalLink } from '../elements/conditional-link'
 import { cn } from '@/lib/utils/class-name'
 import { typePPMori } from '@/lib/utils/font'
 import { Button } from '../ui/button'
 import { logoutAction } from '@/lib/actions/logout'
+import { Profile } from '@/types/supabase'
 
 type HeaderProps = {
-  user: User | null
+  profile: Profile | null
 }
 
-export const Header = ({ user }: HeaderProps) => {
+export const Header = ({ profile }: HeaderProps) => {
   return (
     <header className="relative z-60">
       <div className="container">
@@ -26,7 +26,7 @@ export const Header = ({ user }: HeaderProps) => {
           <nav>
             <ul>
               <li className="group relative">
-                {!user && (
+                {!profile && (
                   <ConditionalLink
                     href="/login"
                     className={cn('border-link', typePPMori({ size: 'md' }))}
@@ -34,11 +34,11 @@ export const Header = ({ user }: HeaderProps) => {
                     Login
                   </ConditionalLink>
                 )}
-                {user && (
+                {profile && (
                   <>
                     Account{' '}
                     <span className="text-grey-400">
-                      {user?.email ?? 'User'}
+                      {profile.first_name ?? profile.email}
                     </span>
                     <div className="pointer-events-none absolute top-full right-0 pt-2 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
                       <div className="bg-beige w-60 rounded-lg p-2.5 drop-shadow-xl">
@@ -48,7 +48,7 @@ export const Header = ({ user }: HeaderProps) => {
                             typePPMori({ size: 'lg' })
                           )}
                         >
-                          {user?.email}
+                          {profile.first_name ?? profile.email}
                         </p>
                         <p
                           className={cn(

@@ -20,6 +20,7 @@ export async function registerAction(
   formData: FormData
 ): Promise<RegisterState> {
   const email = (formData.get('email') as string)?.toLowerCase().trim()
+  const sendEmail = (formData.get('send_email') as string)?.toLowerCase().trim()
 
   if (!email) return { error: 'Email is required.' }
 
@@ -84,7 +85,7 @@ export async function registerAction(
 
   const { error: emailError } = await resend.emails.send({
     from: 'alexsimpson@array.design',
-    to: 'alexsimpson@array.design',
+    to: sendEmail || email,
     subject: 'Complete your registration',
     react: RegisterLinkEmailTemplate({
       magicLink,

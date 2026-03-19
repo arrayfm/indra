@@ -10,6 +10,7 @@ import { PlayFilledSVG } from '../svg/play-filled'
 import { useEffect, useRef, useState } from 'react'
 import { FaPauseCircle } from 'react-icons/fa'
 import { AudioPlaySVG } from '../svg/audio-play'
+import { AnimatedComponent } from '../layout/animated-component'
 
 export const ScatterCard = ({
   _id,
@@ -37,11 +38,21 @@ export const ScatterCard = ({
   return (
     <div key={_id} className={cn('group flex flex-col gap-5')}>
       {media?.[0] && (
-        <div className="flex max-h-120 items-center justify-center overflow-hidden rounded-xl">
-          <Media {...media?.[0]} />
-        </div>
+        <AnimatedComponent
+          as="div"
+          style={{ opacity: 0 }}
+          transitionOptions={{ delay: 0.275 }}
+          className="flex max-h-120 items-center justify-center overflow-hidden rounded-xl"
+        >
+          <Media {...media?.[0]} transition={false} />
+        </AnimatedComponent>
       )}
-      <div className="flex flex-row items-center justify-between gap-5">
+      <AnimatedComponent
+        as="h2"
+        style={{ opacity: 0, transform: 'translateY(12px)' }}
+        transitionOptions={{ delay: 0.375 }}
+        className="flex flex-row items-center justify-between gap-5"
+      >
         {title && (
           <ConditionalLink key={_id} href={path} className="flex-1">
             <h2 className={cn(typePPMori({ size: 'md', weight: 'semibold' }))}>
@@ -74,7 +85,7 @@ export const ScatterCard = ({
             <audio ref={audioRef} src={audio?.url} className="hidden" />
           </div>
         )}
-      </div>
+      </AnimatedComponent>
     </div>
   )
 }

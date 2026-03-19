@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { Resource } from '@/types/documents'
-import { Section } from '../layout/section'
 import { Embed } from './embed'
 import { Media } from './media'
 import { Button } from '../ui/button'
@@ -12,6 +11,7 @@ import { AudioPlaySVG } from '../svg/audio-play'
 import { typePPMori } from '@/lib/utils/font'
 import { cn } from '@/lib/utils/class-name'
 import { PauseIcon } from '@radix-ui/react-icons'
+import { AnimatedComponent } from '../layout/animated-component'
 
 const formatDuration = (seconds: number) => {
   const minutes = Math.floor(seconds / 60)
@@ -109,17 +109,27 @@ export const ResourcePlayer = ({
   return (
     <div className="flex flex-col gap-5">
       {(media || hasVideo) && (
-        <div className="relative aspect-video overflow-hidden rounded-xl">
-          {media && <Media {...media[0]} cover />}
+        <AnimatedComponent
+          as="div"
+          style={{ opacity: 0 }}
+          transitionOptions={{ delay: 0.3 }}
+          className="relative aspect-video overflow-hidden rounded-xl"
+        >
+          {media && <Media {...media[0]} cover transition={false} />}
           <Embed
             {...mediaUrlEmbed}
             hasMedia={!!media}
             externalControls={externalControls}
           />
-        </div>
+        </AnimatedComponent>
       )}
 
-      <div className="flex flex-col justify-between gap-2.5 md:flex-row">
+      <AnimatedComponent
+        as="div"
+        style={{ opacity: 0, transform: 'translateY(12px)' }}
+        transitionOptions={{ delay: 0.4 }}
+        className="flex flex-col justify-between gap-2.5 md:flex-row"
+      >
         <div className="flex flex-col gap-2.5">
           {subtitle && (
             <p className={cn(typePPMori({ size: 'md', weight: 'semibold' }))}>
@@ -149,7 +159,7 @@ export const ResourcePlayer = ({
             </Button>
           )}
         </div>
-      </div>
+      </AnimatedComponent>
     </div>
   )
 }

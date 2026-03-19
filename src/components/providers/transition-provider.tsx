@@ -4,7 +4,11 @@ import React, { useState, useRef, useEffect } from 'react'
 
 import { Animation, TransitionContext } from '@/lib/context/transition-context'
 import { usePathname } from 'next/navigation'
-import { useTransition, useTransitionContext } from '@/lib/hooks/use-transition'
+import {
+  ANIMATION_DURATION,
+  useTransition,
+  useTransitionContext,
+} from '@/lib/hooks/use-transition'
 import { cn } from '@/lib/utils/class-name'
 import { cva, VariantProps } from 'class-variance-authority'
 
@@ -33,8 +37,8 @@ export function TransitionProvider({
   const isHome = pathname === '/'
 
   const [className, setClassName] = useState('animate-fade-out')
-  const [headerVisible, setHeaderVisible] = useState(isHome ? false : true)
-  const [pageReady, setPageReady] = useState(isHome ? false : true)
+  const [headerVisible, setHeaderVisible] = useState(true)
+  const [pageReady, setPageReady] = useState(false)
   const [backgroundTheme, setBackgroundTheme] = useState<
     VariantProps<typeof transitionVariants>['backgroundTheme'] | undefined
   >(undefined)
@@ -86,7 +90,9 @@ const TransitionContextHandler = ({
 
     transitions.fadeOut()
 
-    setPageReady(true)
+    setTimeout(() => {
+      setPageReady(true)
+    }, ANIMATION_DURATION)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])

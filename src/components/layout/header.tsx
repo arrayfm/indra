@@ -5,6 +5,7 @@ import { typePPMori } from '@/lib/utils/font'
 import { Button } from '../ui/button'
 import { logoutAction } from '@/lib/actions/logout'
 import { Profile } from '@/types/supabase'
+import { ResetPasswordButton } from '../ui/reset-password-button'
 
 type HeaderProps = {
   profile: Profile | null
@@ -62,7 +63,7 @@ export const Header = ({ profile }: HeaderProps) => {
                         <form action={logoutAction} className="mb-1.5">
                           <Button type="submit">Logout</Button>
                         </form>
-                        <Button type="button">Reset password</Button>
+                        <ResetPasswordButton email={profile.email} />
                       </div>
                     </div>
                   </>

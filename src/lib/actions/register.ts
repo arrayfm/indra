@@ -6,6 +6,7 @@ import { supabaseAdmin } from '../supabase/admin'
 import { RegisterLinkEmailTemplate } from '@/components/email/register-link'
 import { sembleQuery } from '../semble/client'
 import { GET_PATIENT_BY_EMAIL } from '../semble/queries'
+import { createToken } from '../supabase/queries'
 
 export type RegisterState = {
   error?: string
@@ -64,21 +65,10 @@ export async function registerAction(
     return { error: 'Something went wrong. Please try again.' }
   }
 
-  const token = crypto.randomBytes(32).toString('hex')
-  const expiresAt = new Date(Date.now() + 1000 * 60 * 60)
+  const token = await createToken(email, 'registration')
 
-  const { error: dbError } = await supabaseAdmin
-    .from('registration_tokens')
-    .upsert({
-      email,
-      token,
-      expires_at: expiresAt.toISOString(),
-      completed_at: null,
-    })
-
-  if (dbError) {
-    console.error('DB error storing token:', dbError)
-    return { error: 'Something went wrong. Please try again.' }
+  if (!token) {
+    return { error: 'Failed to create registration token. Please try again.' }
   }
 
   const magicLink = `${NEXT_PUBLIC_BASE_URL}/set-password?token=${token}`

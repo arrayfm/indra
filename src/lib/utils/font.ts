@@ -18,9 +18,9 @@ export const typePPMori = tv(
         xs: 'text-ppmori-xs',
         sm: 'text-ppmori-sm',
         md: 'text-ppmori-md',
-        lg: 'text-ppmori-lg',
-        xl: 'text-ppmori-xl',
-        '2xl': 'text-ppmori-2xl',
+        lg: 'text-ppmori-lg-mobile md:text-ppmori-lg',
+        xl: 'text-ppmori-xl-mobile md:text-ppmori-xl',
+        '2xl': 'text-ppmori-2xl-mobile md:text-ppmori-2xl',
       },
       weight: {
         normal: 'font-normal',

@@ -34,7 +34,7 @@ const Header = ({
         as="p"
         style={{ transform: 'translateY(20px)', opacity: 0 }}
         transitionOptions={{ delay: 0.375 }}
-        className={cn('pt-12 md:w-1/2', typePPMori({ size: 'md' }))}
+        className={cn('pt-6 md:w-1/2 md:pt-12', typePPMori({ size: 'md' }))}
       >
         {nl2br(description)}
       </AnimatedComponent>

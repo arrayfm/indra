@@ -7,7 +7,6 @@ import { Page } from '@/types/documents'
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { Hero } from '@/components/layout/hero'
 import { CardRow } from '@/components/sections/card-row'
-import Image from 'next/image'
 import { FixedImage } from '@/components/partial/fixed-image'
 
 export const generateMetadata = async (): Promise<Metadata> => {

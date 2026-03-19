@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export const FixedImage = () => {
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10 flex h-screen items-end justify-end">
+    <div className="pointer-events-none fixed inset-0 -z-10 flex h-screen items-end justify-end opacity-10 sm:opacity-100">
       <Image
         height={865}
         width={549}

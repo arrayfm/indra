@@ -37,7 +37,7 @@ export const Hero = ({ title, description, hasBacklink = true }: HeroProps) => {
               delay: 0.2,
             }}
             className={cn(
-              'col-span-10 row-start-3 pt-12 md:col-span-3',
+              'col-span-10 row-start-3 pt-6 md:col-span-3 md:pt-12',
               typePPMori({ size: 'md' })
             )}
           >

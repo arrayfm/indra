@@ -37,7 +37,7 @@ export const Header = ({ profile }: HeaderProps) => {
                 )}
                 {profile && (
                   <>
-                    Account{' '}
+                    <ConditionalLink href="/">Account </ConditionalLink>
                     <span className="text-grey-400">
                       {profile.first_name ?? profile.email}
                     </span>

@@ -2,7 +2,7 @@ export const GET_PATIENT_BY_EMAIL = (email: string) => ({
   query: `
     query {
       patients(search: "${email}", pagination: { page: 1, pageSize: 1 }) {
-        data { id firstName lastName email }
+        data { id firstName lastName email dob }
       }
     }
   `,

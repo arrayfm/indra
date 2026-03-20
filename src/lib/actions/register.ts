@@ -1,7 +1,6 @@
 'use server'
 
 import { Resend } from 'resend'
-import crypto from 'crypto'
 import { supabaseAdmin } from '../supabase/admin'
 import { RegisterLinkEmailTemplate } from '@/components/email/register-link'
 import { sembleQuery } from '../semble/client'
@@ -21,9 +20,11 @@ export async function registerAction(
   formData: FormData
 ): Promise<RegisterState> {
   const email = (formData.get('email') as string)?.toLowerCase().trim()
+  const dob = (formData.get('dob') as string)?.trim()
   const sendEmail = (formData.get('send_email') as string)?.toLowerCase().trim()
 
   if (!email) return { error: 'Email is required.' }
+  if (!dob) return { error: 'Date of birth is required.' }
 
   let patient
   try {
@@ -37,8 +38,10 @@ export async function registerAction(
     return { error: 'Something went wrong. Please try again.' }
   }
 
-  if (!patient) {
-    return { error: "We couldn't find that email in our system." }
+  const sembleDob = patient?.dob?.slice(0, 10)
+
+  if (!patient || sembleDob !== dob) {
+    return { error: "Sorry, we couldn't find a matching patient." }
   }
 
   const { data: existingUser } = await supabaseAdmin

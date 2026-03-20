@@ -13,10 +13,7 @@ export const CardRow = ({ cards }: { cards?: RowCard[] }) => {
       <div className="container">
         <div className="flex flex-col gap-y-7.5">
           {cards?.map((card, index) => (
-            <div
-              key={index}
-              className="ease-cubic grid origin-left scale-100 grid-cols-10 gap-x-2.5 transition-transform hover:scale-105"
-            >
+            <div key={index} className="ease-cubic grid grid-cols-10 gap-x-2.5">
               <ConditionalLink
                 href={card.link?.href}
                 className="group col-span-10 flex gap-2.5 sm:col-span-8 md:col-span-5 lg:col-span-4"
@@ -25,7 +22,7 @@ export const CardRow = ({ cards }: { cards?: RowCard[] }) => {
                   as="div"
                   style={{ opacity: 0 }}
                   transitionOptions={{ delay: 0.25 }}
-                  className="h-fit w-full max-w-1/3 sm:max-w-[calc(50%-5px)]"
+                  className="black-overlay-hover h-fit w-full max-w-1/3 rounded-xl sm:max-w-[calc(50%-5px)]"
                 >
                   <Media {...card.image} transition={false} />
                 </AnimatedComponent>

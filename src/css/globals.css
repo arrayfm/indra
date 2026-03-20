@@ -114,6 +114,7 @@
   --color-purple: #af89c6;
   --color-beige: #ebe6df;
   --color-mid-beige: #cec8c6;
+  --color-mid-beige-hover: #bfb8b6;
 
   --color-grey-400: #9c9c9c;
 
@@ -368,4 +369,27 @@ input[type='search']::-webkit-search-cancel-button {
 .group:hover .border-link:after {
   transform: scaleX(1);
   transform-origin: 0 0;
+}
+
+.black-overlay-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.black-overlay-hover::after {
+  content: '';
+  position: absolute;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.group:hover > .black-overlay-hover::after,
+.black-overlay-hover:hover::after {
+  opacity: 1;
 }

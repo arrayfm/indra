@@ -39,7 +39,7 @@ export const ArticleCard = ({
           as="div"
           style={{ opacity: 0 }}
           transitionOptions={{ delay: 0.25 }}
-          className="flex max-h-120 items-center justify-center overflow-hidden rounded-xl"
+          className="black-overlay-hover flex max-h-120 items-center justify-center overflow-hidden rounded-xl"
         >
           <Media {...media?.[0]} />
         </AnimatedComponent>

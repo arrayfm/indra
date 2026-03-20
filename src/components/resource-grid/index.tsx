@@ -17,7 +17,7 @@ const Header = ({
   description,
 }: Pick<Article, 'title' | 'description'>) => (
   <div className="col-span-10 flex flex-col gap-2.5 md:col-span-6">
-    <BackLink className="text-grey-400 col-span-1">Back</BackLink>
+    <BackLink />
 
     {title && (
       <AnimatedComponent

@@ -4,6 +4,8 @@ import { defineType, defineField, defineArrayMember } from 'sanity'
 import { seo } from '@/sanity/schema/fields/seo'
 import { createSlugField } from '../fields/slug'
 
+const homeSlug = ['home']
+
 export const page = defineType({
   name: 'page',
   type: 'document',
@@ -58,6 +60,12 @@ export const page = defineType({
       title: 'Home Page Content',
       type: 'object',
       group: 'content',
+      hidden: ({ parent, document }) => {
+        // @ts-ignore
+        if (homeSlug.includes(document?.slug?.current)) return false
+
+        return true
+      },
       fields: [
         defineField({
           name: 'cards',

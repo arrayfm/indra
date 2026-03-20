@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import { ConditionalLink } from '../elements/conditional-link'
 import { cn } from '@/lib/utils/class-name'
@@ -6,24 +8,55 @@ import { Button } from '../ui/button'
 import { logoutAction } from '@/lib/actions/logout'
 import { Profile } from '@/types/supabase'
 import { ResetPasswordButton } from '../ui/reset-password-button'
+import { usePathname } from 'next/navigation'
 
 type HeaderProps = {
   profile: Profile | null
 }
 
+const MENU_LINKS = [
+  { label: 'Patient history', href: '/patient-history' },
+  { label: 'Mind & body', href: '/modules' },
+]
+
 export const Header = ({ profile }: HeaderProps) => {
+  const pathname = usePathname()
+  const urlIncludes = (href: string) => pathname?.includes(href)
   return (
     <header className="relative z-60">
       <div className="container">
         <div className="flex items-center justify-between py-2.5">
-          <ConditionalLink href="/">
-            <Image
-              src="/images/indra-logo-purple.png"
-              alt="Indra logo"
-              width={70}
-              height={38}
-            />
-          </ConditionalLink>
+          <nav>
+            <ul className="flex items-center gap-2.5">
+              <li className="group relative mr-7.5">
+                <ConditionalLink href="/">
+                  <Image
+                    src="/images/indra-logo-purple.png"
+                    alt="Indra logo"
+                    width={70}
+                    height={38}
+                  />
+                </ConditionalLink>
+              </li>
+              {MENU_LINKS.map((link) => (
+                <li key={link.href}>
+                  <ConditionalLink
+                    href={link.href}
+                    className={cn(
+                      'transition-colors',
+                      typePPMori({ size: 'md' }),
+                      {
+                        'text-dark-purple': urlIncludes(link.href),
+                        'text-grey-400 border-link': !urlIncludes(link.href),
+                      }
+                    )}
+                  >
+                    {link.label}
+                  </ConditionalLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
           <nav>
             <ul>
               <li className="group relative">

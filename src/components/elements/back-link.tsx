@@ -3,17 +3,16 @@
 import { contains, stripBaseUrl } from '@/lib/utils/string'
 import { ConditionalLink, ConditionalLinkProps } from './conditional-link'
 import { useNavigateTransition } from '@/lib/hooks/use-transition'
+import { Button } from '../ui/button'
 
 export const BackLink = ({
   targetPreviousUrl,
   previousUrl,
-  children,
   ...props
 }: {
   targetPreviousUrl?: string
   previousUrl?: string
-  children: React.ReactNode
-} & ConditionalLinkProps) => {
+} & Partial<ConditionalLinkProps>) => {
   const { handleBack } = useNavigateTransition()
 
   const canGoBack =
@@ -22,14 +21,16 @@ export const BackLink = ({
   if (canGoBack) {
     return (
       <ConditionalLink href={stripBaseUrl(previousUrl)} {...props}>
-        {children}
+        <Button className="mb-5 w-fit" {...props}>
+          Back
+        </Button>
       </ConditionalLink>
     )
   }
 
   return (
-    <a href="#" onClick={handleBack} {...props}>
-      {children}
-    </a>
+    <Button onClick={handleBack} className="mb-5 w-fit" {...props}>
+      Back
+    </Button>
   )
 }

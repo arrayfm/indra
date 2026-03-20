@@ -14,9 +14,7 @@ export const Hero = ({ title, description, hasBacklink = true }: HeroProps) => {
   return (
     <Section id="hero" className="pt-10">
       <div className="container grid grid-cols-10 gap-2.5">
-        {hasBacklink && (
-          <BackLink className="text-grey-400 col-span-1">Back</BackLink>
-        )}
+        {hasBacklink && <BackLink />}
         {title && (
           <AnimatedComponent
             as="h1"

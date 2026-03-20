@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils/class-name'
 import { typePPMori } from '@/lib/utils/font'
 import { ConditionalLink } from '../elements/conditional-link'
 import { Button } from '../ui/button'
+import { AnimatedComponent } from '../layout/animated-component'
 
 export const CardRow = ({ cards }: { cards?: RowCard[] }) => {
   return (
@@ -20,25 +21,43 @@ export const CardRow = ({ cards }: { cards?: RowCard[] }) => {
                 href={card.link?.href}
                 className="group col-span-10 flex gap-2.5 sm:col-span-8 md:col-span-5 lg:col-span-4"
               >
-                <div className="h-fit w-full max-w-1/3 sm:max-w-[calc(50%-5px)]">
-                  <Media {...card.image} />
-                </div>
+                <AnimatedComponent
+                  as="div"
+                  style={{ opacity: 0 }}
+                  transitionOptions={{ delay: 0.25 }}
+                  className="h-fit w-full max-w-1/3 sm:max-w-[calc(50%-5px)]"
+                >
+                  <Media {...card.image} transition={false} />
+                </AnimatedComponent>
                 <div>
-                  <h3 className={cn(typePPMori({ size: 'lg' }))}>
+                  <AnimatedComponent
+                    as="h3"
+                    style={{ opacity: 0, transform: 'translateY(12px)' }}
+                    transitionOptions={{ delay: 0.35 }}
+                    className={cn(typePPMori({ size: 'lg' }))}
+                  >
                     {card.title}
-                  </h3>
-                  <p
+                  </AnimatedComponent>
+                  <AnimatedComponent
+                    as="p"
+                    style={{ opacity: 0, transform: 'translateY(12px)' }}
+                    transitionOptions={{ delay: 0.45 }}
                     className={cn(
                       'text-grey-400 mt-4',
                       typePPMori({ size: 'md' })
                     )}
                   >
                     {card.description}
-                  </p>
+                  </AnimatedComponent>
                   {card.link?.href && (
-                    <Button className="mt-1.5">
-                      {card.link.label || 'Explore'}
-                    </Button>
+                    <AnimatedComponent
+                      as="div"
+                      style={{ opacity: 0, transform: 'translateY(12px)' }}
+                      transitionOptions={{ delay: 0.55 }}
+                      className="mt-1.5"
+                    >
+                      <Button>{card.link.label || 'Explore'}</Button>
+                    </AnimatedComponent>
                   )}
                 </div>
               </ConditionalLink>

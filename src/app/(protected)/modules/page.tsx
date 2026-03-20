@@ -5,7 +5,7 @@ import { Article, Page } from '@/types/documents'
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { getArticles } from '@/sanity/queries/get-article'
 import { Hero } from '@/components/layout/hero'
-import { ArticleGrid } from '@/components/sections/article-grid'
+import ArticleGrid from '@/components/article-grid'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({

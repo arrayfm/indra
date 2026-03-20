@@ -75,7 +75,7 @@ export const Header = ({ profile }: HeaderProps) => {
                       {profile.first_name ?? profile.email}
                     </span>
                     <div className="pointer-events-none absolute top-full right-0 pt-2 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
-                      <div className="bg-beige w-60 rounded-lg p-2.5 drop-shadow-xl">
+                      <div className="bg-beige w-60 rounded-lg p-2.5 shadow-xl">
                         <p
                           className={cn(
                             'mb-4 overflow-hidden text-ellipsis',

@@ -45,8 +45,8 @@ export const RegisterForm = () => {
             typePPMori({ size: 'md' })
           )}
         >
-          If you have been onboarded by the team, you'll receive an email to set
-          your password and complete your signup. It expires in 1 hour.
+          If you have been onboarded by the team, you&apos;ll receive an email
+          to set your password and complete your signup. It expires in 1 hour.
         </p>
       </div>
     )
@@ -125,6 +125,7 @@ export const RegisterForm = () => {
           type="email"
           autoComplete="email"
           disabled={isPending}
+          onKeyDown={(e) => e.key === 'Enter' && handleEmailContinue(e)}
         />
       </div>
 

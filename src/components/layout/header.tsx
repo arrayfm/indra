@@ -43,23 +43,26 @@ export const Header = ({ profile }: HeaderProps) => {
                   />
                 </ConditionalLink>
               </li>
-              {MENU_LINKS.map((link) => (
-                <li key={link.href}>
-                  <ConditionalLink
-                    href={link.href}
-                    className={cn(
-                      'hidden transition-colors md:block',
-                      typePPMori({ size: 'md' }),
-                      {
-                        'text-dark-purple': urlIncludes(link.parent),
-                        'text-grey-400 border-link': !urlIncludes(link.parent),
-                      }
-                    )}
-                  >
-                    {link.label}
-                  </ConditionalLink>
-                </li>
-              ))}
+              {profile &&
+                MENU_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <ConditionalLink
+                      href={link.href}
+                      className={cn(
+                        'hidden transition-colors md:block',
+                        typePPMori({ size: 'md' }),
+                        {
+                          'text-dark-purple': urlIncludes(link.parent),
+                          'text-grey-400 border-link': !urlIncludes(
+                            link.parent
+                          ),
+                        }
+                      )}
+                    >
+                      {link.label}
+                    </ConditionalLink>
+                  </li>
+                ))}
             </ul>
           </nav>
           <nav>

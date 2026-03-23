@@ -55,16 +55,13 @@ export function formatBookingTime(start: string, end: string): string {
 export default async function Appointments() {
   const user = await getUser()
   const profile = await getProfile(user?.id)
-  console.log('semblePatientId:', profile?.semble_id)
 
-  const appointments = await sembleQuery(
-    GET_PATIENT_BOOKINGS(profile?.semble_id)
-  )
+  const response = await sembleQuery(GET_PATIENT_BOOKINGS(profile?.semble_id))
 
-  const futureAppointments = appointments?.data?.patient?.bookings.filter(
+  const futureAppointments = response?.data?.patient?.bookings.filter(
     (booking: any) => new Date(booking.start) > new Date()
   )
-  const pastAppointments = appointments?.data?.patient?.bookings.filter(
+  const pastAppointments = response?.data?.patient?.bookings.filter(
     (booking: any) => new Date(booking.start) <= new Date()
   )
 

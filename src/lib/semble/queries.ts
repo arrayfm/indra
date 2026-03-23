@@ -29,11 +29,20 @@ export const GET_PATIENT_BOOKINGS = (patientId: string) => ({
   `,
 })
 
-export const GET_PATIENT_SCRIPTS = (patientId: string) => ({
+export const GET_PATIENT_PRESCRIPTIONS = (patientId: string) => ({
   query: `
-    query {
-      prescriptions(patientId: "${patientId}") {
-        data { id medication dosage issuedAt }
+   query {
+      patient(id: "${patientId}") {
+        prescriptions {
+          data { 
+            id
+            drugs {
+              drug 
+            }
+            date
+            pdfDownloadUrl
+          }
+        }
       }
     }
   `,

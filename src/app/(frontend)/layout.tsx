@@ -8,6 +8,7 @@ import { TransitionProvider } from '@/components/providers/transition-provider'
 import { VideoPlaybackQueueProvider } from '@/components/providers/video-playback-queue-provider'
 import { getUser } from '@/lib/supabase/session'
 import { getProfile } from '@/lib/supabase/queries'
+import { ProfileProvider } from '@/components/providers/profile-provider'
 
 export const metadata: Metadata = {
   title: {
@@ -41,11 +42,13 @@ export default async function RootLayout({
       <body>
         <TransitionProvider>
           <VideoPlaybackQueueProvider>
-            <>
-              <Header profile={profile} />
-              {children}
-              <Footer />
-            </>
+            <ProfileProvider profile={profile}>
+              <>
+                <Header profile={profile} />
+                {children}
+                <Footer />
+              </>
+            </ProfileProvider>
           </VideoPlaybackQueueProvider>
         </TransitionProvider>
       </body>

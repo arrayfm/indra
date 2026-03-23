@@ -71,7 +71,7 @@ export default async function Appointments() {
 
   return (
     <div className="flex flex-col gap-20">
-      <div className="grid grid-cols-6 gap-x-2.5 gap-y-10">
+      <div className="flex grid-cols-6 flex-col gap-x-2.5 gap-y-10 md:grid">
         <h2
           className={cn(
             'text-grey-400 col-span-6 mb-2',

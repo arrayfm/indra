@@ -38,7 +38,7 @@ export default async function Appointments() {
   const prescriptions = response?.data?.patient?.prescriptions.data
 
   return (
-    <div className="grid grid-cols-6 gap-x-2.5 gap-y-10">
+    <div className="flex grid-cols-6 flex-col gap-x-2.5 gap-y-10 md:grid">
       {prescriptions?.map((prescription: any) => (
         <div key={prescription.id} className="col-span-3 flex flex-col gap-2">
           <h3

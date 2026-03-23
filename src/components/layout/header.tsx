@@ -43,7 +43,7 @@ export const Header = ({ profile }: HeaderProps) => {
                   <ConditionalLink
                     href={link.href}
                     className={cn(
-                      'transition-colors',
+                      'hidden transition-colors md:block',
                       typePPMori({ size: 'md' }),
                       {
                         'text-dark-purple': urlIncludes(link.href),

@@ -16,7 +16,7 @@ export const PatientHistoryLinks = () => {
 
   return (
     <nav>
-      <ul className="flex flex-wrap gap-8 md:flex-col">
+      <ul className="flex flex-wrap gap-5 md:flex-col">
         {PATIENT_HISTORY_LINKS.map((link) => (
           <li key={link.href}>
             <Link

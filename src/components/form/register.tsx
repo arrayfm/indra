@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { cn } from '@/lib/utils/class-name'
 import { Input } from '../ui/input'
@@ -23,6 +23,12 @@ export const RegisterForm = () => {
   const [step, setStep] = useState<Step>('email')
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)
+
+  useEffect(() => {
+    if (state?.error) {
+      setStep('email')
+    }
+  }, [state?.errorKey])
 
   const handleEmailContinue = (e: React.FormEvent) => {
     e.preventDefault()

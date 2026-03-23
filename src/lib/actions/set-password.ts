@@ -54,7 +54,7 @@ export async function setPasswordAction(
 
   const { error: profileError } = await supabaseAdmin
     .from('profiles')
-    .update({ id: authUser.user!.id })
+    .update({ id: authUser.user!.id, completed_at: new Date().toISOString() })
     .eq('email', email)
 
   if (profileError) {

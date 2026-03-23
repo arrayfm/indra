@@ -15,13 +15,18 @@ type HeaderProps = {
 }
 
 const MENU_LINKS = [
-  { label: 'Patient history', href: '/patient-history/appointments' },
-  { label: 'Mind & body', href: '/modules' },
+  {
+    label: 'Patient history',
+    href: '/patient-history/appointments',
+    parent: '/patient-history',
+  },
+  { label: 'Mind & body', href: '/modules', parent: '/modules' },
 ]
 
 export const Header = ({ profile }: HeaderProps) => {
   const pathname = usePathname()
-  const urlIncludes = (href: string) => pathname?.includes(href)
+  const urlIncludes = (parent: string) => pathname?.includes(parent)
+
   return (
     <header className="relative z-60">
       <div className="container">
@@ -46,8 +51,8 @@ export const Header = ({ profile }: HeaderProps) => {
                       'hidden transition-colors md:block',
                       typePPMori({ size: 'md' }),
                       {
-                        'text-dark-purple': urlIncludes(link.href),
-                        'text-grey-400 border-link': !urlIncludes(link.href),
+                        'text-dark-purple': urlIncludes(link.parent),
+                        'text-grey-400 border-link': !urlIncludes(link.parent),
                       }
                     )}
                   >

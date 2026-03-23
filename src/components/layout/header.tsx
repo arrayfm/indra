@@ -15,7 +15,7 @@ type HeaderProps = {
 }
 
 const MENU_LINKS = [
-  { label: 'Patient history', href: '/patient-history' },
+  { label: 'Patient history', href: '/patient-history/appointments' },
   { label: 'Mind & body', href: '/modules' },
 ]
 

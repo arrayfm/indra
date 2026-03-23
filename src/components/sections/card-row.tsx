@@ -31,7 +31,7 @@ export const CardRow = ({ cards }: { cards?: RowCard[] }) => {
                     as="h3"
                     style={{ opacity: 0, transform: 'translateY(12px)' }}
                     transitionOptions={{ delay: 0.35 }}
-                    className={cn(typePPMori({ size: 'lg' }))}
+                    className={cn(typePPMori({ size: 'xl' }))}
                   >
                     {card.title}
                   </AnimatedComponent>

@@ -34,30 +34,34 @@
   --text-ppmori-md--line-height: 14px;
   --text-ppmori-md--letter-spacing: var(--tracking-ppmori);
 
-  --text-ppmori-lg: 28px;
-  --text-ppmori-lg--line-height: 28px;
+  --text-ppmori-lg: 22px;
+  --text-ppmori-lg--line-height: 22px;
   --text-ppmori-lg--letter-spacing: var(--tracking-ppmori);
 
-  --text-ppmori-lg-mobile: 24px;
-  --text-ppmori-lg--line-height-mobile: 24px;
-  --text-ppmori-lg--letter-spacing-mobile: var(--tracking-ppmori);
-
-  --text-ppmori-xl: 38px;
-  --text-ppmori-xl--line-height: 34px;
+  --text-ppmori-xl: 28px;
+  --text-ppmori-xl--line-height: 28px;
   --text-ppmori-xl--letter-spacing: var(--tracking-ppmori);
 
-  --text-ppmori-xl-mobile: 32px;
-  --text-ppmori-xl-mobile--line-height: 28px;
-  --text-ppmori-xl-mobile--letter-spacing: var(--tracking-ppmori);
+  --text-ppmori-xl-mobile: 24px;
+  --text-ppmori-xl--line-height-mobile: 24px;
+  --text-ppmori-xl--letter-spacing-mobile: var(--tracking-ppmori);
 
-  --text-ppmori-2xl: 86px;
-  --text-ppmori-2xl--line-height: 74px;
-  --text-ppmori-2xl--letter-spacing: -0.02em;
+  --text-ppmori-2xl: 38px;
+  --text-ppmori-2xl--line-height: 34px;
+  --text-ppmori-2xl--letter-spacing: var(--tracking-ppmori);
 
-  --text-ppmori-2xl-mobile: 60px;
-  --text-ppmori-2xl-mobile--line-height: 55px;
-  --text-ppmori-2xl-mobile--letter-spacing: var(
-    --text-ppmori-2xl--letter-spacing
+  --text-ppmori-2xl-mobile: 32px;
+  --text-ppmori-2xl-mobile--line-height: 28px;
+  --text-ppmori-2xl-mobile--letter-spacing: var(--tracking-ppmori);
+
+  --text-ppmori-3xl: 86px;
+  --text-ppmori-3xl--line-height: 74px;
+  --text-ppmori-3xl--letter-spacing: -0.02em;
+
+  --text-ppmori-3xl-mobile: 60px;
+  --text-ppmori-3xl-mobile--line-height: 55px;
+  --text-ppmori-3xl-mobile--letter-spacing: var(
+    --text-ppmori-3xl--letter-spacing
   );
 
   --radius-sm: 6px;

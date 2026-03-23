@@ -70,8 +70,18 @@ export const Header = ({ profile }: HeaderProps) => {
                 )}
                 {profile && (
                   <>
-                    <ConditionalLink href="/">Account </ConditionalLink>
-                    <span className="text-grey-400">
+                    <ConditionalLink
+                      href="/"
+                      className={cn(typePPMori({ size: 'md' }))}
+                    >
+                      Account{' '}
+                    </ConditionalLink>
+                    <span
+                      className={cn(
+                        'text-grey-400',
+                        typePPMori({ size: 'md' })
+                      )}
+                    >
                       {profile.first_name ?? profile.email}
                     </span>
                     <div className="pointer-events-none absolute top-full right-0 pt-2 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
@@ -79,7 +89,7 @@ export const Header = ({ profile }: HeaderProps) => {
                         <p
                           className={cn(
                             'mb-4 overflow-hidden text-ellipsis',
-                            typePPMori({ size: 'lg' })
+                            typePPMori({ size: 'xl' })
                           )}
                         >
                           {profile.first_name ?? profile.email}

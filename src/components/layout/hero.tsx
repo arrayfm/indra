@@ -21,7 +21,7 @@ export const Hero = ({ title, description, hasBacklink = true }: HeroProps) => {
             style={{ transform: 'translateY(20px)', opacity: 0 }}
             className={cn(
               'col-span-10 row-start-2 md:col-span-6',
-              typePPMori({ size: '2xl' })
+              typePPMori({ size: '3xl' })
             )}
           >
             {nl2br(title)}

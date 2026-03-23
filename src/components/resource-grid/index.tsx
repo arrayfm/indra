@@ -23,7 +23,7 @@ const Header = ({
       <AnimatedComponent
         as="h1"
         style={{ transform: 'translateY(20px)', opacity: 0 }}
-        className={cn(typePPMori({ size: '2xl' }))}
+        className={cn(typePPMori({ size: '3xl' }))}
       >
         {nl2br(title)}
       </AnimatedComponent>

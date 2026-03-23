@@ -45,7 +45,7 @@ export default async function Appointments() {
         <div key={prescription.id} className="col-span-3 flex flex-col gap-2">
           <h3
             className={cn(
-              'max-w-2/3 truncate',
+              'max-w-2/3',
               typePPMori({ size: 'md', weight: 'semibold' })
             )}
           >

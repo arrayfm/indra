@@ -89,14 +89,16 @@ export const Header = ({ profile }: HeaderProps) => {
                     </ConditionalLink>
                     <div className="pointer-events-none absolute top-full right-0 pt-2 opacity-0 transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
                       <div className="bg-beige w-60 rounded-lg p-2.5 shadow-xl">
-                        <p
-                          className={cn(
-                            'mb-4 overflow-hidden text-ellipsis',
-                            typePPMori({ size: 'xl' })
-                          )}
-                        >
-                          {profile.first_name ?? profile.email}
-                        </p>
+                        <ConditionalLink href="/">
+                          <p
+                            className={cn(
+                              'mb-4 overflow-hidden text-ellipsis',
+                              typePPMori({ size: 'xl' })
+                            )}
+                          >
+                            {profile.first_name ?? profile.email}
+                          </p>
+                        </ConditionalLink>
                         <p
                           className={cn(
                             'text-grey-400 mb-8',

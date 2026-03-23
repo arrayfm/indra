@@ -29,6 +29,9 @@ export async function registerAction(
   const dob = (formData.get('dob') as string)?.trim()
   const sendEmail = (formData.get('send_email') as string)?.toLowerCase().trim()
 
+  const dateOnlyDob = dob ? new Date(dob) : null
+  const isoDob = dateOnlyDob ? dateOnlyDob.toISOString().slice(0, 10) : null
+
   if (!email) return err('Email is required.')
   if (!dob) return err('Date of birth is required.')
 
@@ -46,7 +49,7 @@ export async function registerAction(
 
   const sembleDob = patient?.dob?.slice(0, 10)
 
-  if (!patient || sembleDob !== dob) {
+  if (!patient || sembleDob !== isoDob) {
     return err(GENERIC_ERROR_MESSAGE)
   }
 
@@ -55,9 +58,6 @@ export async function registerAction(
     .select('email, completed_at')
     .eq('email', email)
     .single()
-
-  console.log('existingUser:', existingUser)
-  console.log('profileFetchError:', profileFetchError)
 
   if (existingUser?.completed_at) {
     return err(GENERIC_ERROR_MESSAGE)

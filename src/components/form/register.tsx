@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useEffect, useState } from 'react'
+import { useActionState, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { cn } from '@/lib/utils/class-name'
 import { Input } from '../ui/input'
@@ -8,6 +8,8 @@ import { typePPMori } from '@/lib/utils/font'
 import { Button } from '../ui/button'
 import { registerAction } from '@/lib/actions/register'
 import { ConditionalLink } from '../elements/conditional-link'
+import { DatePicker } from 'react-datepicker'
+import { DateOfBirthPicker } from '../ui/date-of-birth-picker'
 
 const fieldVariants = {
   hidden: { opacity: 0, y: -6 },
@@ -20,6 +22,8 @@ type Step = 'email' | 'dob'
 export const RegisterForm = () => {
   const [state, action, isPending] = useActionState(registerAction, {})
   const [emailValue, setEmailValue] = useState('')
+  const [dateValue, setDateValue] = useState<Date | null>(null)
+  const datePickerRef = useRef<DatePicker>(null)
   const [step, setStep] = useState<Step>('email')
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)
@@ -29,6 +33,14 @@ export const RegisterForm = () => {
       setStep('email')
     }
   }, [state?.errorKey])
+
+  useEffect(() => {
+    if (step === 'dob') {
+      setTimeout(() => {
+        datePickerRef.current?.setFocus()
+      }, 300)
+    }
+  }, [step])
 
   const handleEmailContinue = (e: React.FormEvent) => {
     e.preventDefault()
@@ -86,7 +98,7 @@ export const RegisterForm = () => {
         ) : (
           <motion.div
             key="dob"
-            className="mb-4"
+            className="mb-4 flex flex-col"
             variants={fieldVariants}
             initial="hidden"
             animate="visible"
@@ -99,13 +111,17 @@ export const RegisterForm = () => {
             >
               Date of birth
             </label>
-            <Input
-              id="dob"
-              name="dob"
-              type="date"
-              required
+
+            <DateOfBirthPicker
+              value={dateValue}
+              onChange={setDateValue}
+              focus={step === 'dob'}
               disabled={isPending}
-              autoFocus
+            />
+            <input
+              type="hidden"
+              name="dob"
+              value={dateValue ? dateValue.toISOString() : ''}
             />
             <input type="hidden" name="email" value={emailValue} />
           </motion.div>

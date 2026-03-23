@@ -58,12 +58,19 @@ export default async function Appointments() {
 
   const response = await sembleQuery(GET_PATIENT_BOOKINGS(profile?.semble_id))
 
-  const futureAppointments = response?.data?.patient?.bookings.filter(
-    (booking: any) => new Date(booking.start) > new Date()
-  )
-  const pastAppointments = response?.data?.patient?.bookings.filter(
-    (booking: any) => new Date(booking.start) <= new Date()
-  )
+  const futureAppointments = response?.data?.patient?.bookings
+    .filter((booking: any) => new Date(booking.start) > new Date())
+    .sort(
+      (a: any, b: any) =>
+        new Date(a.start).getTime() - new Date(b.start).getTime()
+    )
+
+  const pastAppointments = response?.data?.patient?.bookings
+    .filter((booking: any) => new Date(booking.start) <= new Date())
+    .sort(
+      (a: any, b: any) =>
+        new Date(b.start).getTime() - new Date(a.start).getTime()
+    )
 
   const tempFutureAppointments = futureAppointments?.length
     ? futureAppointments

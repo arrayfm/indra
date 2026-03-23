@@ -3,6 +3,7 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 
 @import './animations.css';
+@import './react-datepicker.css';
 
 /*
   ---break---
@@ -126,6 +127,16 @@
   --color-sanity-ui-error: #d73a49;
   --color-sanity-ui-warning: #ffaa15;
   --color-sanity-ui-info: #556bfc;
+
+  --color-mono-100: #e8e8e8;
+  --color-mono-200: #d0d0d0;
+  --color-mono-300: #c7c7c7;
+  --color-mono-400: #a7a7a7;
+  --color-mono-500: #989898;
+  --color-mono-600: #8a8a8a;
+  --color-mono-700: #686868;
+  --color-mono-800: #4f4f4f;
+  --color-mono-900: #383838;
 
   --drop-shadow-xl: 0 0 20px rgba(0, 0, 0, 0.15);
 

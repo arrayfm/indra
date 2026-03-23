@@ -13,10 +13,7 @@ function formatBookingDate(start: string): string {
     month: 'numeric',
     year: 'numeric',
   })
-
-  const [month, day, year] = date.split('/')
-
-  return `${day}/${month}/${year}`
+  return date
 }
 
 function drugsFlatTitle(
@@ -36,6 +33,11 @@ export default async function Appointments() {
   )
 
   const prescriptions = response?.data?.patient?.prescriptions.data
+    ?.slice()
+    .sort(
+      (a: any, b: any) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+    )
 
   return (
     <div className="flex grid-cols-6 flex-col gap-x-2.5 gap-y-10 md:grid">

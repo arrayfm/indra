@@ -6,11 +6,11 @@ export default async function AuthLayout({
 }: {
   children: React.ReactNode
 }) {
-  // const user = await getUser()
+  const user = await getUser()
 
-  // if (user) {
-  //   redirect('/')
-  // }
+  if (user) {
+    redirect('/')
+  }
 
   return <>{children}</>
 }

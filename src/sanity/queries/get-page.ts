@@ -27,6 +27,16 @@ export const getPage = groq`
           link {
             ${link()}
           }
+        },
+        featuredModule-> {
+          _id,
+          title,
+          path,
+          "slug": slug.current,
+          _updatedAt,
+          media[]{
+            ${mediaItem}
+          },
         }
       }
     }

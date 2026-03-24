@@ -10,6 +10,7 @@ export interface Page {
   slug: string
   homeContent?: {
     cards: RowCard[]
+    featuredModule?: Article
   }
 }
 

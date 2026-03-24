@@ -100,6 +100,12 @@ export const page = defineType({
             }),
           ],
         }),
+        defineField({
+          name: 'featuredModule',
+          title: 'Featured Module',
+          type: 'reference',
+          to: [{ type: 'article' }],
+        }),
       ],
     }),
     seo,

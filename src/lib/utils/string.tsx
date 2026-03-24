@@ -3,7 +3,7 @@ import { PortableTextBlock } from 'next-sanity'
 export const nl2br = (str?: string) => {
   if (!str) return null
   return str.split('\n').map((line, index) => (
-    <span key={index}>
+    <span key={index} className="pb-[0.02em]">
       {line}
       <br />
     </span>

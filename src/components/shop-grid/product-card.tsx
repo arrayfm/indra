@@ -1,9 +1,7 @@
 'use client'
 
-import { Article } from '@/types/documents'
 import { ConditionalLink } from '../elements/conditional-link'
 import { AnimatedComponent } from '../layout/animated-component'
-import { Button } from '../ui/button'
 import { typePPMori } from '@/lib/utils/font'
 import { cn } from '@/lib/utils/class-name'
 import { Media } from '../media/media'

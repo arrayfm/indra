@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils/class-name'
 import { typePPMori } from '@/lib/utils/font'
 
 export const Footer = () => {
+  const currentYear = new Date().getFullYear()
   return (
     <footer>
       <div className="container py-5">
@@ -10,7 +11,7 @@ export const Footer = () => {
             Company information
           </p>
           <p className={cn(typePPMori({ size: 'xs' }))}>
-            © 2025 RPH Medica Limited.
+            © {currentYear} RPH Medica Limited.
             <br /> All rights reserved. INDRA is a trademark of RPH Medica Ltd.
           </p>
         </div>

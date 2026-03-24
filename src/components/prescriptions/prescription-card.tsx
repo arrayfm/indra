@@ -1,34 +1,38 @@
+'use client'
+
+import { cn } from '@/lib/utils/class-name'
+import { formatPrescriptionDate } from '@/lib/utils/date-time'
 import { typePPMori } from '@/lib/utils/font'
 import { ConditionalLink } from '../elements/conditional-link'
 import { AnimatedComponent } from '../layout/animated-component'
 import { Button } from '../ui/button'
-import { formatBookingDate, formatBookingTime } from '@/lib/utils/date-time'
-import { cn } from '@/lib/utils/class-name'
-import { Booking } from '@/types/semble'
 
-export const FutureAppointmentCard = ({ booking }: { booking: Booking }) => {
+function drugsFlatTitle(drug: { drug?: string }[]) {
+  return drug.map((d) => d.drug).join(', ')
+}
+
+export const PrescriptionCard = ({ prescription }: { prescription: any }) => {
   return (
-    <div key={booking.id} className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2">
       <AnimatedComponent
         as="h3"
         style={{ opacity: 0, transform: 'translateY(12px)' }}
         transitionOptions={{ delay: 0.1 }}
-        className={cn(typePPMori({ size: 'lg', weight: 'semibold' }))}
+        className={cn(
+          'max-w-2/3',
+          typePPMori({ size: 'md', weight: 'semibold' })
+        )}
       >
-        {booking.appointment.title}
+        {drugsFlatTitle(prescription.drugs)}
       </AnimatedComponent>
 
       <AnimatedComponent
-        as="div"
+        as="p"
         style={{ opacity: 0, transform: 'translateY(12px)' }}
         transitionOptions={{ delay: 0.2 }}
+        className={cn(typePPMori({ size: 'md' }))}
       >
-        <p className={cn('mb-1', typePPMori({ size: '2xl' }))}>
-          {formatBookingDate(booking.start)}
-        </p>
-        <p className={cn(typePPMori({ size: 'lg' }))}>
-          {formatBookingTime(booking.start, booking.end)}
-        </p>
+        {formatPrescriptionDate(prescription.date)}
       </AnimatedComponent>
 
       <AnimatedComponent
@@ -37,11 +41,11 @@ export const FutureAppointmentCard = ({ booking }: { booking: Booking }) => {
         transitionOptions={{ delay: 0.3 }}
       >
         <ConditionalLink
-          href={booking.videoUrl}
+          href={prescription.pdfDownloadUrl}
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Button>Join Meeting</Button>
+          <Button>Download</Button>
         </ConditionalLink>
       </AnimatedComponent>
     </div>

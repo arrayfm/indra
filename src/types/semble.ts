@@ -7,3 +7,12 @@ export type Booking = {
     title: string
   }
 }
+
+export type Prescription = {
+  id: string
+  date: string
+  drugs: {
+    drug?: string
+  }[]
+  pdfDownloadUrl: string
+}

@@ -13,12 +13,13 @@ import { getProfile } from '@/lib/supabase/queries'
 import { sembleQuery } from '@/lib/semble/client'
 import { GET_PATIENT_BOOKINGS } from '@/lib/semble/queries'
 import { sortBookingsByDate } from '@/lib/semble/utils'
-import { MOCK_FUTURE_APPOINTMENTS } from './patient-history/appointments/page'
+import { MOCK_FUTURE_APPOINTMENTS } from './patient-dashboard/appointments/page'
 import { FutureAppointmentsGrid } from '@/components/appointments/future-appointments-grid'
 import { Section } from '@/components/layout/section'
 import { typePPMori } from '@/lib/utils/font'
 import { cn } from '@/lib/utils/class-name'
 import { ArticleCard } from '@/components/article-grid/article-card'
+import { AnimatedComponent } from '@/components/layout/animated-component'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({
@@ -61,6 +62,7 @@ export default async function Home() {
       <main className="min-h-screen-header-footer">
         <Hero title={page.title} hasBacklink={false} />
         <CardColumns cards={page.homeContent?.cards} />
+
         <Section id="future-appointments" className="pt-30">
           <div className="container">
             <div className="grid grid-cols-10 gap-x-2.5 gap-y-10">
@@ -77,19 +79,24 @@ export default async function Home() {
             </div>
           </div>
         </Section>
+
         {page.homeContent?.featuredModule && (
           <Section id="latest-meditation" className="pt-30">
             <div className="container">
               <div className="grid grid-cols-10 gap-x-2.5 gap-y-10">
                 <div className="col-span-10 md:col-span-6">
-                  <h2
+                  <AnimatedComponent
+                    as="h2"
+                    style={{
+                      opacity: 0,
+                    }}
                     className={cn(
                       'text-grey-400 col-span-6 mb-2',
                       typePPMori({ size: 'lg' })
                     )}
                   >
                     Latest meditation
-                  </h2>
+                  </AnimatedComponent>
                   <ArticleCard
                     {...page.homeContent?.featuredModule}
                     index={0}
@@ -99,6 +106,7 @@ export default async function Home() {
             </div>
           </Section>
         )}
+
         <FixedImage />
       </main>
     </>

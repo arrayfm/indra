@@ -6,11 +6,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const PATIENT_HISTORY_LINKS = [
-  { label: 'Appointments', href: '/patient-history/appointments' },
-  { label: 'Prescriptions', href: '/patient-history/prescriptions' },
+  { label: 'Appointments', href: '/patient-dashboard/appointments' },
+  { label: 'Prescriptions', href: '/patient-dashboard/prescriptions' },
 ]
 
-export const PatientHistoryLinks = () => {
+export const PatientDashboardLinks = () => {
   const pathname = usePathname()
   const urlIncludes = (href: string) => pathname?.includes(href)
 

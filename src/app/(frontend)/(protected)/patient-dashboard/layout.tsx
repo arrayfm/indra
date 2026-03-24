@@ -4,29 +4,29 @@ import { Metadata } from 'next'
 import { Page } from '@/types/documents'
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { Hero } from '@/components/layout/hero'
-import PatientHistoryTemplate from '@/components/patient-history'
+import PatientDashboardTemplate from '@/components/patient-dashboard'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({
     type: 'page',
-    slug: 'patient-history',
+    slug: 'patient-dashboard',
   })
 }
 
-export default async function PatientHistoryLayout({
+export default async function PatientDashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   const page = (await sanityFetch({
     query: getPage,
-    params: { type: 'page', path: '/patient-history' },
+    params: { type: 'page', path: '/patient-dashboard' },
   })) as Page
 
   return (
     <main className="min-h-screen-header">
       <Hero {...page} />
-      <PatientHistoryTemplate>{children}</PatientHistoryTemplate>
+      <PatientDashboardTemplate>{children}</PatientDashboardTemplate>
     </main>
   )
 }

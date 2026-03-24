@@ -31,15 +31,16 @@ export function formatBookingDate(start: string): string {
   return DateTime.fromISO(start).toFormat('EEE d MMMM')
 }
 
-export function formatBookingTime(start: string, end: string): string {
-  const zone = 'Europe/London'
-  const startDt = DateTime.fromISO(start, { zone })
-  const endDt = DateTime.fromISO(end, { zone })
+export function formatBookingTime(start: string, end?: string): string {
+  const startDt = DateTime.fromISO(start)
+  const endDt = end ? DateTime.fromISO(end) : undefined
 
-  const startTime = startDt.toFormat('h:mm a')
-  const endTime = `${endDt.toFormat('h:mm a')} ${endDt.offsetNameShort}`
+  const startTime = startDt.toLocaleString(
+    endDt ? DateTime.TIME_SIMPLE : DateTime.TIME_WITH_SHORT_OFFSET
+  )
+  const endTime = `${endDt?.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET)}`
 
-  return `${startTime} — ${endTime}`
+  return end ? `${startTime} — ${endTime}` : startTime
 }
 
 export default async function Appointments() {

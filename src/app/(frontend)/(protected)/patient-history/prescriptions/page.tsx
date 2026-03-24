@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { DateTime } from 'luxon'
 
 function formatBookingDate(start: string): string {
-  return DateTime.fromISO(start).toFormat('dd/MM/yyyy')
+  return DateTime.fromISO(start).toLocaleString(DateTime.DATE_SHORT)
 }
 
 function drugsFlatTitle(

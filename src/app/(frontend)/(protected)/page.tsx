@@ -6,8 +6,16 @@ import { Metadata } from 'next'
 import { Page } from '@/types/documents'
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { Hero } from '@/components/layout/hero'
-import { CardRow } from '@/components/sections/card-row'
+import { CardColumns } from '@/components/sections/card-row'
 import { FixedImage } from '@/components/partial/fixed-image'
+import { getUser } from '@/lib/supabase/session'
+import { getProfile } from '@/lib/supabase/queries'
+import { sembleQuery } from '@/lib/semble/client'
+import { GET_PATIENT_BOOKINGS } from '@/lib/semble/queries'
+import { sortBookingsByDate } from '@/lib/semble/utils'
+import { MOCK_FUTURE_APPOINTMENTS } from './patient-history/appointments/page'
+import { FutureAppointmentsGrid } from '@/components/appointments/future-appointments-grid'
+import { Section } from '@/components/layout/section'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({
@@ -17,14 +25,27 @@ export const generateMetadata = async (): Promise<Metadata> => {
 }
 
 export default async function Home() {
+  const organizationData = await sanityFetch({
+    query: getSiteSettings,
+  }).then((data) => generateOrganizationData(data))
+
   const page = (await sanityFetch({
     query: getPage,
     params: { type: 'page', path: '/' },
   })) as Page
 
-  const organizationData = await sanityFetch({
-    query: getSiteSettings,
-  }).then((data) => generateOrganizationData(data))
+  const user = await getUser()
+  const profile = await getProfile(user?.id)
+
+  const response = await sembleQuery(GET_PATIENT_BOOKINGS(profile?.semble_id))
+
+  const { futureAppointments, pastAppointments } = sortBookingsByDate(
+    response?.data?.patient?.bookings || []
+  )
+
+  const tempFutureAppointments = futureAppointments?.length
+    ? futureAppointments
+    : MOCK_FUTURE_APPOINTMENTS
 
   return (
     <>
@@ -36,7 +57,15 @@ export default async function Home() {
 
       <main className="min-h-screen-header-footer">
         <Hero title={page.title} hasBacklink={false} />
-        <CardRow cards={page.homeContent?.cards} />
+        <CardColumns cards={page.homeContent?.cards} />
+        <Section id="future-appointments" className="pt-30">
+          <div className="container">
+            <FutureAppointmentsGrid
+              appointments={tempFutureAppointments}
+              title="Upcoming Appointments"
+            />
+          </div>
+        </Section>
         <FixedImage />
       </main>
     </>

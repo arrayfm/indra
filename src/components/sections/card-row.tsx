@@ -7,22 +7,25 @@ import { ConditionalLink } from '../elements/conditional-link'
 import { Button } from '../ui/button'
 import { AnimatedComponent } from '../layout/animated-component'
 
-export const CardRow = ({ cards }: { cards?: RowCard[] }) => {
+export const CardColumns = ({ cards }: { cards?: RowCard[] }) => {
   return (
     <Section id="items" className="pt-17.5">
       <div className="container">
-        <div className="flex flex-col gap-y-7.5">
+        <div className="grid grid-cols-10 gap-x-2.5">
           {cards?.map((card, index) => (
-            <div key={index} className="ease-cubic grid grid-cols-10 gap-x-2.5">
+            <div
+              key={index}
+              className="col-span-10 sm:col-span-4 lg:col-span-3"
+            >
               <ConditionalLink
                 href={card.link?.href}
-                className="group col-span-10 flex gap-2.5 sm:col-span-8 md:col-span-5 lg:col-span-4"
+                className="group flex flex-col gap-2.5"
               >
                 <AnimatedComponent
                   as="div"
                   style={{ opacity: 0 }}
                   transitionOptions={{ delay: 0.25 }}
-                  className="black-overlay-hover h-fit w-full max-w-1/3 rounded-xl sm:max-w-[calc(50%-5px)]"
+                  className="black-overlay-hover h-fit w-full max-w-1/3 rounded-xl sm:max-w-[calc(66%-5px)]"
                 >
                   <Media {...card.image} transition={false} />
                 </AnimatedComponent>

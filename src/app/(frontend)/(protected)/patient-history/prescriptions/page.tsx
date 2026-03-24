@@ -6,14 +6,10 @@ import { cn } from '@/lib/utils/class-name'
 import { typePPMori } from '@/lib/utils/font'
 import { ConditionalLink } from '@/components/elements/conditional-link'
 import { Button } from '@/components/ui/button'
+import { DateTime } from 'luxon'
 
 function formatBookingDate(start: string): string {
-  const date = new Date(start).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric',
-  })
-  return date
+  return DateTime.fromISO(start).toFormat('dd/MM/yyyy')
 }
 
 function drugsFlatTitle(
@@ -36,7 +32,8 @@ export default async function Appointments() {
     ?.slice()
     .sort(
       (a: any, b: any) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime()
+        DateTime.fromISO(b.date).toMillis() -
+        DateTime.fromISO(a.date).toMillis()
     )
 
   return (

@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils/class-name'
 import { typePPMori } from '@/lib/utils/font'
 import { ConditionalLink } from '@/components/elements/conditional-link'
 import { Button } from '@/components/ui/button'
+import { DateTime } from 'luxon'
 
 const MOCK_FUTURE_APPOINTMENTS = [
   {
@@ -27,27 +28,16 @@ const MOCK_FUTURE_APPOINTMENTS = [
 ]
 
 export function formatBookingDate(start: string): string {
-  return new Date(start).toLocaleDateString('en-GB', {
-    weekday: 'short',
-    day: 'numeric',
-    month: 'long',
-  })
+  return DateTime.fromISO(start).toFormat('EEE d MMMM')
 }
 
 export function formatBookingTime(start: string, end: string): string {
-  const opts: Intl.DateTimeFormatOptions = {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-    timeZone: 'Europe/London',
-    timeZoneName: 'short',
-  }
+  const zone = 'Europe/London'
+  const startDt = DateTime.fromISO(start, { zone })
+  const endDt = DateTime.fromISO(end, { zone })
 
-  const startTime = new Date(start).toLocaleTimeString('en-GB', {
-    ...opts,
-    timeZoneName: undefined,
-  })
-  const endTime = new Date(end).toLocaleTimeString('en-GB', opts)
+  const startTime = startDt.toFormat('h:mm a')
+  const endTime = `${endDt.toFormat('h:mm a')} ${endDt.offsetNameShort}`
 
   return `${startTime} — ${endTime}`
 }
@@ -58,18 +48,22 @@ export default async function Appointments() {
 
   const response = await sembleQuery(GET_PATIENT_BOOKINGS(profile?.semble_id))
 
+  const now = DateTime.now()
+
   const futureAppointments = response?.data?.patient?.bookings
-    .filter((booking: any) => new Date(booking.start) > new Date())
+    .filter((booking: any) => DateTime.fromISO(booking.start) > now)
     .sort(
       (a: any, b: any) =>
-        new Date(a.start).getTime() - new Date(b.start).getTime()
+        DateTime.fromISO(a.start).toMillis() -
+        DateTime.fromISO(b.start).toMillis()
     )
 
   const pastAppointments = response?.data?.patient?.bookings
-    .filter((booking: any) => new Date(booking.start) <= new Date())
+    .filter((booking: any) => DateTime.fromISO(booking.start) <= now)
     .sort(
       (a: any, b: any) =>
-        new Date(b.start).getTime() - new Date(a.start).getTime()
+        DateTime.fromISO(b.start).toMillis() -
+        DateTime.fromISO(a.start).toMillis()
     )
 
   const tempFutureAppointments = futureAppointments?.length

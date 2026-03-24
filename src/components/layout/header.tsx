@@ -21,6 +21,7 @@ const MENU_LINKS = [
     parent: '/patient-history',
   },
   { label: 'Mind & body', href: '/modules', parent: '/modules' },
+  { label: 'IC Shop', href: '/shop', parent: '/shop' },
 ]
 
 export const Header = ({ profile }: HeaderProps) => {

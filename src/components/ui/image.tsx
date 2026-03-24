@@ -134,6 +134,7 @@ function Image({
             'opacity-0': (!isInView && transition) || !loaded,
             'opacity-100': (isInView && transition) || (!transition && loaded),
             'absolute inset-0 h-full w-full': cover,
+            'max-h-full max-w-full': !cover,
           })}
           loading="lazy"
           {...props}

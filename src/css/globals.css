@@ -44,8 +44,8 @@
   --text-ppmori-xl--letter-spacing: var(--tracking-ppmori);
 
   --text-ppmori-xl-mobile: 24px;
-  --text-ppmori-xl--line-height-mobile: 24px;
-  --text-ppmori-xl--letter-spacing-mobile: var(--tracking-ppmori);
+  --text-ppmori-xl-mobile--line-height: 24px;
+  --text-ppmori-xl-mobile--letter-spacing: var(--tracking-ppmori);
 
   --text-ppmori-2xl: 38px;
   --text-ppmori-2xl--line-height: 34px;

@@ -5,7 +5,7 @@ import { getProfile } from '@/lib/supabase/queries'
 import { DateTime } from 'luxon'
 import { PrescriptionCard } from '@/components/prescriptions/prescription-card'
 
-export default async function Appointments() {
+export default async function Prescriptions() {
   const user = await getUser()
   const profile = await getProfile(user?.id)
 

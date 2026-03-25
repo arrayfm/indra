@@ -9,6 +9,7 @@ import {
 } from '../ui/accordion'
 import { ConditionalLink } from '../elements/conditional-link'
 import { Button } from '../ui/button'
+import { formatInvoiceDate } from '@/lib/utils/date-time'
 
 interface InvoiceItemProps
   extends
@@ -19,6 +20,7 @@ interface InvoiceItemProps
 
 export const InvoiceItem = (invoice: InvoiceItemProps) => {
   const { reference, amount, items, payment_link, financials } = invoice
+  const datePaid = 'date_paid' in invoice ? invoice.date_paid : undefined
 
   return (
     <div
@@ -26,8 +28,13 @@ export const InvoiceItem = (invoice: InvoiceItemProps) => {
       className="border-grey-400 flex flex-col gap-2 border-b py-6 first:pt-0 last:border-0 last:pb-0"
     >
       <div className="flex justify-between">
-        <div className="">
+        <div className="flex flex-col gap-1">
           <h3 className={cn(typePPMori({ size: 'lg' }))}>{reference}</h3>
+          {datePaid && (
+            <p className={cn(typePPMori({ size: 'md', weight: 'semibold' }))}>
+              {formatInvoiceDate(datePaid)}
+            </p>
+          )}
         </div>
         <div>
           <p className={cn('text-grey-400', typePPMori({ size: 'lg' }))}>

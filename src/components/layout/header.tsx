@@ -112,7 +112,6 @@ export const Header = ({ profile }: HeaderProps) => {
                         <form action={logoutAction} className="mb-1.5">
                           <Button type="submit">Logout</Button>
                         </form>
-                        <ResetPasswordButton email={profile.email} />
                       </div>
                     </div>
                   </>

@@ -8,6 +8,10 @@ export function formatPrescriptionDate(start: string): string {
   return DateTime.fromISO(start).toLocaleString(DateTime.DATE_SHORT)
 }
 
+export function formatInvoiceDate(start: string): string {
+  return DateTime.fromISO(start).toLocaleString(DateTime.DATE_SHORT)
+}
+
 export function formatBookingTime(start: string, end?: string): string {
   const TIME_WITH_OFFSET: Intl.DateTimeFormatOptions = {
     hour: 'numeric',

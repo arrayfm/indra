@@ -5,9 +5,11 @@ import { typePPMori } from '@/lib/utils/font'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const PATIENT_HISTORY_LINKS = [
+const PATIENT_DASHBOARD_LINKS = [
   { label: 'Appointments', href: '/patient-dashboard/appointments' },
   { label: 'Prescriptions', href: '/patient-dashboard/prescriptions' },
+  { label: 'Invoices', href: '/patient-dashboard/invoices' },
+  { label: 'Settings', href: '/patient-dashboard/settings' },
 ]
 
 export const PatientDashboardLinks = () => {
@@ -17,7 +19,7 @@ export const PatientDashboardLinks = () => {
   return (
     <nav>
       <ul className="flex flex-wrap gap-5 md:flex-col">
-        {PATIENT_HISTORY_LINKS.map((link) => (
+        {PATIENT_DASHBOARD_LINKS.map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}

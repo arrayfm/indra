@@ -22,17 +22,32 @@ export interface Patient {
   [key: string]: unknown
 }
 
+export type InvoiceItem = {
+  description: string
+  qty: number
+  unit_price: number
+  line_total: number
+}
+
 export interface Invoice {
   reference: string
   amount: string
-  items: {
-    description: string
-    qty: string
-    unit_price: number
-    line_total: number
-  }[]
+  items: InvoiceItem[]
   payment_link: string
   status: 'PAID' | 'UNPAID'
+}
+
+export interface HistoryItem {
+  reference: string
+  patient_email: string
+  date_paid: string
+  transaction_id: string
+  financials: {
+    subtotal: number
+    delivery_fee: number
+    total_paid: number
+  }
+  items: InvoiceItem[]
 }
 
 export interface FindPatientResponse {
@@ -49,10 +64,15 @@ export interface InvoicesApiResponse extends GenericApiResponse {
   invoices: Invoice[]
 }
 
+export interface BillingHistoryResponse extends GenericApiResponse {
+  history: HistoryItem[]
+}
+
 export type ApiResponse =
   | FindPatientResponse
   | GenericApiResponse
   | InvoicesApiResponse
+  | BillingHistoryResponse
 
 export interface SuccessOutput {
   label?: string

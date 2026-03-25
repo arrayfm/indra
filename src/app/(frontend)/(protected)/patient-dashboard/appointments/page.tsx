@@ -7,6 +7,7 @@ import { typePPMori } from '@/lib/utils/font'
 import { sortBookingsByDate } from '@/lib/semble/utils'
 import { PastAppointmentCard } from '@/components/appointments/past-appointment-card'
 import { FutureAppointmentsGrid } from '@/components/appointments/future-appointments-grid'
+import { AnimatedComponent } from '@/components/layout/animated-component'
 
 export const MOCK_FUTURE_APPOINTMENTS = [
   {
@@ -46,14 +47,17 @@ export default async function Appointments() {
       <FutureAppointmentsGrid appointments={tempFutureAppointments} />
 
       <div className="grid grid-cols-6 gap-x-2.5 gap-y-10">
-        <h2
+        <AnimatedComponent
+          as="h2"
+          style={{ opacity: 0, transform: 'translateY(12px)' }}
+          transitionOptions={{ delay: 0.1 }}
           className={cn(
             'text-grey-400 col-span-6 mb-2',
             typePPMori({ size: 'lg' })
           )}
         >
           Previous
-        </h2>
+        </AnimatedComponent>
         {pastAppointments?.map((booking: any) => (
           <div key={booking.id} className="col-span-3">
             <PastAppointmentCard booking={booking} />

@@ -1,5 +1,6 @@
 import {
   ApiResponse,
+  BillingHistoryResponse,
   FindPatientResponse,
   InvoicesApiResponse,
   Patient,
@@ -44,6 +45,8 @@ export async function getAzureInvoices(
 
 export async function getAzureBillingHistory(
   email: string
-): Promise<ApiResponse> {
-  return azureQuery('get_billing_history', { email })
+): Promise<BillingHistoryResponse> {
+  return azureQuery('get_billing_history', {
+    email,
+  }) as Promise<BillingHistoryResponse>
 }

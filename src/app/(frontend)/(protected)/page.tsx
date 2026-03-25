@@ -20,6 +20,8 @@ import { typePPMori } from '@/lib/utils/font'
 import { cn } from '@/lib/utils/class-name'
 import { ArticleCard } from '@/components/article-grid/article-card'
 import { AnimatedComponent } from '@/components/layout/animated-component'
+import { MOCK_PRODUCTS } from '@/components/shop-grid'
+import { ProductCard } from '@/components/shop-grid/product-card'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({
@@ -106,6 +108,44 @@ export default async function Home() {
             </div>
           </Section>
         )}
+
+        <Section id="latest-products" className="pt-30">
+          <div className="container">
+            <div className="grid grid-cols-10 gap-x-2.5 gap-y-10">
+              <AnimatedComponent
+                as="h2"
+                style={{
+                  opacity: 0,
+                }}
+                className={cn(
+                  'text-grey-400 col-span-6 mb-2',
+                  typePPMori({ size: 'lg' })
+                )}
+              >
+                IC Shop
+              </AnimatedComponent>
+              <div className="col-span-7 flex flex-wrap justify-between">
+                {MOCK_PRODUCTS?.map((product, index) => {
+                  if (index >= 3) return null
+                  return (
+                    <div
+                      key={product._id}
+                      className="w-full md:w-1/2 lg:w-[calc(33%-7px)]"
+                    >
+                      <ProductCard
+                        index={index}
+                        {...product}
+                        imageSize="sm"
+                        titleSize="md"
+                        showPrice={false}
+                      />
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </Section>
 
         <FixedImage />
       </main>

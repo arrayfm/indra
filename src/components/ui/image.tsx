@@ -110,7 +110,7 @@ function Image({
         'overflow-hidden',
         {
           'absolute inset-0 h-full w-full object-cover': cover,
-          'relative h-auto max-h-full w-auto max-w-full object-contain': !cover,
+          'relative h-auto w-auto max-w-full object-contain': !cover,
         },
         className
       )}

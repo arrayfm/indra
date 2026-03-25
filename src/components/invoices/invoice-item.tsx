@@ -45,7 +45,7 @@ export const InvoiceItem = (invoice: InvoiceItemProps) => {
 
       <Accordion type="single" collapsible>
         <AccordionItem value={reference}>
-          <AccordionTrigger className="flex w-full justify-between">
+          <AccordionTrigger className="group flex w-full justify-between">
             <p className={cn(typePPMori({ size: 'md', weight: 'semibold' }))}>
               {items?.length ?? 0} item{items?.length > 1 ? 's' : ''}
             </p>
@@ -55,7 +55,10 @@ export const InvoiceItem = (invoice: InvoiceItemProps) => {
                 typePPMori({ size: 'md', weight: 'semibold' })
               )}
             >
-              Expand {'+'}
+              <span className="group-data-[state=open]:hidden">Expand +</span>
+              <span className="group-data-[state=closed]:hidden">
+                Collapse −
+              </span>
             </p>
           </AccordionTrigger>
           <AccordionContent className="flex flex-col gap-2 pt-6 pb-2">

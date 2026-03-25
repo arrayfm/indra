@@ -365,6 +365,7 @@ input[type='search']::-webkit-search-cancel-button {
   text-decoration: none;
 }
 
+.border-link-non-group:after,
 .border-link:after {
   position: absolute;
   left: 0px;
@@ -381,6 +382,7 @@ input[type='search']::-webkit-search-cancel-button {
 
 .border-link-active:after,
 .border-link:hover:after,
+.border-link-non-group:hover:after,
 .group:hover .border-link:after {
   transform: scaleX(1);
   transform-origin: 0 0;

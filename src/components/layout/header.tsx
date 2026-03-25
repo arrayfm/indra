@@ -7,22 +7,12 @@ import { typePPMori } from '@/lib/utils/font'
 import { Button } from '../ui/button'
 import { logoutAction } from '@/lib/actions/logout'
 import { Profile } from '@/types/supabase'
-import { ResetPasswordButton } from '../ui/reset-password-button'
 import { usePathname } from 'next/navigation'
+import { MENU_LINKS, PATIENT_DASHBOARD_LINKS } from '@/constants'
 
 type HeaderProps = {
   profile: Profile | null
 }
-
-const MENU_LINKS = [
-  {
-    label: 'Patient dashboard',
-    href: '/patient-dashboard/appointments',
-    parent: '/patient-dashboard',
-  },
-  { label: 'Mind & body', href: '/modules', parent: '/modules' },
-  { label: 'IC Shop', href: '/shop', parent: '/shop' },
-]
 
 export const Header = ({ profile }: HeaderProps) => {
   const pathname = usePathname()
@@ -100,15 +90,30 @@ export const Header = ({ profile }: HeaderProps) => {
                             {profile.first_name ?? profile.email}
                           </p>
                         </ConditionalLink>
-                        <p
-                          className={cn(
-                            'text-grey-400 mb-8',
-                            typePPMori({ size: 'md' })
-                          )}
-                        >
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Curabitur at ligula arcu.
-                        </p>
+                        <nav className="pb-6">
+                          <ul className="flex flex-col">
+                            {PATIENT_DASHBOARD_LINKS.map((link) => (
+                              <li key={link.href}>
+                                <ConditionalLink
+                                  href={link.href}
+                                  className={cn(
+                                    'border-link-non-group relative w-fit transition-colors',
+                                    typePPMori({ size: 'md' }),
+                                    {
+                                      'text-dark-purple': urlIncludes(
+                                        link.href
+                                      ),
+                                      'text-grey-400 hover:bg-beige/50':
+                                        !urlIncludes(link.href),
+                                    }
+                                  )}
+                                >
+                                  {link.label}
+                                </ConditionalLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </nav>
                         <form action={logoutAction} className="mb-1.5">
                           <Button type="submit">Logout</Button>
                         </form>

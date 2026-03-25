@@ -5,7 +5,7 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear()
   return (
     <footer>
-      <div className="container py-5">
+      <div className="container pt-10 pb-5">
         <div className="text-grey-400 flex max-w-55 flex-col gap-3">
           <p className={cn(typePPMori({ size: 'sm', weight: 'semibold' }))}>
             Company information

@@ -16,6 +16,7 @@ type InputSelectProps = {
   inputName: string
   placeholder?: string
   resetTrigger?: boolean
+  onSelect?: (option: Option) => void
 }
 
 export const SelectInput: React.FC<InputSelectProps> = ({
@@ -23,6 +24,7 @@ export const SelectInput: React.FC<InputSelectProps> = ({
   inputName,
   placeholder = 'Select an option',
   resetTrigger,
+  onSelect,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState<Option>()
@@ -38,6 +40,7 @@ export const SelectInput: React.FC<InputSelectProps> = ({
   const handleSelect = (option: Option) => {
     setSelectedOption(option)
     setIsOpen(false)
+    onSelect?.(option)
   }
 
   useEffect(() => {
@@ -88,17 +91,11 @@ export const SelectInput: React.FC<InputSelectProps> = ({
         />
         <div
           className={cn(
-            'rounded-xs flex h-9 w-full cursor-pointer items-center justify-between overflow-hidden bg-white p-2.5'
+            'text-md text-dark-purple bg-mid-beige flex w-full items-center justify-between rounded-[200px] px-4 py-3 leading-none transition-colors outline-none'
           )}
           onClick={(event) => handleOnClick(event)}
         >
-          <span
-            className={cn({
-              'text-mono-400': !selectedOption,
-            })}
-          >
-            {selectedOption?.label || placeholder}
-          </span>
+          <span>{selectedOption?.label || placeholder}</span>
           <SVG
             className={cn('transition-transform', {
               'rotate-180': isOpen,
@@ -116,7 +113,7 @@ export const SelectInput: React.FC<InputSelectProps> = ({
           <ul
             ref={dropdownRef}
             style={dropdownStyles}
-            className="rounded-xs text-dark-blue max-h-[400px] cursor-pointer overflow-y-auto bg-white shadow-md"
+            className="text-dark-purple bg-mid-beige max-h-[400px] cursor-pointer overflow-y-auto rounded-xl shadow-xl"
           >
             {options.map((option) => (
               <li
@@ -124,7 +121,7 @@ export const SelectInput: React.FC<InputSelectProps> = ({
                 onClick={() => handleSelect(option)}
                 className="group p-1"
               >
-                <div className="rounded-xs group-hover:bg-dark-blue p-1.5 transition-colors duration-100 group-hover:text-white">
+                <div className="group-hover:bg-dark-purple rounded-xs p-1.5 transition-colors duration-100 group-hover:text-white">
                   {option.label}
                 </div>
               </li>

@@ -22,6 +22,7 @@ import { ArticleCard } from '@/components/article-grid/article-card'
 import { AnimatedComponent } from '@/components/layout/animated-component'
 import { MOCK_PRODUCTS } from '@/components/shop-grid'
 import { ProductCard } from '@/components/shop-grid/product-card'
+import { ConditionalLink } from '@/components/elements/conditional-link'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({
@@ -93,10 +94,19 @@ export default async function Home() {
                       opacity: 0,
                     }}
                     className={cn(
-                      'text-grey-400 col-span-6 mb-2',
+                      'text-grey-400 col-span-6 mb-2 flex flex-col',
                       typePPMori({ size: 'lg' })
                     )}
                   >
+                    <ConditionalLink
+                      href="/modules"
+                      className={cn(
+                        'text-dark-purple border-link mb-2 w-fit',
+                        typePPMori({ size: 'md' })
+                      )}
+                    >
+                      Mind & body
+                    </ConditionalLink>
                     Latest meditation
                   </AnimatedComponent>
                   <ArticleCard
@@ -118,11 +128,20 @@ export default async function Home() {
                   opacity: 0,
                 }}
                 className={cn(
-                  'text-grey-400 col-span-6 mb-2',
+                  'text-grey-400 col-span-6 mb-2 flex flex-col',
                   typePPMori({ size: 'lg' })
                 )}
               >
-                IC Shop
+                <ConditionalLink
+                  href="/shop"
+                  className={cn(
+                    'text-dark-purple border-link mb-2 w-fit',
+                    typePPMori({ size: 'md' })
+                  )}
+                >
+                  IC Shop
+                </ConditionalLink>
+                Latest products
               </AnimatedComponent>
               <div className="col-span-7 flex flex-wrap justify-between gap-x-2.5 gap-y-10">
                 {MOCK_PRODUCTS?.map((product, index) => {

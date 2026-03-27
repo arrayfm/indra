@@ -11,7 +11,7 @@ export const CardColumns = ({ cards }: { cards?: RowCard[] }) => {
   return (
     <Section id="items" className="pt-17.5">
       <div className="container">
-        <div className="grid grid-cols-10 gap-x-2.5">
+        <div className="grid grid-cols-10 gap-x-2.5 gap-y-10">
           {cards?.map((card, index) => (
             <div
               key={index}

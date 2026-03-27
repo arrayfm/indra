@@ -124,7 +124,7 @@ export default async function Home() {
               >
                 IC Shop
               </AnimatedComponent>
-              <div className="col-span-7 flex flex-wrap justify-between">
+              <div className="col-span-7 flex flex-wrap justify-between gap-x-2.5 gap-y-10">
                 {MOCK_PRODUCTS?.map((product, index) => {
                   if (index >= 3) return null
                   return (

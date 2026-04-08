@@ -8,6 +8,15 @@ export interface Page {
   title?: string
   description?: string
   slug: string
+  patientDashboardContent?: {
+    usefulLinks: {
+      items: {
+        title: string
+        description?: string
+        link: Link
+      }[]
+    }
+  }
   homeContent?: {
     cards: RowCard[]
     featuredModule?: Article

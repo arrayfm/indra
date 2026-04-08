@@ -10,21 +10,9 @@ import { ConditionalLink } from '@/components/elements/conditional-link'
 import { Button } from '@/components/ui/button'
 import { AnimatedComponent } from '@/components/layout/animated-component'
 
-export default async function Appointments() {
+export default async function Settings() {
   const user = await getUser()
   const profile = await getProfile(user?.id)
-
-  const response = await sembleQuery(
-    GET_PATIENT_PRESCRIPTIONS(profile?.semble_id)
-  )
-
-  const prescriptions = response?.data?.patient?.prescriptions.data
-    ?.slice()
-    .sort(
-      (a: any, b: any) =>
-        DateTime.fromISO(b.date).toMillis() -
-        DateTime.fromISO(a.date).toMillis()
-    )
 
   return (
     <div className="flex grid-cols-6 flex-col gap-x-2.5 gap-y-10 md:grid">

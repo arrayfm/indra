@@ -2,6 +2,7 @@ export const PATIENT_DASHBOARD_LINKS = [
   { label: 'Appointments', href: '/patient-dashboard/appointments' },
   { label: 'Prescriptions', href: '/patient-dashboard/prescriptions' },
   { label: 'Invoices', href: '/patient-dashboard/invoices' },
+  { label: 'Useful links', href: '/patient-dashboard/useful-links' },
   { label: 'Settings', href: '/patient-dashboard/settings' },
 ]
 

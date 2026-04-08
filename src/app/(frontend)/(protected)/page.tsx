@@ -71,6 +71,7 @@ export default async function Home() {
             <div className="grid grid-cols-10 gap-x-2.5 gap-y-10">
               <div className="col-span-10 md:col-span-6">
                 <FutureAppointmentsGrid
+                  hasPretitle={true}
                   appointments={tempFutureAppointments}
                   title={
                     tempFutureAppointments.length > 0

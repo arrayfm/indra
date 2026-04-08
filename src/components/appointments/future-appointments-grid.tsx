@@ -8,9 +8,11 @@ import { ConditionalLink } from '../elements/conditional-link'
 export const FutureAppointmentsGrid = ({
   appointments,
   title = 'Upcoming',
+  hasPretitle = false,
 }: {
   appointments: Booking[]
   title?: string
+  hasPretitle?: boolean
 }) => {
   return (
     <div className="flex grid-cols-6 flex-col gap-x-2.5 gap-y-10 md:grid">
@@ -23,15 +25,17 @@ export const FutureAppointmentsGrid = ({
           typePPMori({ size: 'lg' })
         )}
       >
-        <ConditionalLink
-          href="/patient-dashboard/appointments"
-          className={cn(
-            'text-dark-purple border-link mb-2 w-fit',
-            typePPMori({ size: 'md' })
-          )}
-        >
-          Customer dashboard
-        </ConditionalLink>
+        {hasPretitle && (
+          <ConditionalLink
+            href="/patient-dashboard/appointments"
+            className={cn(
+              'text-dark-purple border-link mb-2 w-fit',
+              typePPMori({ size: 'md' })
+            )}
+          >
+            Customer dashboard
+          </ConditionalLink>
+        )}
         {title}
       </AnimatedComponent>
       {appointments?.map((booking: any) => (

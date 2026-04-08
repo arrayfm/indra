@@ -17,6 +17,17 @@ export const getPage = groq`
         path
       },
       description,
+      patientDashboardContent {
+        usefulLinks {
+          items[] {
+            title,
+            description,
+            link {
+              ${link()}
+            }
+          }
+        }
+      },
       homeContent {
         cards[] {
           title,  

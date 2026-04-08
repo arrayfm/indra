@@ -3,8 +3,10 @@ import { defineType, defineField, defineArrayMember } from 'sanity'
 
 import { seo } from '@/sanity/schema/fields/seo'
 import { createSlugField } from '../fields/slug'
+import { patientDashboardContent } from '../fields/patient-dashboard-content'
 
 const homeSlug = ['home']
+const patientDashboardSlug = ['patient-dashboard']
 
 export const page = defineType({
   name: 'page',
@@ -54,6 +56,19 @@ export const page = defineType({
       type: 'text',
       group: 'content',
       rows: 5,
+    }),
+    defineField({
+      name: 'patientDashboardContent',
+      title: 'Patient Dashboard Content',
+      type: 'object',
+      group: 'content',
+      hidden: ({ parent, document }) => {
+        // @ts-ignore
+        if (patientDashboardSlug.includes(document?.slug?.current)) return false
+
+        return true
+      },
+      fields: [...patientDashboardContent],
     }),
     defineField({
       name: 'homeContent',

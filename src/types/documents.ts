@@ -1,4 +1,10 @@
 import { Audio, Embed, Image, Link, Media, RowCard } from './elements'
+import { PatientDashboardContentLinks, TextContent } from './sections'
+
+export type PatientDashboardContent = (
+  | TextContent
+  | PatientDashboardContentLinks
+)[]
 
 export interface Page {
   _id: string
@@ -10,11 +16,7 @@ export interface Page {
   slug: string
   patientDashboardContent?: {
     usefulLinks: {
-      items: {
-        title: string
-        description?: string
-        link: Link
-      }[]
+      content: (TextContent | PatientDashboardContentLinks)[]
     }
   }
   homeContent?: {

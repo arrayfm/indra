@@ -19,12 +19,24 @@ export const getPage = groq`
       description,
       patientDashboardContent {
         usefulLinks {
-          items[] {
-            title,
-            description,
-            link {
-              ${link()}
-            }
+          content[] {
+            _type,
+            _type == 'textContent' => {
+                _type,
+                _key,
+                title,
+            },  
+              _type == 'links' => {
+                _type,
+                _key, 
+                items[] {
+                  title,
+                  description,
+                  link {
+                    ${link()}
+                  }
+                }
+              }  
           }
         }
       },

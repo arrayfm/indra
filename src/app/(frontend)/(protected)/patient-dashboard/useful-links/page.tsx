@@ -2,6 +2,7 @@ import { sanityFetch } from '@/sanity/lib/fetch'
 import { getPage } from '@/sanity/queries/get-page'
 import { Page } from '@/types/documents'
 import { TextCard } from '@/components/items/text-card'
+import { PatientDashboardContent } from '@/components/patient-dashboard/patient-dashboard-content'
 
 export default async function UsefulLinks() {
   const page = (await sanityFetch({
@@ -9,16 +10,16 @@ export default async function UsefulLinks() {
     params: { type: 'page', path: '/patient-dashboard' },
   })) as Page
 
+  console.log(
+    'useful links page',
+    page.patientDashboardContent?.usefulLinks.content
+  )
+
   return (
-    <div className="flex grid-cols-6 flex-col gap-x-2.5 gap-y-10 md:grid">
-      {page.patientDashboardContent?.usefulLinks?.items.map((item, index) => (
-        <TextCard
-          key={index}
-          title={item.title}
-          description={item.description || ''}
-          link={item.link}
-        />
-      ))}
+    <div className="flex flex-col gap-y-12">
+      <PatientDashboardContent
+        content={page.patientDashboardContent?.usefulLinks.content || []}
+      />
     </div>
   )
 }

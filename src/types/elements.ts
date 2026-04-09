@@ -114,3 +114,9 @@ export type RowCard = {
   image?: Image
   link?: Link
 }
+
+export type LinkItem = {
+  title: string
+  description?: string
+  link: Link
+}

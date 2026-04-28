@@ -62,7 +62,7 @@ export default async function Home() {
     variables: { handle: 'portal' },
   })) as ShopifyCollectionProducts
 
-  const products = mapShopifyProducts(shopifyData)
+  const products = mapShopifyProducts(shopifyData, { limit: 3 })
 
   return (
     <>

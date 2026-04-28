@@ -28,7 +28,7 @@ export default async function Shop() {
     variables: { handle: 'portal' },
   })) as ShopifyCollectionProducts
 
-  const products = mapShopifyProducts(shopifyData)
+  const products = mapShopifyProducts(shopifyData, { limit: 50 })
 
   return (
     <main className="min-h-screen-header-footer">

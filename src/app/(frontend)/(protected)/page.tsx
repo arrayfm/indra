@@ -20,9 +20,12 @@ import { typePPMori } from '@/lib/utils/font'
 import { cn } from '@/lib/utils/class-name'
 import { ArticleCard } from '@/components/article-grid/article-card'
 import { AnimatedComponent } from '@/components/layout/animated-component'
-import { MOCK_PRODUCTS } from '@/components/shop-grid'
 import { ProductCard } from '@/components/shop-grid/product-card'
 import { ConditionalLink } from '@/components/elements/conditional-link'
+import { shopifyFetch } from '@/lib/shopify/client'
+import { GET_COLLECTION_PRODUCTS } from '@/lib/shopify/queries'
+import { ShopifyCollectionProducts } from '@/types/shopify'
+import { mapShopifyProducts } from '@/lib/shopify/utils'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({
@@ -53,6 +56,13 @@ export default async function Home() {
   const tempFutureAppointments = futureAppointments?.length
     ? futureAppointments
     : MOCK_FUTURE_APPOINTMENTS
+
+  const shopifyData = (await shopifyFetch({
+    query: GET_COLLECTION_PRODUCTS,
+    variables: { handle: 'portal' },
+  })) as ShopifyCollectionProducts
+
+  const products = mapShopifyProducts(shopifyData)
 
   return (
     <>
@@ -145,7 +155,7 @@ export default async function Home() {
                 Latest products
               </AnimatedComponent>
               <div className="col-span-7 flex flex-wrap justify-between gap-x-2.5 gap-y-10">
-                {MOCK_PRODUCTS?.map((product, index) => {
+                {products?.map((product, index) => {
                   if (index >= 3) return null
                   return (
                     <div
@@ -153,7 +163,6 @@ export default async function Home() {
                       className="w-full md:w-1/2 lg:w-[calc(33%-7px)]"
                     >
                       <ProductCard
-                        index={index}
                         {...product}
                         imageSize="sm"
                         titleSize="md"

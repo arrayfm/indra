@@ -5,6 +5,10 @@ import { Page } from '@/types/documents'
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { Hero } from '@/components/layout/hero'
 import ShopGrid from '@/components/shop-grid'
+import { shopifyFetch } from '@/lib/shopify/client'
+import { GET_COLLECTION_PRODUCTS } from '@/lib/shopify/queries'
+import { ShopifyCollectionProducts } from '@/types/shopify'
+import { mapShopifyProducts } from '@/lib/shopify/utils'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return await getMetaData({
@@ -19,10 +23,17 @@ export default async function Shop() {
     params: { type: 'page', path: '/shop' },
   })) as Page
 
+  const shopifyData = (await shopifyFetch({
+    query: GET_COLLECTION_PRODUCTS,
+    variables: { handle: 'portal' },
+  })) as ShopifyCollectionProducts
+
+  const products = mapShopifyProducts(shopifyData)
+
   return (
     <main className="min-h-screen-header-footer">
       <Hero title={page.title} />
-      <ShopGrid />
+      <ShopGrid products={products} />
     </main>
   )
 }

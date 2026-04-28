@@ -6,6 +6,7 @@ import { AnimatedComponent } from '../layout/animated-component'
 import { typePPMori } from '@/lib/utils/font'
 import { cn } from '@/lib/utils/class-name'
 import { Media } from '../media/media'
+import { Product } from '@/types/shopify'
 
 const productCardVariants = cva('', {
   variants: {
@@ -34,21 +35,16 @@ type ProductCardVariants = VariantProps<typeof productCardVariants>
 
 export const ProductCard = ({
   _id,
-  path,
+  url,
   imageUrl,
   title,
   price,
-  size,
   imageSize,
   titleSize,
-  showPrice,
-}: any & ProductCardVariants) => {
+  amount,
+}: { amount?: string } & Product & ProductCardVariants) => {
   return (
-    <ConditionalLink
-      key={_id}
-      className="group flex flex-col gap-3"
-      href={path}
-    >
+    <ConditionalLink key={_id} className="group flex flex-col gap-3" href={url}>
       {imageUrl && (
         <AnimatedComponent
           as="div"
@@ -70,10 +66,10 @@ export const ProductCard = ({
           transitionOptions={{ delay: 0.35 }}
           className={cn(typePPMori({ size: titleSize ?? 'xl' }))}
         >
-          {title} {size && <span className="text-grey-400">{size}</span>}
+          {title} {amount && <span className="text-grey-400">{amount}</span>}
         </AnimatedComponent>
       )}
-      {showPrice !== false && (
+      {price && (
         <AnimatedComponent
           as="h3"
           style={{ opacity: 0, transform: 'translateY(12px)' }}

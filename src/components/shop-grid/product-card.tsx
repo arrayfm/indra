@@ -50,7 +50,7 @@ export const ProductCard = ({
           as="div"
           style={{ opacity: 0 }}
           transitionOptions={{ delay: 0.25 }}
-          className="relative mb-5 w-full"
+          className="relative mb-5 w-full overflow-hidden rounded-xl"
         >
           <Media
             src={imageUrl}

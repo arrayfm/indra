@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 import { FaPauseCircle } from 'react-icons/fa'
 import { AudioPlaySVG } from '../svg/audio-play'
 import { AnimatedComponent } from '../layout/animated-component'
+import { Embed } from '../media/embed'
 
 export const ScatterCard = ({
   _id,
@@ -20,20 +21,31 @@ export const ScatterCard = ({
   audio,
   mediaUrlEmbed,
 }: Resource) => {
-  const isAudioOnly = !!audio && !mediaUrlEmbed?.url
+  const hasAudio = !!audio
+  const hasVideo = !!mediaUrlEmbed?.url
 
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false)
+  const showAudioControls = hasAudio || hasVideo
+
+  const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
-    if (!audioRef.current) return
-
-    if (isPlayingAudio) {
+    if (!audioRef.current || !hasAudio) return
+    if (isPlaying) {
       audioRef.current.play()
     } else {
       audioRef.current.pause()
     }
-  }, [isPlayingAudio])
+  }, [isPlaying, hasAudio])
+
+  const videoAsAudioControls =
+    hasVideo && !hasAudio
+      ? {
+          isPlaying,
+          isAudioMode: true as const,
+          onPlayToggle: () => setIsPlaying((prev) => !prev),
+        }
+      : undefined
 
   return (
     <div key={_id} className={cn('group flex flex-col gap-5')}>
@@ -47,6 +59,23 @@ export const ScatterCard = ({
           <Media {...media?.[0]} transition={false} />
         </AnimatedComponent>
       )}
+
+      {videoAsAudioControls && (
+        <div
+          className="pointer-events-none absolute overflow-hidden"
+          style={{ width: 1, height: 1, opacity: 0 }}
+          aria-hidden="true"
+        >
+          <div className="relative" style={{ width: 1, height: 1 }}>
+            <Embed
+              {...mediaUrlEmbed}
+              hasMedia={false}
+              externalControls={videoAsAudioControls}
+            />
+          </div>
+        </div>
+      )}
+
       <AnimatedComponent
         as="h2"
         style={{ opacity: 0, transform: 'translateY(12px)' }}
@@ -60,29 +89,28 @@ export const ScatterCard = ({
             </h2>
           </ConditionalLink>
         )}
-        {!isAudioOnly && (
+
+        {!showAudioControls && (
           <ConditionalLink key={_id} href={path}>
             <Button className={cn('w-fit')}>Get started</Button>
           </ConditionalLink>
         )}
 
-        {isAudioOnly && (
+        {showAudioControls && (
           <div className="flex items-center gap-5">
-            <AudioPlaySVG
-              isPlaying={isPlayingAudio}
-              linesOnly
-              numberOfLines={30}
-            />
+            <AudioPlaySVG isPlaying={isPlaying} linesOnly numberOfLines={30} />
             <button
               className={cn('svg h-8 w-8 cursor-pointer')}
               onClick={(e) => {
                 e.preventDefault()
-                setIsPlayingAudio(!isPlayingAudio)
+                setIsPlaying((prev) => !prev)
               }}
             >
-              {isPlayingAudio ? <FaPauseCircle /> : <PlayFilledSVG />}
+              {isPlaying ? <FaPauseCircle /> : <PlayFilledSVG />}
             </button>
-            <audio ref={audioRef} src={audio?.url} className="hidden" />
+            {hasAudio && (
+              <audio ref={audioRef} src={audio?.url} className="hidden" />
+            )}
           </div>
         )}
       </AnimatedComponent>

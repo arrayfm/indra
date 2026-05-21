@@ -18,7 +18,6 @@ const formatDuration = (seconds: number) => {
   const secs = Math.floor(seconds % 60)
     .toString()
     .padStart(2, '0')
-
   return `${minutes}m ${secs}s`
 }
 
@@ -30,16 +29,17 @@ export const ResourcePlayer = ({
 }: Resource) => {
   const [isPlayingVideo, setIsPlayingVideo] = useState(false)
   const [isPlayingAudio, setIsPlayingAudio] = useState(false)
+  const [isAudioMode, setIsAudioMode] = useState(false)
   const [length, setLength] = useState<string | null>(null)
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const hasAudio = !!audio
   const hasVideo = !!mediaUrlEmbed?.url
+  const showAudioButton = hasAudio || hasVideo
 
   useEffect(() => {
     if (!audioRef.current) return
-
     if (isPlayingAudio) {
       audioRef.current.play()
     } else {
@@ -50,6 +50,7 @@ export const ResourcePlayer = ({
   const externalControls = hasVideo
     ? {
         isPlaying: isPlayingVideo,
+        isAudioMode,
         onPlayToggle: () => setIsPlayingVideo((prev) => !prev),
       }
     : undefined
@@ -57,29 +58,37 @@ export const ResourcePlayer = ({
   const handleVideoClick = () => {
     if (!hasVideo) return
 
-    // if (isPlayingAudio) setIsPlayingAudio(false)
-    setIsPlayingVideo((prev) => !prev)
+    if (isAudioMode) {
+      setIsAudioMode(false)
+    } else {
+      setIsPlayingVideo((prev) => !prev)
+    }
   }
 
   const handleAudioClick = () => {
-    if (!hasAudio) return
-
-    // if (isPlayingVideo) setIsPlayingVideo(false)
-    setIsPlayingAudio((prev) => !prev)
+    if (hasAudio) {
+      setIsPlayingAudio((prev) => !prev)
+    } else if (hasVideo) {
+      if (isAudioMode) {
+        setIsAudioMode(false)
+        setIsPlayingVideo(false)
+      } else {
+        setIsAudioMode(true)
+        setIsPlayingVideo(true)
+      }
+    }
   }
+
+  const isAudioPlaying = hasAudio ? isPlayingAudio : isAudioMode
 
   useEffect(() => {
     const getDuration = async () => {
       try {
         if (mediaUrlEmbed?.url) {
           const res = await fetch(
-            `https://noembed.com/embed?url=${encodeURIComponent(
-              mediaUrlEmbed.url
-            )}`
+            `https://noembed.com/embed?url=${encodeURIComponent(mediaUrlEmbed.url)}`
           )
-
           const data = await res.json()
-
           if (data?.duration) {
             setLength(formatDuration(data.duration))
             return
@@ -88,13 +97,10 @@ export const ResourcePlayer = ({
 
         if (audioRef.current) {
           const audio = audioRef.current
-
           const handleLoadedMetadata = () => {
             setLength(formatDuration(audio.duration))
           }
-
           audio.addEventListener('loadedmetadata', handleLoadedMetadata)
-
           return () =>
             audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
         }
@@ -141,21 +147,25 @@ export const ResourcePlayer = ({
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-1.5">
-          {hasAudio && (
+          {showAudioButton && (
             <>
-              <Button onClick={handleAudioClick}>
-                {isPlayingAudio ? 'Pause' : 'Play'} audio
+              <Button onClick={handleAudioClick} className="relative">
+                {isAudioPlaying ? 'Pause' : 'Play'} audio
                 <SVG>
-                  <AudioPlaySVG isPlaying={isPlayingAudio} />
+                  <AudioPlaySVG isPlaying={isAudioPlaying} />
                 </SVG>
               </Button>
-              <audio ref={audioRef} src={audio?.url} className="hidden" />
+              {hasAudio && (
+                <audio ref={audioRef} src={audio?.url} className="hidden" />
+              )}
             </>
           )}
           {hasVideo && (
             <Button onClick={handleVideoClick}>
-              {isPlayingVideo ? 'Pause' : 'Play'} video
-              <SVG>{isPlayingVideo ? <PauseIcon /> : <PlaySVG />}</SVG>
+              {isPlayingVideo && !isAudioMode ? 'Pause' : 'Play'} video
+              <SVG>
+                {isPlayingVideo && !isAudioMode ? <PauseIcon /> : <PlaySVG />}
+              </SVG>
             </Button>
           )}
         </div>

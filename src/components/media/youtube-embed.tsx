@@ -10,6 +10,7 @@ import { Embed } from '@/types/elements'
 export type YoutubeEmbedControls = {
   isPlaying?: boolean
   isMuted?: boolean
+  isAudioMode?: boolean
   onPlayToggle?: () => void
   onMuteToggle?: () => void
 }
@@ -21,6 +22,8 @@ export const YoutubeEmbed = ({
   hasMedia = false,
   externalControls,
 }: Embed & { externalControls?: YoutubeEmbedControls }) => {
+  const isAudioMode = !!externalControls?.isAudioMode
+
   const playerRef = useRef<HTMLDivElement | null>(null)
   const [player, setPlayer] = useState<any | null>(null)
 
@@ -35,7 +38,9 @@ export const YoutubeEmbed = ({
 
   const handlePlay = () => {
     if (!player) return
-    if (!isClicked) setIsClicked(true)
+    if (!isClicked && !isAudioMode) {
+      setIsClicked(true)
+    }
 
     if (externalControls?.onPlayToggle) {
       externalControls.onPlayToggle()
@@ -82,7 +87,9 @@ export const YoutubeEmbed = ({
 
     if (isPlaying) {
       player.playVideo()
-      if (!isClicked) setIsClicked(true)
+      if (!isClicked && !isAudioMode) {
+        setIsClicked(true)
+      }
     } else {
       player.pauseVideo()
     }
@@ -118,6 +125,9 @@ export const YoutubeEmbed = ({
           events: {
             onReady: () => {
               setPlayer(playerInstance)
+              if (externalControls?.isAudioMode) {
+                playerInstance.unMute()
+              }
             },
           },
         })
@@ -143,6 +153,16 @@ export const YoutubeEmbed = ({
     return () => clearInterval(interval)
   }, [player])
 
+  useEffect(() => {
+    if (!player) return
+
+    if (isAudioMode) {
+      player.unMute()
+
+      setInternalIsMuted(false)
+    }
+  }, [isAudioMode, player])
+
   if (!playbackId) return null
 
   return (
@@ -152,8 +172,8 @@ export const YoutubeEmbed = ({
         className={cn(
           'absolute top-0 left-0 z-20 h-full w-full object-cover object-center transition-opacity duration-300',
           {
-            'opacity-0': hasMedia && !isClicked,
-            'opacity-100': !!isClicked || autoplay,
+            'opacity-0': (hasMedia && !isClicked) || isAudioMode,
+            'opacity-100': (!!isClicked || autoplay) && !isAudioMode,
           }
         )}
       >

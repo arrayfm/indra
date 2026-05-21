@@ -5,7 +5,7 @@ import { YoutubeEmbed } from './youtube-embed'
 import { Embed as EmbedProps } from '@/types/elements'
 
 type EmbedWithControls = EmbedProps & {
-  externalControls?: VimeoEmbedControls
+  externalControls?: VimeoEmbedControls & { isAudioMode?: boolean }
 }
 
 export const Embed = ({ externalControls, ...embed }: EmbedWithControls) => {

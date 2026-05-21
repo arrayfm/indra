@@ -19,6 +19,7 @@ export const PatientDashboardContent = ({
           case 'textContent':
             return (
               <AnimatedComponent
+                key={index}
                 as="h2"
                 style={{ opacity: 0, transform: 'translateY(12px)' }}
                 transitionOptions={{ delay: 0.1 }}

@@ -10,6 +10,7 @@ import { Embed } from '@/types/elements'
 export type VimeoEmbedControls = {
   isPlaying?: boolean
   isMuted?: boolean
+  isAudioMode?: boolean
   onPlayToggle?: () => void
   onMuteToggle?: () => void
 }
@@ -21,6 +22,8 @@ export const VimeoEmbed = ({
   hasMedia = false,
   externalControls,
 }: Embed & { externalControls?: VimeoEmbedControls }) => {
+  const isAudioMode = !!externalControls?.isAudioMode
+
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
   const playerRef = useRef<any | null>(null)
 
@@ -48,7 +51,9 @@ export const VimeoEmbed = ({
 
   const handlePlay = () => {
     if (!playerRef.current) return
-    if (!isClicked) setIsClicked(true)
+    if (!isClicked && !isAudioMode) {
+      setIsClicked(true)
+    }
 
     if (externalControls?.onPlayToggle) {
       externalControls.onPlayToggle()
@@ -94,7 +99,9 @@ export const VimeoEmbed = ({
 
     if (isPlaying) {
       playerRef.current.play()
-      if (!isClicked) setIsClicked(true)
+      if (!isClicked && !isAudioMode) {
+        setIsClicked(true)
+      }
     } else {
       playerRef.current.pause()
     }
@@ -154,6 +161,16 @@ export const VimeoEmbed = ({
     return () => clearInterval(interval)
   }, [playerRef, isPlaying])
 
+  useEffect(() => {
+    if (!playerRef.current) return
+
+    if (isAudioMode) {
+      playerRef.current.setVolume(1)
+
+      setInternalIsMuted(false)
+    }
+  }, [isAudioMode])
+
   if (!playbackId) return null
 
   return (
@@ -164,8 +181,8 @@ export const VimeoEmbed = ({
         className={cn(
           'absolute top-0 left-0 z-20 h-full w-full object-cover object-center transition-opacity duration-300',
           {
-            'opacity-0': hasMedia && !isClicked,
-            'opacity-100': !!isClicked || autoplay,
+            'opacity-0': (hasMedia && !isClicked) || isAudioMode,
+            'opacity-100': (!!isClicked || autoplay) && !isAudioMode,
           }
         )}
         allow="autoplay; fullscreen; picture-in-picture"

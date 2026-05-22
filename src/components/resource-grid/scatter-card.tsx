@@ -18,6 +18,7 @@ export const ScatterCard = ({
   path,
   media,
   title,
+  subtitle,
   audio,
   mediaUrlEmbed,
 }: Resource) => {
@@ -82,11 +83,24 @@ export const ScatterCard = ({
         transitionOptions={{ delay: 0.375 }}
         className="flex flex-row items-center justify-between gap-5"
       >
-        {title && (
-          <ConditionalLink key={_id} href={path} className="flex-1">
-            <h2 className={cn(typePPMori({ size: 'md', weight: 'semibold' }))}>
+        {(title || subtitle) && (
+          <ConditionalLink
+            key={_id}
+            href={path}
+            className="flex flex-1 flex-col gap-1"
+          >
+            <h2 className={typePPMori({ size: 'md', weight: 'semibold' })}>
               {title}
             </h2>
+            <h3
+              className={typePPMori({
+                size: 'sm',
+                weight: 'normal',
+                className: 'text-grey-400 max-w-50',
+              })}
+            >
+              {subtitle}
+            </h3>
           </ConditionalLink>
         )}
 

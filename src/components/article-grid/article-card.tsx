@@ -17,7 +17,7 @@ const gridPlacement = (index: number) => {
       return 'col-span-10 md:col-span-4 md:col-start-6 md:row-start-4'
     case 0:
     default:
-      return 'col-span-10 md:col-span-6 row-span-2'
+      return 'col-span-10 md:col-span-5 row-span-2'
   }
 }
 
@@ -39,7 +39,7 @@ export const ArticleCard = ({
           as="div"
           style={{ opacity: 0 }}
           transitionOptions={{ delay: 0.25 }}
-          className="black-overlay-hover flex max-h-120 items-center justify-center overflow-hidden rounded-xl"
+          className="black-overlay-hover flex items-center justify-center overflow-hidden rounded-xl"
         >
           <Media {...media?.[0]} />
         </AnimatedComponent>

@@ -18,23 +18,11 @@ export const structure = (
       ...S.documentTypeListItems().filter((listItem) =>
         content.includes(listItem.getId()?.toString() || '')
       ),
-      orderableDocumentListDeskItem({
-        type: 'article',
-        title: 'Module',
-        icon: RiNewspaperLine,
-        S,
-        context,
-      }),
+      S.documentTypeListItem('article').icon(RiNewspaperLine).title('Module'),
       // --------------------- Divider ---------------------
       S.divider(),
       // --------------------- Types ---------------------
-      orderableDocumentListDeskItem({
-        type: 'resource',
-        title: 'Resource',
-        icon: MdOutlineDatasetLinked,
-        S,
-        context,
-      }),
+      S.documentTypeListItem('resource').icon(MdOutlineDatasetLinked),
       // --------------------- Divider ---------------------
       S.divider(),
       // --------------------- Settings ---------------------

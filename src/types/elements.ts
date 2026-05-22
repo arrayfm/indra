@@ -111,7 +111,7 @@ export type Audio = {
 export type RowCard = {
   title?: string
   description?: string
-  image?: Image
+  image?: Media
   link?: Link
 }
 

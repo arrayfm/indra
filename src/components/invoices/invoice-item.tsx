@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@/lib/utils/class-name'
 import { typePPMori } from '@/lib/utils/font'
 import { HistoryItem, Invoice } from '@/types/azure'
@@ -10,6 +12,7 @@ import {
 import { ConditionalLink } from '../elements/conditional-link'
 import { Button } from '../ui/button'
 import { formatInvoiceDate } from '@/lib/utils/date-time'
+import { useTimezone } from '@/lib/hooks/use-timezone'
 
 interface InvoiceItemProps
   extends
@@ -22,6 +25,8 @@ export const InvoiceItem = (invoice: InvoiceItemProps) => {
   const { reference, amount, items, payment_link, financials } = invoice
   const datePaid = 'date_paid' in invoice ? invoice.date_paid : undefined
 
+  const tz = useTimezone()
+
   return (
     <div
       key={reference}
@@ -32,7 +37,7 @@ export const InvoiceItem = (invoice: InvoiceItemProps) => {
           <h3 className={cn(typePPMori({ size: 'lg' }))}>{reference}</h3>
           {datePaid && (
             <p className={cn(typePPMori({ size: 'md', weight: 'semibold' }))}>
-              {formatInvoiceDate(datePaid)}
+              {tz && formatInvoiceDate(datePaid, tz)}
             </p>
           )}
         </div>

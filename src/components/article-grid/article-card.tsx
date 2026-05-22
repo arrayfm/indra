@@ -11,13 +11,13 @@ import { Media } from '../media/media'
 const gridPlacement = (index: number) => {
   const placementIndex = index % 3
   switch (placementIndex) {
-    case 1:
+    /*case 1:
       return 'col-span-10 md:col-span-3 md:col-start-8 md:row-start-2 row-span-2'
     case 2:
-      return 'col-span-10 md:col-span-4 md:col-start-6 md:row-start-4'
+      return 'col-span-10 md:col-span-4 md:col-start-6 md:row-start-4'*/
     case 0:
     default:
-      return 'col-span-10 md:col-span-5 row-span-2'
+      return 'col-span-10 md:col-span-2'
   }
 }
 
@@ -29,38 +29,41 @@ export const ArticleCard = ({
   index,
 }: Article & { index: number }) => {
   return (
-    <ConditionalLink
-      key={_id}
-      className={cn(gridPlacement(index), 'group flex flex-col gap-5')}
-      href={path}
-    >
-      {media?.[0] && (
+    <>
+      <ConditionalLink
+        key={_id}
+        className={cn(gridPlacement(index), 'group flex flex-col gap-5')}
+        href={path}
+      >
+        {media?.[0] && (
+          <AnimatedComponent
+            as="div"
+            style={{ opacity: 0 }}
+            transitionOptions={{ delay: 0.25 }}
+            className="black-overlay-hover flex items-center justify-center overflow-hidden rounded-xl"
+          >
+            <Media {...media?.[0]} />
+          </AnimatedComponent>
+        )}
+        {title && (
+          <AnimatedComponent
+            as="h2"
+            style={{ opacity: 0, transform: 'translateY(12px)' }}
+            transitionOptions={{ delay: 0.35 }}
+            className={cn(typePPMori({ size: 'xl' }))}
+          >
+            {title}
+          </AnimatedComponent>
+        )}
         <AnimatedComponent
           as="div"
-          style={{ opacity: 0 }}
-          transitionOptions={{ delay: 0.25 }}
-          className="black-overlay-hover flex items-center justify-center overflow-hidden rounded-xl"
-        >
-          <Media {...media?.[0]} />
-        </AnimatedComponent>
-      )}
-      {title && (
-        <AnimatedComponent
-          as="h2"
           style={{ opacity: 0, transform: 'translateY(12px)' }}
-          transitionOptions={{ delay: 0.35 }}
-          className={cn(typePPMori({ size: 'xl' }))}
+          transitionOptions={{ delay: 0.45 }}
         >
-          {title}
+          <Button className="w-fit">Explore</Button>
         </AnimatedComponent>
-      )}
-      <AnimatedComponent
-        as="div"
-        style={{ opacity: 0, transform: 'translateY(12px)' }}
-        transitionOptions={{ delay: 0.45 }}
-      >
-        <Button className="w-fit">Explore</Button>
-      </AnimatedComponent>
-    </ConditionalLink>
+      </ConditionalLink>
+      <div className="col-span-1 hidden md:block" />
+    </>
   )
 }

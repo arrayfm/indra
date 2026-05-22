@@ -122,7 +122,7 @@ const ResourceGrid = ({ title, description, resources }: Article) => {
           }
 
           if (layout === 'scattered') {
-            if (!isMobile && index !== 0) return null
+            //if (!isMobile && index !== 0) return null
             return (
               <div
                 key={index}
@@ -136,7 +136,7 @@ const ResourceGrid = ({ title, description, resources }: Article) => {
           return null
         })}
 
-        {layout === 'scattered' && <ScatteredLayout items={items} />}
+        {/*layout === 'scattered' && <ScatteredLayout items={items} />*/}
       </div>
     </Section>
   )

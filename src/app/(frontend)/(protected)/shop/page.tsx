@@ -32,7 +32,13 @@ export default async function Shop() {
 
   return (
     <main className="min-h-screen-header-footer">
-      <Hero title={page.title} />
+      <Hero
+        title={page.title}
+        backlink={{
+          href: '/',
+          hasBacklink: true,
+        }}
+      />
       <ShopGrid products={products} />
     </main>
   )

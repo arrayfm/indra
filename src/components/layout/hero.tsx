@@ -7,14 +7,22 @@ import { Article, Page, Resource } from '@/types/documents'
 import { AnimatedComponent } from './animated-component'
 
 type HeroProps = Pick<Page | Article | Resource, 'title' | 'description'> & {
-  hasBacklink?: boolean
+  backlink?: {
+    title?: string
+    href?: string
+    hasBacklink?: boolean
+  }
 }
 
-export const Hero = ({ title, description, hasBacklink = true }: HeroProps) => {
+export const Hero = ({
+  title,
+  description,
+  backlink = { hasBacklink: true },
+}: HeroProps) => {
   return (
     <Section id="hero" className="pt-10">
       <div className="container grid grid-cols-10 gap-2.5">
-        {hasBacklink && <BackLink />}
+        {backlink?.hasBacklink && <BackLink {...backlink} />}
         {title && (
           <AnimatedComponent
             as="h1"

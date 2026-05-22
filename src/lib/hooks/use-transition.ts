@@ -111,13 +111,17 @@ export const useNavigateTransition = () => {
     router.push(href)
   }
 
-  const handleBack = async (event: MouseEvent) => {
-    event.preventDefault()
+  const handleBack = async (event?: MouseEvent, path?: string) => {
+    event?.preventDefault()
 
     setPageReady(false)
     await transitions.fadeIn()
 
-    router.back()
+    if (path) {
+      router.push(path)
+    } else {
+      router.back()
+    }
   }
 
   return {

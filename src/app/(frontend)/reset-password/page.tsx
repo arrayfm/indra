@@ -31,7 +31,7 @@ export default async function ResetPassword({
 
   return (
     <main className="min-h-screen-header-footer">
-      <Hero title="Reset password" hasBacklink={false} />
+      <Hero title="Reset password" backlink={{ hasBacklink: false }} />
       <Section id="reset-password" className="pt-18 sm:pt-32 md:pt-36">
         <div className="container">
           <div className="sm:w-3/4 md:max-w-1/2">

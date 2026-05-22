@@ -62,3 +62,13 @@ export const getArticles = groq`
     },
   }
 `
+
+export const getArticleByResourceId = groq`*[_type == "article" && references($resourceId)][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  path,
+  media[]{
+    ${mediaItem}
+  },
+}`

@@ -1,35 +1,35 @@
 'use client'
 
-import { contains, stripBaseUrl } from '@/lib/utils/string'
 import { ConditionalLink, ConditionalLinkProps } from './conditional-link'
 import { useNavigateTransition } from '@/lib/hooks/use-transition'
 import { Button } from '../ui/button'
+import { popHistory } from '@/lib/utils/page-history'
 
 export const BackLink = ({
-  targetPreviousUrl,
-  previousUrl,
+  href,
   ...props
-}: {
-  targetPreviousUrl?: string
-  previousUrl?: string
-} & Partial<ConditionalLinkProps>) => {
+}: { href?: string } & Partial<ConditionalLinkProps>) => {
   const { handleBack } = useNavigateTransition()
 
-  const canGoBack =
-    targetPreviousUrl && previousUrl && contains(previousUrl, targetPreviousUrl)
+  const handleHistoryBack = () => {
+    const previous = popHistory()
+    if (previous) {
+      handleBack(undefined, previous)
+    } else {
+      handleBack(undefined, '')
+    }
+  }
 
-  if (canGoBack) {
+  if (href) {
     return (
-      <ConditionalLink href={stripBaseUrl(previousUrl)} {...props}>
-        <Button className="mb-5 w-fit" {...props}>
-          Back
-        </Button>
+      <ConditionalLink href={href} {...props}>
+        <Button className="mb-5 w-fit">Back</Button>
       </ConditionalLink>
     )
   }
 
   return (
-    <Button onClick={handleBack} className="mb-5 w-fit" {...props}>
+    <Button onClick={handleHistoryBack} className="mb-5 w-fit" {...props}>
       Back
     </Button>
   )

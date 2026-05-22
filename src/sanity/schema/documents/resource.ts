@@ -9,6 +9,7 @@ import {
   orderRankField,
   orderRankOrdering,
 } from '@sanity/orderable-document-list'
+import { ResourceUsedInArticle } from '@/sanity/components/resource-used-in-article'
 
 export const resource = defineType({
   name: 'resource',
@@ -41,6 +42,16 @@ export const resource = defineType({
       type: 'string',
       group: 'content',
       hidden: true,
+    }),
+    defineField({
+      name: 'usedIn',
+      title: 'Used In',
+      type: 'string',
+      group: 'content',
+      readOnly: true,
+      components: {
+        input: ResourceUsedInArticle,
+      },
     }),
     defineField({
       name: 'media',

@@ -101,6 +101,21 @@ export const article = defineType({
                   title: 'Resource Reference',
                   type: 'reference',
                   to: [{ type: 'resource' }],
+                  options: {
+                    filter: async ({ document, getClient }) => {
+                      const client = getClient({ apiVersion: '2024-01-01' })
+
+                      const usedIds = await client.fetch(
+                        `*[_type == "article" && _id != $currentId].resources.items[].resourceReference._ref`,
+                        { currentId: document._id }
+                      )
+
+                      return {
+                        filter: '!(_id in $usedIds)',
+                        params: { usedIds },
+                      }
+                    },
+                  },
                 }),
               ],
               preview: {

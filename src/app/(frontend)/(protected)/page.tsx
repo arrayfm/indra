@@ -73,7 +73,7 @@ export default async function Home() {
       />
 
       <main className="min-h-screen-header-footer">
-        <Hero title={page.title} hasBacklink={false} />
+        <Hero title={page.title} backlink={{ hasBacklink: false }} />
         <CardColumns cards={page.homeContent?.cards} />
 
         <Section id="future-appointments" className="pt-30">

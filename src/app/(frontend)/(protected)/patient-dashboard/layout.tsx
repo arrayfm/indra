@@ -25,7 +25,13 @@ export default async function PatientDashboardLayout({
 
   return (
     <main className="min-h-screen-header">
-      <Hero {...page} />
+      <Hero
+        {...page}
+        backlink={{
+          href: '/',
+          hasBacklink: true,
+        }}
+      />
       <PatientDashboardTemplate>{children}</PatientDashboardTemplate>
     </main>
   )

@@ -26,7 +26,13 @@ export default async function Articles() {
 
   return (
     <main className="min-h-screen-header">
-      <Hero {...page} />
+      <Hero
+        {...page}
+        backlink={{
+          href: '/',
+          hasBacklink: true,
+        }}
+      />
       <ArticleGrid articles={articles} />
     </main>
   )

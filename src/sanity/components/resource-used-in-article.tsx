@@ -31,7 +31,7 @@ export function ResourceUsedInArticle(props: any) {
   if (!article)
     return (
       <Text size={1} muted>
-        Not used in any article
+        Not used in any module yet
       </Text>
     )
 

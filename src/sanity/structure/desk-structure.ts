@@ -28,13 +28,7 @@ export const structure = (
       // --------------------- Divider ---------------------
       S.divider(),
       // --------------------- Types ---------------------
-      orderableDocumentListDeskItem({
-        type: 'resource',
-        title: 'Resource',
-        icon: MdOutlineDatasetLinked,
-        S,
-        context,
-      }),
+      S.documentTypeListItem('resource').icon(MdOutlineDatasetLinked),
       // --------------------- Divider ---------------------
       S.divider(),
       // --------------------- Settings ---------------------

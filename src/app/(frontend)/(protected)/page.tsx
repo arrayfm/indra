@@ -74,12 +74,12 @@ export default async function Home() {
 
       <main className="min-h-screen-header-footer">
         <Hero title={page.title} backlink={{ hasBacklink: false }} />
-        <CardColumns cards={page.homeContent?.cards} />
+        <CardColumns cards={page.homeContent?.cards} stack={true} />
 
         <Section id="future-appointments" className="pt-30">
           <div className="container">
             <div className="grid grid-cols-10 gap-x-2.5 gap-y-10">
-              <div className="col-span-10 md:col-span-6">
+              <div className="col-span-10 md:col-span-5">
                 <FutureAppointmentsGrid
                   hasPretitle={true}
                   appointments={tempFutureAppointments}
@@ -98,7 +98,7 @@ export default async function Home() {
           <Section id="latest-meditation" className="pt-30">
             <div className="container">
               <div className="grid grid-cols-10 gap-x-2.5 gap-y-10">
-                <div className="col-span-10 md:col-span-6">
+                <div className="col-span-10 md:col-span-4">
                   <AnimatedComponent
                     as="h2"
                     style={{
@@ -139,7 +139,7 @@ export default async function Home() {
                   opacity: 0,
                 }}
                 className={cn(
-                  'text-grey-400 col-span-6 mb-2 flex flex-col',
+                  'text-grey-400 col-span-10 mb-2 flex flex-col',
                   typePPMori({ size: 'lg' })
                 )}
               >
@@ -154,7 +154,7 @@ export default async function Home() {
                 </ConditionalLink>
                 Latest products
               </AnimatedComponent>
-              <div className="col-span-7 flex flex-wrap justify-between gap-x-2.5 gap-y-10">
+              <div className="col-span-4 flex flex-wrap justify-between gap-x-2.5 gap-y-10">
                 {products?.map((product, index) => {
                   if (index >= 3) return null
                   return (

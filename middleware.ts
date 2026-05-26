@@ -4,7 +4,7 @@ import { updateSession } from '@/lib/supabase/middleware'
 export async function middleware(request: NextRequest) {
   const response = await updateSession(request)
   const tz = request.cookies.get('timezone')?.value ?? 'UTC'
-  console.log('Middleware executed for:', request.url) // Debug log to confirm middleware execution
+
   response.headers.set('x-timezone', tz)
 
   return response

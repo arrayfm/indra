@@ -25,6 +25,9 @@ export const UnpaidInvoices = ({ invoices }: { invoices: Invoice[] }) => {
           .map((invoice) => (
             <InvoiceItem key={invoice.reference} {...invoice} />
           ))}
+        {invoices?.length === 0 && (
+          <p className="col-span-6">No unpaid invoices</p>
+        )}
       </AnimatedComponent>
     </div>
   )

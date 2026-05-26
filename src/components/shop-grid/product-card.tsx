@@ -50,12 +50,16 @@ export const ProductCard = ({
           as="div"
           style={{ opacity: 0 }}
           transitionOptions={{ delay: 0.25 }}
-          className="relative mb-5 w-full"
+          className={cn(
+            productCardVariants({ imageSize }),
+            'relative mb-5 aspect-square w-full'
+          )}
         >
           <Media
             src={imageUrl}
             _type="image"
-            className={cn('rounded-xl', productCardVariants({ imageSize }))}
+            cover={true}
+            className="rounded-xl"
           />
         </AnimatedComponent>
       )}

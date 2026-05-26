@@ -43,6 +43,9 @@ export const FutureAppointmentsGrid = ({
           <FutureAppointmentCard booking={booking} />
         </div>
       ))}
+      {appointments?.length === 0 && (
+        <p className="col-span-6">No upcoming appointments</p>
+      )}
     </div>
   )
 }

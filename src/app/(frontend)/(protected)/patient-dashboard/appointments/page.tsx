@@ -9,25 +9,6 @@ import { PastAppointmentCard } from '@/components/appointments/past-appointment-
 import { FutureAppointmentsGrid } from '@/components/appointments/future-appointments-grid'
 import { AnimatedComponent } from '@/components/layout/animated-component'
 
-export const MOCK_FUTURE_APPOINTMENTS = [
-  {
-    id: '123',
-    start: '2026-04-05T15:00:00.000Z',
-    end: '2026-04-05T15:15:00.000Z',
-    videoUrl:
-      'https://patients.semble.io/video-consultation/3379ef385737a6d3193bd07df33fa3345dd588f4',
-    appointment: { title: '(FAKE) A3. Indra Additional' },
-  },
-  {
-    id: '234',
-    start: '2026-06-08T15:00:00.000Z',
-    end: '2026-06-08T15:15:00.000Z',
-    videoUrl:
-      'https://patients.semble.io/video-consultation/3379ef385737a6d3193bd07df33fa3345dd588f4',
-    appointment: { title: '(FAKE) A3. Indra Additional' },
-  },
-]
-
 export default async function Appointments() {
   const user = await getUser()
   const profile = await getProfile(user?.id)
@@ -38,13 +19,9 @@ export default async function Appointments() {
     response?.data?.patient?.bookings || []
   )
 
-  const tempFutureAppointments = futureAppointments?.length
-    ? futureAppointments
-    : MOCK_FUTURE_APPOINTMENTS
-
   return (
     <div className="flex flex-col gap-20">
-      <FutureAppointmentsGrid appointments={tempFutureAppointments} />
+      <FutureAppointmentsGrid appointments={futureAppointments} />
 
       <div className="grid grid-cols-6 gap-x-2.5 gap-y-10">
         <AnimatedComponent

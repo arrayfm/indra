@@ -13,7 +13,6 @@ import { getProfile } from '@/lib/supabase/queries'
 import { sembleQuery } from '@/lib/semble/client'
 import { GET_PATIENT_BOOKINGS } from '@/lib/semble/queries'
 import { sortBookingsByDate } from '@/lib/semble/utils'
-import { MOCK_FUTURE_APPOINTMENTS } from './patient-dashboard/appointments/page'
 import { FutureAppointmentsGrid } from '@/components/appointments/future-appointments-grid'
 import { Section } from '@/components/layout/section'
 import { typePPMori } from '@/lib/utils/font'
@@ -53,10 +52,6 @@ export default async function Home() {
     response?.data?.patient?.bookings || []
   )
 
-  const tempFutureAppointments = futureAppointments?.length
-    ? futureAppointments
-    : MOCK_FUTURE_APPOINTMENTS
-
   const shopifyData = (await shopifyFetch({
     query: GET_COLLECTION_PRODUCTS,
     variables: { handle: 'portal' },
@@ -82,12 +77,8 @@ export default async function Home() {
               <div className="col-span-10 md:col-span-5">
                 <FutureAppointmentsGrid
                   hasPretitle={true}
-                  appointments={tempFutureAppointments}
-                  title={
-                    tempFutureAppointments.length > 0
-                      ? 'Upcoming Appointments'
-                      : 'No Upcoming Appointments'
-                  }
+                  appointments={futureAppointments}
+                  title="Upcoming Appointments"
                 />
               </div>
             </div>

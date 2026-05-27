@@ -145,9 +145,8 @@ export const RegisterForm = () => {
         )}
 
         <p className={typePPMori({ size: 'sm' })}>
-          Already registered?{' '}
           <ConditionalLink href="/login" className="border-link">
-            Login
+            Already registered? Login
           </ConditionalLink>
         </p>
       </div>

@@ -76,9 +76,8 @@ export const ForgotPasswordForm = () => {
         </Button>
 
         <p className={typePPMori({ size: 'sm' })}>
-          Remembered it?{' '}
           <ConditionalLink href="/login" className="border-link">
-            Login
+            Remembered it? Login
           </ConditionalLink>
         </p>
       </div>

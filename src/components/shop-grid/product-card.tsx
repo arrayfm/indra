@@ -11,8 +11,8 @@ import { Product } from '@/types/shopify'
 const productCardVariants = cva('', {
   variants: {
     imageSize: {
-      sm: 'max-h-48',
-      md: 'max-h-76',
+      sm: 'max-h-48 max-w-48',
+      md: 'max-h-76 max-w-76',
     },
     titleSize: {
       sm: '',

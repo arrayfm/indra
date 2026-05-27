@@ -84,7 +84,7 @@ export async function registerAction(
   const magicLink = `${NEXT_PUBLIC_BASE_URL}/set-password?token=${token}`
 
   const { error: emailError } = await resend.emails.send({
-    from: 'alexsimpson@array.design',
+    from: 'Indra portal <no-reply@array.design>',
     to: sendEmail || email,
     subject: 'Complete your registration',
     react: RegisterLinkEmailTemplate({

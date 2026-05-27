@@ -55,12 +55,18 @@ export const LoginForm = ({ email }: { email?: string }) => {
           {isPending ? 'Signing in…' : 'Sign In'}
         </Button>
 
-        <p className={typePPMori({ size: 'sm' })}>
-          Haven't registered yet?{' '}
-          <ConditionalLink href="/register" className="border-link">
-            Register
-          </ConditionalLink>
-        </p>
+        <div className="flex flex-col gap-1">
+          <p className={typePPMori({ size: 'sm' })}>
+            <ConditionalLink href="/register" className="border-link">
+              Haven&apos;t registered yet? Register
+            </ConditionalLink>
+          </p>
+          <p className={typePPMori({ size: 'sm' })}>
+            <ConditionalLink href="/forgot-password" className="border-link">
+              Forgot your password? Reset
+            </ConditionalLink>
+          </p>
+        </div>
 
         {state?.error && (
           <p className={cn('text-red-600', typePPMori({ size: 'sm' }))}>

@@ -40,8 +40,8 @@ export async function forgotPasswordAction(
   const resetLink = `${NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}`
 
   const { error: emailError } = await resend.emails.send({
-    from: 'alexsimpson@array.design',
-    to: 'joel@array.design',
+    from: 'Indra portal <no-reply@array.design>',
+    to: email,
     subject: 'Reset your password',
     react: ResetPasswordEmailTemplate({
       resetLink,

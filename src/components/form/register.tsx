@@ -128,23 +128,6 @@ export const RegisterForm = () => {
         )}
       </AnimatePresence>
 
-      <div className="mb-6">
-        <label
-          className={cn('mb-1.5', typePPMori({ size: 'md' }))}
-          htmlFor="send_email"
-        >
-          Send Email
-        </label>
-        <Input
-          id="send_email"
-          name="send_email"
-          type="email"
-          autoComplete="email"
-          disabled={isPending}
-          onKeyDown={(e) => e.key === 'Enter' && handleEmailContinue(e)}
-        />
-      </div>
-
       <div className="flex items-center gap-2.5">
         {step === 'email' ? (
           <Button

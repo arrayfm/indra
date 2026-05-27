@@ -27,7 +27,6 @@ export async function registerAction(
 ): Promise<RegisterState> {
   const email = (formData.get('email') as string)?.toLowerCase().trim()
   const dob = (formData.get('dob') as string)?.trim()
-  const sendEmail = (formData.get('send_email') as string)?.toLowerCase().trim()
 
   const dateOnlyDob = dob ? new Date(dob) : null
   const isoDob = dateOnlyDob ? dateOnlyDob.toISOString().slice(0, 10) : null
@@ -85,7 +84,7 @@ export async function registerAction(
 
   const { error: emailError } = await resend.emails.send({
     from: 'Indra portal <no-reply@array.design>',
-    to: sendEmail || email,
+    to: email,
     subject: 'Complete your registration',
     react: RegisterLinkEmailTemplate({
       magicLink,

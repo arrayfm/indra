@@ -52,15 +52,10 @@ export const ProductCard = ({
           transitionOptions={{ delay: 0.25 }}
           className={cn(
             productCardVariants({ imageSize }),
-            'relative mb-5 aspect-square w-full'
+            'black-overlay-hover relative mb-5 aspect-square w-full rounded-xl'
           )}
         >
-          <Media
-            src={imageUrl}
-            _type="image"
-            cover={true}
-            className="rounded-xl"
-          />
+          <Media src={imageUrl} _type="image" cover={true} />
         </AnimatedComponent>
       )}
       {title && (

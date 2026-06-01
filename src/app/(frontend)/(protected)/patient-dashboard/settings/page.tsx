@@ -40,7 +40,7 @@ export default async function Settings() {
           transitionOptions={{ delay: 0.3 }}
         >
           <ConditionalLink
-            href="https://billing.stripe.com/p/login/dRm00ifrAfOzbtD224f3a00"
+            href="https://subscription.indra.clinic/login.html"
             target="_blank"
           >
             <Button>Manage</Button>

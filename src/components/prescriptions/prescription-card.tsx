@@ -7,12 +7,13 @@ import { ConditionalLink } from '../elements/conditional-link'
 import { AnimatedComponent } from '../layout/animated-component'
 import { Button } from '../ui/button'
 import { useTimezone } from '@/lib/hooks/use-timezone'
+import { Prescription } from '@/types/semble'
 
-function drugsFlatTitle(drug: { drug?: string }[]) {
-  return drug.map((d) => d.drug).join(', ')
-}
-
-export const PrescriptionCard = ({ prescription }: { prescription: any }) => {
+export const PrescriptionCard = ({
+  prescription,
+}: {
+  prescription: Prescription
+}) => {
   const tz = useTimezone()
 
   return (
@@ -26,7 +27,7 @@ export const PrescriptionCard = ({ prescription }: { prescription: any }) => {
           typePPMori({ size: 'md', weight: 'semibold' })
         )}
       >
-        {drugsFlatTitle(prescription.drugs)}
+        {prescription.name}
       </AnimatedComponent>
 
       <AnimatedComponent
@@ -35,7 +36,7 @@ export const PrescriptionCard = ({ prescription }: { prescription: any }) => {
         transitionOptions={{ delay: 0.2 }}
         className={cn(typePPMori({ size: 'md' }))}
       >
-        {tz && formatPrescriptionDate(prescription.date, tz)}
+        {tz && formatPrescriptionDate(prescription.dateCreated, tz)}
       </AnimatedComponent>
 
       <AnimatedComponent
@@ -44,7 +45,7 @@ export const PrescriptionCard = ({ prescription }: { prescription: any }) => {
         transitionOptions={{ delay: 0.3 }}
       >
         <ConditionalLink
-          href={prescription.pdfDownloadUrl}
+          href={prescription.downloadUrl}
           target="_blank"
           rel="noopener noreferrer"
         >

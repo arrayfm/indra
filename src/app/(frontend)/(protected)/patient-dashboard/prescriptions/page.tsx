@@ -13,12 +13,15 @@ export default async function Prescriptions() {
     GET_PATIENT_PRESCRIPTIONS(profile?.semble_id)
   )
 
-  const prescriptions = response?.data?.patient?.prescriptions.data
-    ?.slice()
+  const allDocs = response?.data?.patient?.patientDocuments?.data ?? []
+
+  const prescriptions = allDocs
+    .filter((doc: any) => doc.name?.toLowerCase().includes('pink'))
+    .slice()
     .sort(
       (a: any, b: any) =>
-        DateTime.fromISO(b.date).toMillis() -
-        DateTime.fromISO(a.date).toMillis()
+        DateTime.fromISO(b.dateCreated).toMillis() -
+        DateTime.fromISO(a.dateCreated).toMillis()
     )
 
   return (

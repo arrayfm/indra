@@ -31,16 +31,14 @@ export const GET_PATIENT_BOOKINGS = (patientId: string) => ({
 
 export const GET_PATIENT_PRESCRIPTIONS = (patientId: string) => ({
   query: `
-   query {
+    query {
       patient(id: "${patientId}") {
-        prescriptions {
-          data { 
+        patientDocuments {
+          data {
             id
-            drugs {
-              drug 
-            }
-            date
-            pdfDownloadUrl
+            name
+            dateCreated
+            downloadUrl
           }
         }
       }

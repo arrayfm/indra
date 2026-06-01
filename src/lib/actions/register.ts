@@ -59,7 +59,9 @@ export async function registerAction(
     .single()
 
   if (existingUser?.completed_at) {
-    return err(GENERIC_ERROR_MESSAGE)
+    return err(
+      'An account with this email already exists. Please log in instead.'
+    )
   }
 
   const { error: profileError } = await supabaseAdmin.from('profiles').upsert({

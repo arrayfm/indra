@@ -1,9 +1,9 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useMemo } from 'react'
 import DatePicker from 'react-datepicker'
 import { cn } from '@/lib/utils/class-name'
-import { typePPMori } from '@/lib/utils/font'
+import { DateTime } from 'luxon'
 
 const MONTHS = [
   'January',
@@ -88,6 +88,11 @@ export const DateOfBirthPicker = ({
   disabled,
 }: Props) => {
   const ref = useRef<DatePicker>(null)
+  const dateOnlyValue = useMemo(() => {
+    if (!value) return null
+    const dt = DateTime.fromJSDate(value)
+    return dt.toISODate()
+  }, [value])
 
   useEffect(() => {
     if (focus) {
@@ -117,7 +122,7 @@ export const DateOfBirthPicker = ({
       <input
         type="hidden"
         name="dob"
-        value={value ? value.toISOString() : ''}
+        value={dateOnlyValue ? dateOnlyValue : ''}
       />
     </>
   )

@@ -1,6 +1,7 @@
 'use server'
 
 import { Resend } from 'resend'
+import { DateTime } from 'luxon'
 import { supabaseAdmin } from '../supabase/admin'
 import { RegisterLinkEmailTemplate } from '@/components/email/register-link'
 import { sembleQuery } from '../semble/client'
@@ -28,11 +29,10 @@ export async function registerAction(
   const email = (formData.get('email') as string)?.toLowerCase().trim()
   const dob = (formData.get('dob') as string)?.trim()
 
-  const dateOnlyDob = dob ? new Date(dob) : null
-  const isoDob = dateOnlyDob ? dateOnlyDob.toISOString().slice(0, 10) : null
+  const dobDateTime = dob ? DateTime.fromISO(dob) : null
 
   if (!email) return err('Email is required.')
-  if (!dob) return err('Date of birth is required.')
+  if (!dob || !dobDateTime?.isValid) return err('Date of birth is required.')
 
   let patient
   try {
@@ -46,9 +46,15 @@ export async function registerAction(
     return err(GENERIC_ERROR_MESSAGE)
   }
 
-  const sembleDob = patient?.dob?.slice(0, 10)
+  const sembleDobDateTime = patient?.dob ? DateTime.fromISO(patient.dob) : null
 
-  if (!patient || sembleDob !== isoDob) {
+  if (
+    !patient ||
+    !dobDateTime ||
+    !sembleDobDateTime ||
+    !sembleDobDateTime?.isValid ||
+    !dobDateTime!.hasSame(sembleDobDateTime!, 'day')
+  ) {
     return err(GENERIC_ERROR_MESSAGE)
   }
 

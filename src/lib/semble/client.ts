@@ -1,6 +1,11 @@
 const SEMBLE_URL = 'https://open.semble.io/graphql'
 
-export async function sembleQuery(body: { query: string }) {
+type SembleRequest = {
+  query: string
+  variables?: Record<string, unknown>
+}
+
+export async function sembleQuery(body: SembleRequest) {
   const response = await fetch(SEMBLE_URL, {
     method: 'POST',
     headers: {

@@ -1,31 +1,6 @@
 import { Asset } from 'sanity'
 import { ImageProps as NextImageProps } from 'next/image'
 
-export interface MuxVideo {
-  _id: string
-  playbackId: string
-  url: string
-  ratio: string
-}
-
-export type Video = Pick<
-  Asset,
-  | '_id'
-  | 'assetId'
-  | 'url'
-  | 'originalFilename'
-  | 'extension'
-  | 'size'
-  | 'uploadId'
-> & {
-  caption?: string
-  dimensions: {
-    aspectRatio: number
-    height: number
-    width: number
-  }
-}
-
 export type Image = Pick<Asset, '_id' | 'url' | 'alt' | 'caption'> & {
   alt?: string
   caption?: string
@@ -61,30 +36,10 @@ export interface ImageProps extends Omit<
   cover?: boolean
 }
 
-export type VideoOutputSize = {
-  width?: number
-  height?: number
-  ratio?: number
-  poster?: boolean
-}
-
-export interface VideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
-  video?: Video
-  aspectRatio?: string
-  rounded?: boolean
-  transition?: boolean
-  onLoadedData?: () => void
-  cover?: boolean
-  outputSize?: VideoOutputSize
-}
-
-export type Media =
-  | ({ _type: 'image' } & ImageProps)
-  | ({ _type: 'video' } & VideoProps)
+export type Media = { _type: 'image' } & ImageProps
 
 export interface Embed {
-  type?: 'mux' | 'vimeo' | 'youtube'
-  muxVideo?: MuxVideo
+  type?: 'vimeo' | 'youtube'
   url?: string
   embedUrl?: string
   playbackId?: string

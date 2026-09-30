@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils/class-name'
-import { formatPlayerTime } from '@/lib/core/mux'
+import { formatPlayerTime } from '@/lib/utils/player-time'
 import { SVG } from '@/components/elements/svg'
 import { Button } from '../ui/button'
 import { PlaySVG } from '../svg/play'

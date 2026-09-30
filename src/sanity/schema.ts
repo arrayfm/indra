@@ -8,7 +8,6 @@ import { menus } from './schema/documents/menus'
 import { menuItem, subMenuItem } from './schema/types/menu-item'
 import { mediaUrlEmbed } from './schema/types/media-url-embed'
 import { textBlock } from './schema/content/text-block'
-import { video } from './schema/types/video'
 import { article } from './schema/documents/article'
 import { resource } from './schema/documents/resource'
 
@@ -21,7 +20,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     article,
     resource,
     // --------------- Types ---------------
-    video,
     mediaItem,
     mediaEmbed,
     mediaUrlEmbed,

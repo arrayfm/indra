@@ -1,122 +1,217 @@
-# Getting Started
+# Indra Patient Portal
 
-## Setting up Sanity
+This repository contains the source code for the Indra patient portal and its
+embedded Sanity Studio. It is a Next.js application using Supabase for
+authentication and portal data, Sanity for managed content, and external
+integrations for clinical, billing, email, and shop data.
 
-First, you need to create a new project on [Sanity](https://www.sanity.io/). Once you have created a new project, you will need to create a new dataset. Once you have created a new dataset, you will need to create a new schema. There are some examples in the `sanity/schemas` folder that you can use to get started.
+## Handover scope
 
-Once you have created a new schema, you will need to create a new `.env.local` file in the base project folder. You will need to fill in the `SANITY_PROJECT_ID` and `SANITY_DATASET` fields with the appropriate values.
+The source handover includes:
 
-Add http://localhost:3000 to the CORS Origins in the Sanity dashboard.
+- The Next.js application and reusable components
+- The embedded Sanity Studio and its schemas
+- Supabase schema definitions for the application-owned tables
+- Integration clients and queries
+- Static assets, package manifests, and configuration files
 
-## Setting up the project
+The handover does not contain:
 
-Set up the repository on GitHub and clone base-sanity to your local machine
+- Environment files, passwords, API keys, or database connection strings
+- Supabase Auth users or table data
+- Sanity dataset content or media assets
+- Data held by Semble, Azure, Shopify, Resend, or other third parties
+- Build output, dependency folders, deployment history, or Git history
+
+Some legacy or currently unused components remain in the source tree so the
+handover reflects the complete working codebase rather than a reduced export.
+
+## Requirements
+
+- Node.js 22
+- pnpm 11
+- Access to, or replacement accounts for, the external services listed below
+
+The versions used for the final handover were Node.js `22.22.2` and pnpm
+`11.19.0`.
+
+## Local setup
+
+1. Install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+2. Copy the environment-variable template:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+3. Fill in `.env.local` with credentials for the services described in the
+   next section. Never commit this file.
+
+4. Start the development server:
+
+   ```bash
+   pnpm dev
+   ```
+
+5. Open:
+   - Portal: http://localhost:3000
+   - Sanity Studio: http://localhost:3000/studio
+
+## Environment variables
+
+The application reads the following variables. Values prefixed with
+`NEXT_PUBLIC_` are exposed to browser code and must not contain private
+credentials.
+
+| Variable                                       | Purpose                                                                                                                   |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_BASE_URL`                         | Public origin used for links, email assets, robots, and the sitemap. Use `http://localhost:3000` locally.                 |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID`                | Sanity project ID.                                                                                                        |
+| `NEXT_PUBLIC_SANITY_DATASET`                   | Sanity dataset name, normally `production`.                                                                               |
+| `NEXT_PUBLIC_SANITY_API_VERSION`               | Optional Sanity API version. Defaults to `2024-06-12`.                                                                    |
+| `NEXT_PUBLIC_SUPABASE_URL`                     | Supabase project URL.                                                                                                     |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`         | Supabase publishable key used for browser/server sessions. Older projects may provide the legacy anon key for this value. |
+| `SUPABASE_SECRET_KEY`                          | Server-only Supabase secret key used for administrative Auth and database operations. Never expose this in browser code.  |
+| `SEMBLE_API_KEY`                               | Server-only Semble Open API token.                                                                                        |
+| `AZURE_BASE_URL`                               | Base URL of the supplied Azure integration endpoint, without a trailing slash.                                            |
+| `RESEND_API_KEY`                               | Server-only Resend API key used for registration and password-reset emails.                                               |
+| `NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN`             | Shopify store hostname used by the Storefront GraphQL API.                                                                |
+| `NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_TOKEN`     | Shopify Storefront API token.                                                                                             |
+| `NEXT_PUBLIC_SHOPIFY_STOREFRONT_CUSTOM_DOMAIN` | Public shop hostname used to construct product links.                                                                     |
+
+Production and preview deployments must have their own appropriate values.
+Do not reuse production secrets in local or preview environments unless that
+access has been expressly authorised.
+
+## Supabase setup
+
+1. Create or select a Supabase project.
+2. Copy its project URL, publishable key, and server-side secret key into the
+   corresponding environment variables.
+3. In the Supabase SQL Editor, run:
+
+   ```text
+   supabase/profiles-and-tokens.sql
+   ```
+
+   This creates the `public.profiles` and `public.tokens` tables, their
+   constraints, the profile relationship to `auth.users`, and Row Level
+   Security settings. Access is granted only to `service_role`, matching the
+   server-side access pattern in this application.
+
+The SQL file is schema-only. It does not contain portal users, profiles,
+registration tokens, password-reset tokens, or other data. Existing users and
+data must be migrated separately if they are required and the recipient is
+authorised to receive them.
+
+The application uses Supabase Auth for login and creates users through
+server-side administrative calls. `SUPABASE_SECRET_KEY` must therefore only be
+configured in a trusted server or deployment environment.
+
+## Sanity setup
+
+1. Create or select a Sanity project and dataset.
+2. Set `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET`.
+3. Add `http://localhost:3000` to the project's allowed CORS origins for local
+   Studio use. Add the deployed portal origin for production.
+4. Start the application and open `/studio` to access the embedded Studio.
+
+The schemas are registered from `src/sanity/schema.ts`. No Sanity dataset
+export is included, so pages, site settings, articles/modules, resources, and
+menus must either already exist in the configured dataset or be recreated.
+
+## External integrations
+
+### Video embeds
+
+Resource videos use Vimeo or YouTube URLs entered in the Sanity Studio's
+Media URL Embed field. Direct video-file uploads and Mux playback are not
+supported. Images and audio-file uploads remain supported. Vimeo embeds
+require the video's privacy and embed settings to allow the portal's domain.
+
+### Semble
+
+Semble is accessed server-side through `https://open.semble.io/graphql` using
+`SEMBLE_API_KEY`. It supplies patient matching, appointments, and prescription
+documents. A valid token with access to the relevant patient data is required.
+
+### Azure endpoint
+
+`AZURE_BASE_URL` is the base URL of the separately supplied integration. The
+included Azure client defines helpers for the following paths:
+
+- `find_patient`
+- `get_bookings`
+- `get_scripts`
+- `get_invoices`
+- `get_billing_history`
+
+The current invoice UI uses `get_invoices` and `get_billing_history`; the other
+helpers are retained integration code. The implementation of the external
+endpoint is not part of this repository.
+
+### Shopify
+
+The portal uses Shopify's Storefront GraphQL API to load products from the
+`portal` collection. Configure the store domain, Storefront token, and public
+shop domain using the variables above.
+
+### Resend
+
+Resend sends registration and password-reset links. The current sender is
+`Indra portal <no-reply@array.design>` and must be authorised in the configured
+Resend account. If a different sending domain is used, update the sender in:
+
+- `src/lib/actions/register.ts`
+- `src/lib/actions/forgot-password.ts`
+
+`NEXT_PUBLIC_BASE_URL` must be the correct public origin so emailed links and
+images resolve correctly.
+
+## Validation
+
+Run the available project checks before deployment:
 
 ```bash
-git clone git@github.com:arrayfm/base-sanity.git <folder-name>
-cd <folder-name>
-git remote remove origin
-rm -rf .git
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin <repository-url>
-git push -u origin main
+pnpm lint
+pnpm build
 ```
 
-Import seed data into the dataset by running:
+There is currently no automated test suite. The lint command may report
+warnings from retained legacy code; warnings do not currently cause it to
+fail. A production build is the primary compilation and route validation.
 
-```bash
-npx sanity dataset import seed.tar.gz --replace
-```
+Manual checks should cover:
 
-First, run the development server:
+- Registration and registration email delivery
+- Login, logout, protected-route redirects, and session persistence
+- Forgotten-password and password-reset flows
+- Patient appointments and prescription documents from Semble
+- Invoices and billing history from the Azure endpoint
+- Shopify product links
+- Sanity-managed pages, modules, resources, metadata, and Studio access
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Use test accounts and non-production data when possible.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to view the frontend.
-Open [http://localhost:3000/studio](http://localhost:3000/studio) with your browser to view the Sanity Studio.
+## Deployment
 
-# Frontend Development
+The application can be deployed to Vercel or another Node.js-compatible
+platform.
 
-## Styling & Theming
+For each environment:
 
-We use [Tailwind CSS](https://tailwindcss.com/) for styling and theming, you can find the config file at `tailwind.config.ts`. There are number of utility classes that are available to use, some of these are connected to utility functions - `src/lib/utils/theme.ts` to dynamically fetch classes based on given variables, these are generally used through the app for both static & dynamic data as it keeps consistency throughout development and makes it easier to update multiple values at once. However, feel free to change, update and/or use as you like.
+1. Configure every required environment variable in the deployment platform.
+2. Set `NEXT_PUBLIC_BASE_URL` to that environment's public origin.
+3. Add the origin to Sanity's allowed CORS origins.
+4. Confirm that Supabase, Semble, Azure, Shopify, and Resend permit access from
+   the deployment environment.
+5. Run a production build and complete the manual checks above.
 
-There are some extra classes that are also added to the `src/css` for any additional styles that are needed.
-
-## Fonts & Typography
-
-We use [Next.js Local Fonts](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#local-fonts) built in support for local fonts, you can find the config file at `src/fonts`. You can add any fonts you like to the `fonts` array in the config file, and they will be automatically added to the project. _I'd recommend updating the variable names and importing as needed._
-
-## Pages
-
-The folder structure for the frontend fall under the `src/(frontend)` folder, this is where all the pages for frontend development are found. There are a few pages that are already created, such as the index `page.tsx` and `not-found.tsx`. Feel free to change, update and/or use as you like.
-
-## Components
-
-Components are split into a few main categories for ease of use:
-
-- **elements**: Basic building blocks of the app, such as buttons, inputs, etc.
-- **items**: More complex components that are composed of other components, such as cards, modals, etc.
-- **sections**: Components that are composed of items and/or elements, such as summaries, galleries, etc.
-- **layouts**: Components that are composed of sections, items and/or elements, such as headers, footers, etc.
-- **composites**: Components that are made up of several items, such as lists, links etc.
-- **providers**: Components that are used to provide context to other components, such as the `ThemeProvider` or `ScreenProvider`.
-- **partials**: Components that are used to compose other components, these are similar to elements but are more specific to other components, such as the controls for the mux embed.
-
-These are by no means set in stone, so feel free to change, remove, update and/or use as you like.
-
-## Libraries
-
-Our library is folder composed of functions that assist in development of the project of the project, they generally do not return \*.tsx files. They are split into four main categories for ease of use:
-
-- **core**: Functions that are imperative to the project, such as the `fetch` function.
-- **utils**: Functions that are not imperative to the project, but are useful in development, they are simple and/or generic functions that are reusable, such as the `cn` function.
-- **hooks**: A dedicated folder for useful hooks, these may or may not be project specific, such as the `useScreen` hook.
-- **queries**: Functions that are used to fetch data from sanity for the frontend, such as the `getSiteSettings` function.
-
-NOTE: These are libraries that are used for the frontend development (they may also be used within sanity itself), there are a few sanity specific functions that get called from `src/sanity/lib`, these files are used for sanity - except for the client which shares the env details for the frontend fetch function.
-
-## Types
-
-The types folder is used to store types that are used throughout the project, these are re-declared and are used to define the shape of data that is used throughout the project. They are split into a few main categories for ease of use:
-
-- **documents**: Types that are used to define the shape of sanity documents, such as the `page` type. They are the base types that are used to define the shape of the data that is fetched from sanity.
-- **sections**: Types that are used to define the shape of sections, such as a `textBlock` type. These are types that are used to define the shape of sections that sit within documents - generally used for content builder.
-- **elements**: Types that are used to define the shape of elements, such as the `link` type. These are types that make up parts of either sections or documents which are generally repeated several times.
-- **theme**: Types that are used to define the shape of the theme, such as the `aspectRatio` type. These are types that are used to define the shape of minor values that are used throughout the project.
-- **global**: Types that are used to define the shape of global values, such as the `Window` type. These are types that are used to define the shape of global values that are used throughout the project - useful for hooks & related functions.
-
-In addition to declaring these types, sanity also has cli commands that can be used to generate types from the schema, these can be useful as a base but may not always be accurate to the returning groq values within query parameters. To generate types from the schema & groq queries, you can run the following commands:
-
-`npx sanity schema extract` which will generate a `schema.json` file at the base of the project.
-
-`npx sanity typegen generate` which will generate a `sanity.types.ts` file from the previously generated `schema.json` file at the base of the project.
-
-# Sanity Studio Development
-
-# Deployment
-
-## Vercel
-
-We use [Vercel](https://vercel.com/) for deployment. You will need to create a new project on Vercel and link it to your repository. Once you have done this, we begin to deploy the current branch's:
-
-- **main**: The main branch is deployed to the production environment. This is the live site.
-- **staging**: The staging branch is deployed to the staging environment. Generally used to preview progressive updates that will then be pushed through to the live site.
-
-You will need to fill in the `SANITY_PROJECT_ID` and `SANITY_DATASET` and any other environment variables in the Vercel project settings. Main environment variables are set to production, and staging environment variables are set to preview - this can also be configured to be set to the staging branch.
-
-For the case of having both a main and staging setup, a duplicate of the production database should be created in the datasets tab of the sanity dashboard. This will allow for the staging environment to have its own dataset to work with (and recommended to use for development as well). Once the staging dataset is setup, you can then export the dataset from the production environment and import it into the staging environment. Refer to the sanity documentation for more information on how to do this:
-
-- **Exporting**: https://www.sanity.io/docs/dataset#fd38ca03b011
-- **Importing**: https://www.sanity.io/docs/dataset#9c9aab5198aa
+Third-party accounts, permissions, DNS, email-domain verification, and hosted
+integration endpoints are operational dependencies and are not created by
+deploying this repository alone.

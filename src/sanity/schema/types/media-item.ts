@@ -13,10 +13,7 @@ export const mediaItem = defineType({
       name: 'media',
       type: 'array',
       title: 'Media',
-      of: [
-        defineArrayMember(imageExtended),
-        defineArrayMember({ name: 'video', type: 'video' }),
-      ],
+      of: [defineArrayMember(imageExtended)],
       components: { input: ArrayMaxItems },
       validation: (Rule) => Rule.max(1),
     }),
@@ -33,10 +30,7 @@ export const mediaEmbed = defineType({
       name: 'media',
       type: 'array',
       title: 'Media',
-      of: [
-        defineArrayMember(imageExtended),
-        defineArrayMember({ name: 'video', type: 'video' }),
-      ],
+      of: [defineArrayMember(imageExtended)],
       components: { input: ArrayMaxItems },
       validation: (Rule) => Rule.max(1),
     }),

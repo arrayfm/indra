@@ -11,6 +11,20 @@ export default async function Settings() {
   const user = await getUser()
   const profile = await getProfile(user?.id)
 
+  if (!profile?.email) {
+    return (
+      <div className="flex flex-col gap-2">
+        <h2 className={cn(typePPMori({ size: 'lg' }))}>
+          Account settings unavailable
+        </h2>
+        <p className={cn('text-grey-400', typePPMori({ size: 'md' }))}>
+          We couldn&apos;t load your account settings. Please try again shortly,
+          or contact the team if the problem continues.
+        </p>
+      </div>
+    )
+  }
+
   return (
     <div className="flex grid-cols-6 flex-col gap-x-2.5 gap-y-10 md:grid">
       <div className="col-span-3 flex flex-col gap-2">

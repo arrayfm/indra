@@ -77,7 +77,7 @@ export const ResetPasswordEmailTemplate = ({
                         hour.
                       </p>
                       <p>
-                        If you didn't request a password reset, you can safely
+                        If you didn&apos;t request a password reset, you can safely
                         ignore this email.
                       </p>
                       <p>

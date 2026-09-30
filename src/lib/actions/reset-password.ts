@@ -2,7 +2,12 @@
 
 import { redirect } from 'next/navigation'
 import { supabaseAdmin } from '../supabase/admin'
-import { consumeToken, validateToken } from '../supabase/queries'
+import {
+  claimToken,
+  completeTokenClaim,
+  releaseTokenClaim,
+  validateToken,
+} from '../supabase/queries'
 
 export type ResetPasswordState = {
   error?: string
@@ -83,10 +88,10 @@ export async function resetPasswordAction(
     return { error: 'No account found for this email.' }
   }
 
-  const { error: consumeError } = await consumeToken(token, 'password_reset')
+  const claim = await claimToken(token, 'password_reset')
 
-  if (consumeError) {
-    return { error: consumeError }
+  if ('error' in claim) {
+    return { error: claim.error }
   }
 
   const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
@@ -96,7 +101,20 @@ export async function resetPasswordAction(
 
   if (updateError) {
     console.error('Failed to update password:', updateError)
+    await releaseTokenClaim(token, 'password_reset', claim.lockId)
     return { error: 'Failed to reset password. Please try again.' }
+  }
+
+  const completion = await completeTokenClaim(
+    token,
+    'password_reset',
+    claim.lockId
+  )
+
+  // The password change succeeded. Do not invite a retry if recording the
+  // completed claim has a transient failure, as that could change it again.
+  if (completion.error) {
+    console.error('Password reset token was not marked used after update.')
   }
 
   redirect('/login?reset=true')

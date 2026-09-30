@@ -45,6 +45,8 @@ CREATE TABLE public.tokens (
     email text NOT NULL,
     expires_at timestamp with time zone NOT NULL,
     used_at timestamp with time zone,
+    locked_at timestamp with time zone,
+    locked_by text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     token text NOT NULL,
     type text NOT NULL

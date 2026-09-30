@@ -3,7 +3,11 @@ const NEWEST_DATE = new Date(
   Date.now() + 365 * 24 * 60 * 60 * 1000 * 10
 ).toISOString()
 
-export const GET_PATIENT_BY_EMAIL = (email: string) => ({
+export const GET_PATIENT_BY_EMAIL = (
+  email: string,
+  page = 1,
+  pageSize = 100
+) => ({
   query: `
     query GetPatientByEmail($search: String, $pagination: Pagination) {
       patients(search: $search, pagination: $pagination) {
@@ -13,7 +17,7 @@ export const GET_PATIENT_BY_EMAIL = (email: string) => ({
   `,
   variables: {
     search: email,
-    pagination: { page: 1, pageSize: 1 },
+    pagination: { page, pageSize },
   },
 })
 

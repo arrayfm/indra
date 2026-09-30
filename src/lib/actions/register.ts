@@ -16,6 +16,7 @@ export type RegisterState = {
 
 const GENERIC_ERROR_MESSAGE =
   'There was an error when registering patient details, please try again. If the issues persists, and you have been onboarded by the team, please contact us'
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const { NEXT_PUBLIC_BASE_URL } = process.env
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -32,15 +33,32 @@ export async function registerAction(
   const dobDateTime = dob ? DateTime.fromISO(dob) : null
 
   if (!email) return err('Email is required.')
+  if (!EMAIL_PATTERN.test(email)) return err('Enter a valid email address.')
   if (!dob || !dobDateTime?.isValid) return err('Date of birth is required.')
 
-  let patient
+  type PatientSearchResult = {
+    id: string
+    firstName?: string | null
+    lastName?: string | null
+    email?: string | null
+    dob?: string | null
+  }
+
+  const pageSize = 100
+  let patient: PatientSearchResult | undefined
   try {
-    const json = await sembleQuery(GET_PATIENT_BY_EMAIL(email))
-    const results = json?.data?.patients?.data ?? []
-    patient = results.find(
-      (p: any) => p.email.toLowerCase() === email.toLowerCase()
-    )
+    for (let page = 1; ; page += 1) {
+      const json = await sembleQuery(
+        GET_PATIENT_BY_EMAIL(email, page, pageSize)
+      )
+      const results: PatientSearchResult[] = json?.data?.patients?.data ?? []
+
+      patient = results.find(
+        (candidate) => candidate.email?.toLowerCase() === email
+      )
+
+      if (patient || results.length < pageSize) break
+    }
   } catch (error) {
     console.error('Semble lookup error:', error)
     return err(GENERIC_ERROR_MESSAGE)
@@ -58,7 +76,7 @@ export async function registerAction(
     return err(GENERIC_ERROR_MESSAGE)
   }
 
-  const { data: existingUser, error: profileFetchError } = await supabaseAdmin
+  const { data: existingUser } = await supabaseAdmin
     .from('profiles')
     .select('email, completed_at')
     .eq('email', email)
@@ -72,8 +90,8 @@ export async function registerAction(
 
   const { error: profileError } = await supabaseAdmin.from('profiles').upsert({
     email,
-    first_name: patient.firstName,
-    last_name: patient.lastName,
+    first_name: patient.firstName ?? undefined,
+    last_name: patient.lastName ?? undefined,
     semble_id: patient.id,
   })
 
@@ -96,7 +114,7 @@ export async function registerAction(
     subject: 'Complete your registration',
     react: RegisterLinkEmailTemplate({
       magicLink,
-      firstName: patient.firstName,
+      firstName: patient.firstName ?? undefined,
     }),
   })
 

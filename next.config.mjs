@@ -7,9 +7,6 @@ const nextConfig = {
         hostname: 'cdn.sanity.io',
       },
       {
-        hostname: 'image.mux.com', // Mux image URLs
-      },
-      {
         hostname: 'i.ytimg.com', // YouTube image URLs
       },
       {

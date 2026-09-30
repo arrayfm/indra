@@ -2,7 +2,6 @@ import { Badge, Flex, Text, Stack, BadgeProps, Inline, Label } from '@sanity/ui'
 import { gridSizes } from '@/sanity/schema/fields/size'
 import { urlForImage } from '../lib/image'
 import Image from 'next/image'
-import { FaPlay } from 'react-icons/fa'
 import { getMediaEmbedUrlThumbnail } from '@/lib/utils/video'
 import { checkIfStringIsUrl } from '@/lib/utils/string'
 
@@ -26,14 +25,6 @@ export type ItemPreviewCellProps = {
         }
       }
     }
-    muxVideo?: {
-      _type?: 'mux.video'
-      asset: {
-        _ref?: 'mux-video-ref'
-        _type?: 'reference'
-        playbackId?: string
-      }
-    }
     embedUrl?: {
       _type: 'mediaUrlEmbed'
       url: string
@@ -43,17 +34,13 @@ export type ItemPreviewCellProps = {
   size?: string
 }
 
-export const muxPreviewImage = (playbackId = '') => {
-  return `https://image.mux.com/${playbackId}/animated.webp`
-}
-
 export function ItemPreviewCell({
   subtitle,
   title,
   media,
   size,
 }: ItemPreviewCellProps) {
-  const { image, muxVideo, embedUrl } = media?.[0] ?? {}
+  const { image, embedUrl } = media?.[0] ?? {}
   const gridSize = gridSizes.find((gridSize) => gridSize.value === size)
   const embedThumbnailUrl = getMediaEmbedUrlThumbnail(embedUrl?.url || '')
 
@@ -65,7 +52,7 @@ export function ItemPreviewCell({
       style={{ cursor: 'pointer' }}
     >
       <Inline space={2}>
-        {!image && !muxVideo && !title && (
+        {!image && !embedUrl && !title && (
           <div className="relative flex h-[34px] w-[34px] items-center justify-center overflow-hidden border border-dashed border-black/50 text-black/50">
             <Text size={0}>Empty</Text>
           </div>
@@ -79,19 +66,6 @@ export function ItemPreviewCell({
             ) : (
               <Image
                 src={urlForImage(image) || ''}
-                alt="preview"
-                className="object-cover"
-                fill
-              />
-            )}
-          </div>
-        )}
-        {muxVideo && (
-          <div className="svg relative flex h-[34px] w-[34px] overflow-hidden border border-black p-2 text-black">
-            <FaPlay />
-            {muxVideo.asset.playbackId && (
-              <Image
-                src={muxPreviewImage(muxVideo.asset.playbackId)}
                 alt="preview"
                 className="object-cover"
                 fill

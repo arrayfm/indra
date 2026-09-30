@@ -127,6 +127,13 @@ menus must either already exist in the configured dataset or be recreated.
 
 ## External integrations
 
+### Video embeds
+
+Resource videos use Vimeo or YouTube URLs entered in the Sanity Studio's
+Media URL Embed field. Direct video-file uploads and Mux playback are not
+supported. Images and audio-file uploads remain supported. Vimeo embeds
+require the video's privacy and embed settings to allow the portal's domain.
+
 ### Semble
 
 Semble is accessed server-side through `https://open.semble.io/graphql` using

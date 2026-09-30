@@ -57,12 +57,7 @@ export const article = defineType({
       title: 'Media',
       type: 'array',
       group: 'content',
-      of: [
-        defineArrayMember(imageExtended),
-        defineArrayMember({
-          type: 'video',
-        }),
-      ],
+      of: [defineArrayMember(imageExtended)],
       components: { input: ArrayMaxItems },
       validation: (Rule) => Rule.max(1),
     }),

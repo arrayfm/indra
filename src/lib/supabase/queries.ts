@@ -44,6 +44,34 @@ export async function markTokenUsed(token: string) {
     .eq('token', token)
 }
 
+export async function consumeToken(
+  token: string,
+  type: 'registration' | 'password_reset'
+) {
+  const now = new Date().toISOString()
+
+  const { data: record, error } = await supabaseAdmin
+    .from('tokens')
+    .update({ used_at: now })
+    .eq('token', token)
+    .eq('type', type)
+    .is('used_at', null)
+    .gt('expires_at', now)
+    .select('email')
+    .maybeSingle()
+
+  if (error) {
+    console.error('Failed to consume token:', error)
+    return { error: 'Invalid or expired link.' }
+  }
+
+  if (!record) {
+    return { error: 'Invalid, expired, or already used link.' }
+  }
+
+  return { email: record.email }
+}
+
 export async function createToken(
   email: string,
   type: 'registration' | 'password_reset'

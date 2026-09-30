@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { supabaseAdmin } from '../supabase/admin'
-import { validateToken } from '../supabase/queries'
+import { consumeToken, validateToken } from '../supabase/queries'
 
 export type ResetPasswordState = {
   error?: string
@@ -55,6 +55,12 @@ export async function resetPasswordAction(
     return { error: 'No account found for this email.' }
   }
 
+  const { error: consumeError } = await consumeToken(token, 'password_reset')
+
+  if (consumeError) {
+    return { error: consumeError }
+  }
+
   const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
     authUser.id,
     { password }
@@ -64,11 +70,6 @@ export async function resetPasswordAction(
     console.error('Failed to update password:', updateError)
     return { error: 'Failed to reset password. Please try again.' }
   }
-
-  await supabaseAdmin
-    .from('password_reset_tokens')
-    .update({ used_at: new Date().toISOString() })
-    .eq('token', token)
 
   redirect('/login?reset=true')
 }

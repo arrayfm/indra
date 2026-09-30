@@ -5,19 +5,23 @@ const NEWEST_DATE = new Date(
 
 export const GET_PATIENT_BY_EMAIL = (email: string) => ({
   query: `
-    query {
-      patients(search: "${email}", pagination: { page: 1, pageSize: 1 }) {
+    query GetPatientByEmail($search: String, $pagination: Pagination) {
+      patients(search: $search, pagination: $pagination) {
         data { id firstName lastName email dob }
       }
     }
   `,
+  variables: {
+    search: email,
+    pagination: { page: 1, pageSize: 1 },
+  },
 })
 
 export const GET_PATIENT_BOOKINGS = (patientId: string) => ({
   query: `
-    query {
-      patient(id: "${patientId}") {
-        bookings (start: "${OLDEST_DATE}", end: "${NEWEST_DATE}") {
+    query GetPatientBookings($patientId: ID!, $start: Date!, $end: Date!) {
+      patient(id: $patientId) {
+        bookings(start: $start, end: $end) {
           id
           start
           end
@@ -27,12 +31,17 @@ export const GET_PATIENT_BOOKINGS = (patientId: string) => ({
       }
     }
   `,
+  variables: {
+    patientId,
+    start: OLDEST_DATE,
+    end: NEWEST_DATE,
+  },
 })
 
 export const GET_PATIENT_PRESCRIPTIONS = (patientId: string) => ({
   query: `
-    query {
-      patient(id: "${patientId}") {
+    query GetPatientPrescriptions($patientId: ID!) {
+      patient(id: $patientId) {
         patientDocuments {
           data {
             id
@@ -44,4 +53,5 @@ export const GET_PATIENT_PRESCRIPTIONS = (patientId: string) => ({
       }
     }
   `,
+  variables: { patientId },
 })
